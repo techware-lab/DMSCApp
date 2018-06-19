@@ -28,7 +28,7 @@ export class ServiceProvider {
     };
     return this.http.post('http://trendix.qa/dmsc/api/dmsc/activivties', '', options)
     .pipe(map(data => data))
-    .catch((e: any) => Observable.throw(this.errorHandler(e)));
+    // .catch((e: any) => Observable.throw(this.errorHandler(e)));
   }
   errorHandler(error: any): void {
     this.presentAlert('Connection Error', error);

@@ -5,35 +5,17 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Events {{"menu" | translate }}</ion-title>
+    <ion-title>{{"events" | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding class="card-background-page">
-
-  <ion-card>
-    <img src="http://trendix.qa/dmsc/uploads/activity/sailing_new1.png" />
-    <div class="card-title">Sailing</div>
-    <div class="card-subtitle">Sailing is a fun, safe, accessible and affordable sport that welcomes participation from people of all backgrounds, ages and abilities.We have different categories namely , laser 470 , hobbie-16 and optimist</div>
-  </ion-card>
-
-  <ion-card>
-    <img src="http://trendix.qa/dmsc/uploads/activity/kayak_new.png" />
-    <div class="card-title">Kayaking</div>
-    <div class="card-subtitle">Kayaking is one of the biggest rushes you can have on the water, letting you play in lakes, river rapids, waterfalls and even the sea</div>
-  </ion-card>
-
-  <ion-card>
-    <img src="http://trendix.qa/dmsc/uploads/activity/win_surf_new.png" />
-    <div class="card-title">Wind Surfing</div>
-    <div class="card-subtitle">port that combines aspects of sailing and surfing on a one-person craft called a sailboard.</div>
-  </ion-card>
-
-  <ion-card>
-    <img src="http://trendix.qa/dmsc/uploads/activity/kite_surf_new.png" />
-    <div class="card-title">Kiteboarding</div>
-    <div class="card-subtitle">Kiteboarding is a on and above water sport combining aspects of wakeboarding,</div>
+  <ion-card  *ngFor='let event of eventList'>
+    <img src="{{event.image}}" />
+    <div class="card-title">{{service.lang==='ar'?event.title_ar:event.title}}</div>
+    <div class="card-subtitle" [innerHTML]="service.lang==='ar'?event.description_ar:event.description"></div>    
+    
   </ion-card>
 
 </ion-content>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, Platform, ViewController } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ServiceProvider } from '../../providers/service/service';
 
 /**
  * Generated class for the ActivitiesPage page.
@@ -17,7 +18,7 @@ import { map } from 'rxjs/operators';
 })
 export class ActivitiesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,public service: ServiceProvider,
     public modalCtrl: ModalController) {
   }
   activityList;

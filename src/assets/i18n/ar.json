@@ -1,9 +1,11 @@
 {
-    "home": "huis",
-    "menu": "ahista",
-    "about": "over",
-    "contact": "Contact",
-    "welcome": "Welkom bij ionic!",
-    "ourActivities": "Aur Aktivitia",
-    "language": "langua"
+    "home": "الصفحة الرئيسية",
+    "menu": "قائمة طعام",
+    "about": "حول",
+    "contact": "اتصل",
+    "events": "أحداث",
+    "activities": "أنشطة",
+    "welcome": "أهلا بك",
+    "ourActivities": "أنشطتنا",
+    "language": "لغة"
 }
