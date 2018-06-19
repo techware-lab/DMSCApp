@@ -1,0 +1,42 @@
+
+<ion-header>
+    <ion-navbar color='navbarColor'>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content padding>
+
+    <img src="assets/imgs/land.png" />
+    <h1>
+      <label color='navbarColor'></label>
+      <!-- {{ "ourActivities" | translate }} -->
+    </h1>
+  
+    <ion-grid>
+      <ion-row center>
+        <ion-col col-6 *ngFor='let activity of activityList'>
+          <img src="{{activity.image}}" />
+          <div>{{activity.title}}</div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
+    <ion-card>
+      <ion-card-content>
+        <img src="assets/imgs/logo TRANS.png" />
+        <ion-card-title>
+          <ion-icon name="call"></ion-icon> Call us
+          <a href="tel:1800123456789">1800123456789</a>
+        </ion-card-title>
+        <p>
+          Become a member today and unwind the opertunity of unlimited marine sport activities
+        </p>
+      </ion-card-content>
+    </ion-card>
+  
+    <button ion-button block>Join Our Club</button>
+</ion-content>

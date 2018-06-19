@@ -1,0 +1,21 @@
+  
+<ion-header>
+    <ion-navbar color='navbarColor'>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding>    
+      <label>Language</label>
+      <ion-list radio-group [(ngModel)]="service.lang" (ionChange)="switchLanguage()">
+          <ion-item>
+            <ion-label>English</ion-label>
+            <ion-radio value="en"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Arabic</ion-label>
+            <ion-radio value="ar"></ion-radio>
+          </ion-item>
+        </ion-list>
+  </ion-content>

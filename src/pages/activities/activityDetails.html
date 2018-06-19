@@ -1,0 +1,44 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Book Activities
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <!-- <ion-icon name="md-close" showWhen="android,windows"></ion-icon> -->
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-card>
+        <img src="{{Activity.image}}" />
+        <ion-card-content>
+            <ion-card-title>
+                {{Activity.title}}
+            </ion-card-title>
+            <p [innerHTML]="Activity.description">
+            </p>
+        </ion-card-content>
+    </ion-card>
+    <ion-list *ngFor='let training of trainingList'>
+        <ion-item>
+            <!-- <ion-avatar item-start>
+                <img src="{{training.image}}">
+            </ion-avatar> -->
+            <h1>{{training.training_name}}</h1>
+            <h3>
+                <strong>{{training.start_date}} {{training.start_time}} to {{training.end_date}} {{training.end_time}}</strong>
+            </h3>
+            <p [innerHTML]="training.description"></p>
+            <button ion-button clear item-end>Book</button>
+        </ion-item>
+    </ion-list>
+</ion-content>

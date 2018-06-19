@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-navbar color='navbarColor'>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-navbar>
+</ion-header>
+
+<ion-content  class="card-background-page">
+  <img src="assets/imgs/logo TRANS.png" />
+  <div align-items-center >
+      <ion-card center text-center *ngIf="LoggedIn">
+          <button ion-button color="light" (click)="goToSignupEventsPage()" round>Signup for Events</button>
+          <button ion-button color="light" (click)="goToSignupMembershipPage()" round>Signup for Membership</button>
+      </ion-card>
+  </div>
+</ion-content>

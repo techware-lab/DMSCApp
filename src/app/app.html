@@ -1,0 +1,29 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <ion-toolbar >
+      <ion-item (click)="goToProfilePage()">
+        <ion-avatar item-start>
+          <img src="assets/imgs/avathar-default.png">
+        </ion-avatar>
+        <h2>Marty McFly</h2>
+        <p>November 5, 1955</p>
+      </ion-item>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="menu">
+    <ion-list>
+      <button class="nav-btn" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        <ion-icon name="{{p.icon}}"></ion-icon>
+        {{p.title}}
+      </button>
+    </ion-list>
+    <ion-list>
+      <img src="assets/imgs/logo TRANS.png" />
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

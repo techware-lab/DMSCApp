@@ -1,0 +1,47 @@
+<!--
+  Generated template for the ActivitiesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color='navbarColor'>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <label>Activities</label>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content center text-center padding>
+
+  <ion-grid>
+    <ion-row center>
+      <ion-col (click)="openModal({charNum: activity.category_id})" col-6 *ngFor='let activity of activityList'>
+        <img class="circle-pic" src="{{activity.image}}" />
+        <div>{{activity.title}}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- 
+  <ion-card>
+    <img src="http://trendix.qa/dmsc/uploads/activity/kayak_new.png" />
+    <div class="card-title">Kayaking</div>
+    <div class="card-subtitle">Kayaking is one of the biggest rushes you can have on the water, letting you play in lakes, river rapids, waterfalls and even the sea</div>
+  </ion-card>
+
+  <ion-card>
+    <img src="http://trendix.qa/dmsc/uploads/activity/win_surf_new.png" />
+    <div class="card-title">Wind Surfing</div>
+    <div class="card-subtitle">port that combines aspects of sailing and surfing on a one-person craft called a sailboard.</div>
+  </ion-card>
+
+  <ion-card>
+    <img src="http://trendix.qa/dmsc/uploads/activity/kite_surf_new.png" />
+    <div class="card-title">Kiteboarding</div>
+    <div class="card-subtitle">Kiteboarding is a on and above water sport combining aspects of wakeboarding,</div>
+  </ion-card> -->
+
+</ion-content>
