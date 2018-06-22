@@ -12,6 +12,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { ServiceProvider } from '../providers/service/service';
 import { ContactPage } from '../pages/contact/contact';
 import { SettingsPage } from '../pages/settings/settings';
+import { LoginPage } from '../pages/login/login';
 // import { DashboardPage } from '../pages/dashboard/dashboard';
 
 @Component({
@@ -66,6 +67,9 @@ export class MyApp {
 
   goToProfilePage() {
     this.nav.push(ProfilePage);
+  }
+  goToLoginPage() {
+    this.nav.push(LoginPage);
   }
   openPage(page) {
     // debugger;

@@ -24,12 +24,13 @@ export class MyActivitiesPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyActivitiesPage');
+    debugger;
     this.getMyActivities();
   }
   cancelActivity(activity){
     try{
       let loader = this.loadingCtrl.create({
-        content: "Loading Events..."
+        content: "Canceling your activity..."
       });
       loader.present();
       const options = {
@@ -54,15 +55,17 @@ export class MyActivitiesPage {
   getMyActivities() {
     try{
     let loader = this.loadingCtrl.create({
-      content: "Loading Events..."
+      content: "Loading your activities..."
     });
     loader.present();
     const options = {
       headers: this.createAuthorizationHeader()
     };
+    const param = { 'customer_id':this.service.UserDetails.CustomerID,
+    'customer_type':this.service.UserDetails.CustomerType}
 
     this.http
-      .post<any>('http://trendix.qa/dmsc/api/dmsc/MyEvents', '', options)
+      .post<any>('http://trendix.qa/dmsc/api/dmsc/MyEvents', param, options)
       .pipe(map(data => data))
       .subscribe(
         restItems => {
@@ -76,8 +79,7 @@ export class MyActivitiesPage {
   }
   createAuthorizationHeader() {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8',
-     'x-api-key': '123456', 'customer_id':this.service.UserDetails.CustomerID,
-      'customer_type':this.service.UserDetails.CustomerType });
+     'x-api-key': '123456' });
     return headers;
   }
   createAuthorizationHeaderCancel(bookid) {

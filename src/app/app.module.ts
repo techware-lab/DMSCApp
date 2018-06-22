@@ -30,6 +30,10 @@ import { ActivitiesPageModule } from '../pages/activities/activities.module';
 import { EventsPageModule } from '../pages/events/events.module';
 import { ContactPage } from '../pages/contact/contact';
 import { SettingsPage } from '../pages/settings/settings';
+import { ContactPageModule } from '../pages/contact/contact.module';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+import { MyActivitiesPage } from '../pages/my-activities/my-activities';
+import { MyEventsPage } from '../pages/my-events/my-events';
 // import { DashboardPage } from '../pages/dashboard/dashboard';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -49,8 +53,10 @@ export function createTranslateLoader(http: HttpClient) {
     SignupMembershipPage,
     EventDetailsPage,
     LoginPage,
+    ForgotPasswordPage,
     HomePage,
-    ContactPage,
+    MyActivitiesPage,
+    MyEventsPage,
     SettingsPage
     // DashboardPage
     
@@ -63,6 +69,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     ProfilePageModule,
     FeesPageModule,
+    ContactPageModule,
     ActivitiesPageModule,
     EventsPageModule,
     TranslateModule.forRoot({
@@ -85,11 +92,14 @@ export function createTranslateLoader(http: HttpClient) {
     SignupEventsPage,
     SignupMembershipPage,
     IntroPage,
+    ForgotPasswordPage,
     EventDetailsPage,
     HomePage,
     LoginPage,    
     ContactPage,
-    SettingsPage
+    SettingsPage,
+    MyActivitiesPage,
+    MyEventsPage
     // DashboardPage
   ],
   providers: [
