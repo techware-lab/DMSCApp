@@ -3,9 +3,16 @@
     "menu": "قائمة طعام",
     "about": "حول",
     "contact": "اتصل",
+    "SignupMembership": "الاشتراك للحصول على العضوية",
+    "SignupEvents": "الاشتراك في الأحداث",
+    "profile": "الملف الشخصي",
+    "fees": "رسوم",
     "events": "أحداث",
     "activities": "أنشطة",
     "welcome": "أهلا بك",
     "ourActivities": "أنشطتنا",
-    "language": "لغة"
+    "language": "لغة",
+    "login": "تسجيل الدخول",
+    "eventDetails": "تفاصيل الحدث",
+    "logout": "الخروج"
 }

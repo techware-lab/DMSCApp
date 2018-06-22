@@ -3,9 +3,17 @@
     "menu": "Menu",
     "about": "About",
     "contact": "Contact",
-    "events": "events",
-    "activities": "activities",
-    "welcome": "Welcome to ionic",
+    "fees": "Fees",
+    "SignupMembership": "Signup for Membership",
+    "SignupEvents": "Signup for Events",
+    "profile": "Profile",
+    "events": "Events",
+    "activities": "Activities",
+    "welcome": "Welcome to Doha Marine Sports",
     "ourActivities": "Our Activities",
-    "language": "Language"
+    "language": "Language",
+    "login": "Login",
+    "eventDetails":"Event Details",
+    "logout": "Logout"
+
 }

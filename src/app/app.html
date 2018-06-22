@@ -1,12 +1,12 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar >
-      <ion-item (click)="goToProfilePage()">
+      <ion-item *ngIf="service.loginState" (click)="goToProfilePage()">
         <ion-avatar item-start>
-          <img src="assets/imgs/avathar-default.png">
+          <img id="profile-image" src="{{service.UserDetails.member_img !== ''? service.UserDetails.member_img :'assets/imgs/avathar-default.png' }}">
         </ion-avatar>
-        <h2>Marty McFly</h2>
-        <p>November 5, 1955</p>
+        <h2>{{service.UserDetails.full_name}}</h2>
+        <p>{{service.UserDetails.customer_type}}</p>
       </ion-item>
     </ion-toolbar>
   </ion-header>
@@ -19,11 +19,15 @@
       </button>
     </ion-list>
     <ion-list>
+        <button class="nav-btn" menuClose ion-item (click)="service.logout()">
+          <ion-icon name="log-out"></ion-icon>
+          Logout
+        </button>
+    </ion-list>
+    <ion-list>
       <img src="assets/imgs/logo TRANS.png" />
     </ion-list>
   </ion-content>
-
 </ion-menu>
-
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

@@ -1,7 +1,11 @@
+
 <ion-content center text-center>
-    <ion-tabs [selectedIndex]="myIndex">
-        <ion-tab [root]="tabDashboard" [rootParams]="chatParams" tabTitle="Home" tabIcon="home"></ion-tab>
-        <ion-tab [root]="tabProfile" [rootParams]="chatParams" tabTitle="Profile" tabIcon="person"></ion-tab>
-        <ion-tab [root]="tabSettings" [rootParams]="chatParams" tabTitle="Settings" tabIcon="cog"></ion-tab>
-      </ion-tabs>
-</ion-content>
+        <ion-tabs [selectedIndex]="myIndex">
+            <ion-tab [root]="tabDashboard" [rootParams]="chatParams" tabTitle="Home" tabIcon="home"></ion-tab>
+            <ion-tab [root]="tabProfile" [rootParams]="chatParams" tabTitle="Profile" tabIcon="person"></ion-tab>
+            <ion-tab [root]="tabSettings" [rootParams]="chatParams" tabTitle="Settings" tabIcon="cog"></ion-tab>
+            <ion-tab [root]="tabEvents" [rootParams]="chatParams" tabTitle="Events" tabIcon="boat"></ion-tab>
+            <ion-tab [root]="tabActivities" [rootParams]="chatParams" tabTitle="Activities" tabIcon="basketball"></ion-tab>
+            <ion-tab [root]="tabFees" [rootParams]="chatParams" tabTitle="Fees" tabIcon="cash"></ion-tab>
+          </ion-tabs>
+    </ion-content>

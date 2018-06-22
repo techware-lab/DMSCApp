@@ -3,16 +3,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SignupEventsPage } from '../signup-events/signup-events'
 import { SignupMembershipPage } from '../signup-membership/signup-membership'
 import { Storage } from '@ionic/storage';
+// import { MyApp } from '../../app/app.component';
+import { LoginPage } from '../login/login';
+import { ServiceProvider } from '../../providers/service/service';
 
 @IonicPage()
+
+
 @Component({
   selector: 'page-profile',
-  templateUrl: 'profile.html',
+  templateUrl: 'profile.html'
 })
 export class ProfilePage {
   LoggedIn = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams
+    , public storage: Storage, public service: ServiceProvider) {
   }
   goToSignupMembershipPage() {
     this.navCtrl.push(SignupMembershipPage);
@@ -20,14 +26,15 @@ export class ProfilePage {
   goToSignupEventsPage() {
     this.navCtrl.push(SignupEventsPage);
   }
+  goToLoginPage() {
+    this.navCtrl.push(LoginPage);
+  }
 
   ionViewDidLoad() {
-    this.storage.set('LoggedIn', true);
+    this.storage.set('LoggedIn', this.service.loginState);
     this.storage.get('LoggedIn').then((val) => {
-      console.log('Your age is', val);
       this.LoggedIn = val;
     });
-    console.log('ionViewDidLoad ProfilePage');
   }
 
 }

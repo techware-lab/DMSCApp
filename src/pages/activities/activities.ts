@@ -1,15 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, Platform, ViewController, LoadingController } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
-
-/**
- * Generated class for the ActivitiesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,13 +11,13 @@ import { ServiceProvider } from '../../providers/service/service';
 })
 export class ActivitiesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,public service: ServiceProvider,
-    public modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient, public service: ServiceProvider,
+    public modalCtrl: ModalController,public loadingCtrl: LoadingController) {
   }
   activityList;
   activity;
   openModal(characterNum) {
-    this.activity = this.activityList.filter(x=> x.category_id == characterNum.charNum)[0];
+    this.activity = this.activityList.filter(x => x.category_id == characterNum.charNum)[0];
     console.log(this.activity);
     let modal = this.modalCtrl.create(ModalContentPage, this.activity);
     modal.present();
@@ -42,6 +35,10 @@ export class ActivitiesPage {
     }, 2000);
   }
   getActivities() {
+    let loader = this.loadingCtrl.create({
+      content: "Loading Activities..."
+    });
+    loader.present();
     const options = {
       headers: this.createAuthorizationHeader()
     };
@@ -52,6 +49,7 @@ export class ActivitiesPage {
       .subscribe(
         restItems => {
           this.activityList = restItems.response;
+          loader.dismissAll();
           console.log(this.activityList);
         }
       );
@@ -67,11 +65,11 @@ export class ActivitiesPage {
 })
 export class ModalContentPage {
   Activity;
-trainingList;
+  trainingList;
   constructor(
     public platform: Platform,
     public params: NavParams,
-    public viewCtrl: ViewController,
+    public viewCtrl: ViewController,public loadingCtrl: LoadingController,
     public http: HttpClient
   ) {
     this.Activity = this.params.data;
@@ -83,16 +81,21 @@ trainingList;
   }
 
   getTrainingList(id) {
+    let loader = this.loadingCtrl.create({
+      content: "Loading Activity..."
+    });
+    loader.present();
     const options = {
       headers: this.createAuthorizationHeader()
     };
-const arg = {'activity_id':id};
+    const arg = { 'activity_id': id };
     this.http
       .post<any>('http://trendix.qa/dmsc/api/dmsc/activityTraining', arg, options)
       .pipe(map(data => data))
       .subscribe(
         restItems => {
           this.trainingList = restItems.response;
+          loader.dismissAll();
           console.log(this.trainingList);
         }
       );

@@ -88,4 +88,15 @@ $colors: (
 @import "roboto";
 @import "noto-sans";
 
-
+.tabs-md .tabbar {
+  background: #1681c4!important;
+}
+.tabs-md .tab-button[aria-selected=true] {
+  color: #ffffff!important;
+}
+.tabs-md .tab-button {
+  color: #222!important;
+}
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon {
+  color: #ffffff!important;
+}

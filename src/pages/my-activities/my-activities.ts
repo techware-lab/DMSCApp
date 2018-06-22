@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ProfilePage } from '../profile/profile';
 
 /**
- * Generated class for the FeesPage page.
+ * Generated class for the MyActivitiesPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,19 +10,16 @@ import { ProfilePage } from '../profile/profile';
 
 @IonicPage()
 @Component({
-  selector: 'page-fees',
-  templateUrl: 'fees.html',
+  selector: 'page-my-activities',
+  templateUrl: 'my-activities.html',
 })
-export class FeesPage {
+export class MyActivitiesPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeesPage');
+    console.log('ionViewDidLoad MyActivitiesPage');
   }
 
-  goToHomePage() {
-    this.navCtrl.push(ProfilePage);
-  }
 }

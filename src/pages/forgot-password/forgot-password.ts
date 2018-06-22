@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ProfilePage } from '../profile/profile';
 
 /**
- * Generated class for the FeesPage page.
+ * Generated class for the ForgotPasswordPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -11,19 +10,16 @@ import { ProfilePage } from '../profile/profile';
 
 @IonicPage()
 @Component({
-  selector: 'page-fees',
-  templateUrl: 'fees.html',
+  selector: 'page-forgot-password',
+  templateUrl: 'forgot-password.html',
 })
-export class FeesPage {
+export class ForgotPasswordPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeesPage');
+    console.log('ionViewDidLoad ForgotPasswordPage');
   }
-
-  goToHomePage() {
-    this.navCtrl.push(ProfilePage);
-  }
+  GetPassord(){}
 }

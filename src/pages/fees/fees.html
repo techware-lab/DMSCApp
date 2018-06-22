@@ -10,7 +10,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Fees {{"menu" | translate }}</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -150,5 +150,5 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <button primary ion-button block>Join Our Club</button>
+  <button primary (click)="goToHomePage()" ion-button block>Join Our Club</button>
 </ion-content>

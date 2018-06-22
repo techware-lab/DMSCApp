@@ -21,6 +21,15 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { SignupEventsPage } from '../pages/signup-events/signup-events'
 import { SignupMembershipPage } from '../pages/signup-membership/signup-membership'
 import { IonicStorageModule } from '@ionic/storage';
+import { EventDetailsPage } from '../pages/event-details/event-details';
+import { ProfilePage } from '../pages/profile/profile';
+import { LoginPage } from '../pages/login/login';
+import { ProfilePageModule } from '../pages/profile/profile.module';
+import { FeesPageModule } from '../pages/fees/fees.module';
+import { ActivitiesPageModule } from '../pages/activities/activities.module';
+import { EventsPageModule } from '../pages/events/events.module';
+import { ContactPage } from '../pages/contact/contact';
+// import { DashboardPage } from '../pages/dashboard/dashboard';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -28,15 +37,19 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
+   // ProfilePage,
     ListPage,
-    ActivitiesPage,
-    EventsPage,
-    FeesPage,
+    // ActivitiesPage,
+    // EventsPage,
+    // FeesPage,
     ModalContentPage,
     IntroPage,
     SignupEventsPage,
     SignupMembershipPage,
+    EventDetailsPage,
+    LoginPage,
+    HomePage,
+    ContactPage
     // DashboardPage
     
   ],
@@ -46,6 +59,10 @@ export function createTranslateLoader(http: HttpClient) {
     IonicStorageModule.forRoot(),
     HttpModule,
     HttpClientModule,
+    ProfilePageModule,
+    FeesPageModule,
+    ActivitiesPageModule,
+    EventsPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -57,7 +74,7 @@ export function createTranslateLoader(http: HttpClient) {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
+    ProfilePage,
     ListPage,
     ActivitiesPage,
     EventsPage,
@@ -66,6 +83,10 @@ export function createTranslateLoader(http: HttpClient) {
     SignupEventsPage,
     SignupMembershipPage,
     IntroPage,
+    EventDetailsPage,
+    HomePage,
+    LoginPage,    
+    ContactPage
     // DashboardPage
   ],
   providers: [

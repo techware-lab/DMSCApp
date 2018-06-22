@@ -14,6 +14,7 @@ import { AlertController } from 'ionic-angular';
 export class ServiceProvider {
   public loginState:boolean = false;
   public lang:string ='en';
+  public UserDetails ={};
   constructor(public http: HttpClient, private alertCtrl: AlertController) {
     console.log('Hello ServiceProvider Provider');
   }
@@ -28,7 +29,7 @@ export class ServiceProvider {
     };
     return this.http.post('http://trendix.qa/dmsc/api/dmsc/activivties', '', options)
     .pipe(map(data => data))
-    // .catch((e: any) => Observable.throw(this.errorHandler(e)));
+    .catch((e: any) => Observable.throw(this.errorHandler(e)));
   }
   errorHandler(error: any): void {
     this.presentAlert('Connection Error', error);
@@ -41,5 +42,10 @@ export class ServiceProvider {
       buttons: ['Dismiss']
     });
     alert.present();
+  }
+  logout(){
+    debugger;
+    this.loginState =false;
+    this.UserDetails ={};
   }
 }
