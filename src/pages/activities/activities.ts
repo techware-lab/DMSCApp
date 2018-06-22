@@ -35,6 +35,7 @@ export class ActivitiesPage {
     }, 2000);
   }
   getActivities() {
+    try{
     let loader = this.loadingCtrl.create({
       content: "Loading Activities..."
     });
@@ -53,6 +54,8 @@ export class ActivitiesPage {
           console.log(this.activityList);
         }
       );
+    }
+    catch (ex) { console.log(ex) }
   }
 
   createAuthorizationHeader() {
@@ -81,6 +84,7 @@ export class ModalContentPage {
   }
 
   getTrainingList(id) {
+    try{
     let loader = this.loadingCtrl.create({
       content: "Loading Activity..."
     });
@@ -99,6 +103,8 @@ export class ModalContentPage {
           console.log(this.trainingList);
         }
       );
+    }
+    catch (ex) { console.log(ex) }
   }
 
   createAuthorizationHeader() {

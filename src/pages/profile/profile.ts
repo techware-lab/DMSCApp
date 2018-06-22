@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage';
 // import { MyApp } from '../../app/app.component';
 import { LoginPage } from '../login/login';
 import { ServiceProvider } from '../../providers/service/service';
+import { MyEventsPage } from '../my-events/my-events';
+import { MyActivitiesPage } from '../my-activities/my-activities';
 
 @IonicPage()
 
@@ -29,12 +31,24 @@ export class ProfilePage {
   goToLoginPage() {
     this.navCtrl.push(LoginPage);
   }
+  goToChangePasswordPage(){
+    
+  }
+  gotoMyEvents() {
+    this.navCtrl.push(MyEventsPage);
+  }
 
+  gotoMyactivities() {
+    this.navCtrl.push(MyActivitiesPage);
+  }
   ionViewDidLoad() {
-    this.storage.set('LoggedIn', this.service.loginState);
-    this.storage.get('LoggedIn').then((val) => {
-      this.LoggedIn = val;
-    });
+    try {
+      this.storage.set('LoggedIn', this.service.loginState);
+      this.storage.get('LoggedIn').then((val) => {
+        this.LoggedIn = val;
+      });
+    }
+    catch (ex) { console.log(ex) }
   }
 
 }

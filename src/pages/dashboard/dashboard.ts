@@ -14,24 +14,27 @@ export class DashboardPage {
   activityList;
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public modalCtrl: ModalController) {
-    
+
   }
 
   ionViewDidLoad() {
-    this.service.getActivityList()
-    .subscribe(
-      restItems => {
-        this.activityList = restItems.response;
-        console.log(this.activityList);
-      }
-    );
+    try {
+      this.service.getActivityList()
+        .subscribe(
+          restItems => {
+            this.activityList = restItems.response;
+            console.log(this.activityList);
+          }
+        );
+    }
+    catch (ex) { console.log(ex) }
   }
-  
+
   goToProfilePage() {
     this.navCtrl.push(ProfilePage);
   }
   openModal(characterNum) {
-    this.activity = this.activityList.filter(x=> x.category_id == characterNum.charNum)[0];
+    this.activity = this.activityList.filter(x => x.category_id == characterNum.charNum)[0];
     console.log(this.activity);
     let modal = this.modalCtrl.create(ModalContentPage, this.activity);
     modal.present();

@@ -1,9 +1,3 @@
-<!--
-  Generated template for the EventDetailsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -18,7 +12,7 @@
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
         </ion-refresher-content>
     </ion-refresher>
-    <ion-card>
+    <!-- <ion-card>
         <ion-card-content>
           <img src="{{Activity.image}}" />
             <ion-card-title>
@@ -26,7 +20,19 @@
             </ion-card-title>
             <p [innerHTML]="Activity.description">
             </p>
-            <button ion-button (click)="ParticipateClick()" block>Participate</button>
-        </ion-card-content>
-    </ion-card>   
+        </ion-card-content>        
+    </ion-card>  -->
+    <ion-list *ngFor='let training of EventsPostList'>
+      <ion-item>
+          <ion-avatar item-start>
+              <img src="{{training.image}}">
+          </ion-avatar>
+          <h1>{{service.lang==='ar'?training.training_name_ar:training.training_name}} </h1>
+          <h3>
+              <strong>{{training.start_date}} {{training.start_time}} to {{training.end_date}} {{training.end_time}}</strong>
+          </h3>
+          <p [innerHTML]="service.lang==='ar'?training.description_ar:training.description"></p>
+          <button (click)="ParticipateClick()"  ion-button block>Participate</button>
+      </ion-item>
+  </ion-list>  
 </ion-content>

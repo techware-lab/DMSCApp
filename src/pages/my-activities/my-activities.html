@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>myActivities</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +15,11 @@
 
 <ion-content padding>
 
+  <ion-card *ngFor='let activity of activitiesList'>
+    <img src="{{activity.image}}" />
+    <div class="card-title">{{service.lang==='ar'?event.title_ar:event.title}}</div>
+    <div class="card-subtitle" [innerHTML]="service.lang==='ar'?event.description_ar:event.description"></div>    
+    
+    <button ion-button (click)="cancelActivity(activity)" block>Cancel this activity</button>
+  </ion-card>
 </ion-content>

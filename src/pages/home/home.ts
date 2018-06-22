@@ -7,12 +7,11 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class HomePage {
   
-  tabProfile = 'ProfilePage';
   tabDashboard = 'DashboardPage';
-  tabSettings = 'SettingsPage';
-  tabFees = 'FeesPage';
+  // tabSettings = 'SettingsPage';
   tabEvents = 'EventsPage';
   tabActivities = 'ActivitiesPage';
+  tabContact = 'ContactPage';
   myIndex: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {

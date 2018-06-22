@@ -11,6 +11,7 @@ import { IntroPage } from '../pages/intro/intro';
 import { ProfilePage } from '../pages/profile/profile';
 import { ServiceProvider } from '../providers/service/service';
 import { ContactPage } from '../pages/contact/contact';
+import { SettingsPage } from '../pages/settings/settings';
 // import { DashboardPage } from '../pages/dashboard/dashboard';
 
 @Component({
@@ -27,29 +28,29 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
     public modalCtrl: ModalController, public service: ServiceProvider) {
 
+    try {
+      this.initializeApp();
+      platform.ready().then(() => {
+        let splash = modalCtrl.create(IntroPage);
+        splash.present();
+        if (this.service.loginState) {
 
-    this.initializeApp();
-    platform.ready().then(() => {
-      debugger;
-      let splash = modalCtrl.create(IntroPage);
-      splash.present();
-      debugger;
-      if (this.service.loginState) {
+          this.rootPage = HomePage;
+        } else {
+          this.rootPage = ProfilePage;
+        }
 
-        this.rootPage = HomePage;
-      } else {
-        this.rootPage = ProfilePage;
-      }
-
-    });
-
+      });
+    }
+    catch (ex) { console.log(ex) }
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home', index: 0 },
       { title: 'Fees', component: FeesPage, icon: 'cash', index: 1 },
       { title: 'Activities', component: ActivitiesPage, icon: 'basketball', index: 2 },
       { title: 'Events', component: EventsPage, icon: 'boat', index: 3 },
-      { title: 'Contact us', component: ContactPage, icon: 'contacts', index: 4 }
+      { title: 'Contact us', component: ContactPage, icon: 'contacts', index: 4 },
+      { title: 'Settings', component: SettingsPage, icon: 'cog', index: 5 }
     ];
 
   }

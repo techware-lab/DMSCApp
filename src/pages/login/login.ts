@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { ProfilePage } from '../profile/profile';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -42,20 +43,24 @@ export class LoginPage {
       .subscribe(
         restItems => {
           debugger;
-          this.loginStatus = restItems.status;
           this.loginMessage = restItems.message;
           console.log(this.loginStatus);
-            loader.dismissAll();
+          loader.dismissAll();
+          this.loginStatus = restItems.status;
           if (restItems.status) {
+            this.service.UserDetails = {
+              CustomerID: restItems.response.member_id,
+              CustomerType: restItems.response.customer_type,
+              Image: restItems.response.member_img, FullName: restItems.response.full_name
+            };
             this.service.loginState = restItems.status;
-            this.service.UserDetails = restItems.response;
-            this.goToHomePage();
+            this.navCtrl.push(HomePage);
           }
           else {
             let alert = this.alertCtrl.create({
-              title:'Login Error', 
-              subTitle:restItems.message,
-              buttons:['OK']
+              title: 'Login Error',
+              subTitle: restItems.message,
+              buttons: ['OK']
             });
             alert.present();
           }
@@ -83,7 +88,7 @@ export class LogoutPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public alertCtrl: AlertController,
     public loadingCtrl: LoadingController, public service: ServiceProvider) {
-      this.Logout();
+    this.Logout();
   }
   Logout() {
     this.service.loginState = false;

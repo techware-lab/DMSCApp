@@ -14,7 +14,7 @@ import { AlertController } from 'ionic-angular';
 export class ServiceProvider {
   public loginState:boolean = false;
   public lang:string ='en';
-  public UserDetails ={};
+  public UserDetails :{CustomerID: string,CustomerType:string, FullName:string, Image:string };
   constructor(public http: HttpClient, private alertCtrl: AlertController) {
     console.log('Hello ServiceProvider Provider');
   }
@@ -46,6 +46,6 @@ export class ServiceProvider {
   logout(){
     debugger;
     this.loginState =false;
-    this.UserDetails ={};
+    this.UserDetails =null;
   }
 }

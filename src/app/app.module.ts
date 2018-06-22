@@ -29,6 +29,7 @@ import { FeesPageModule } from '../pages/fees/fees.module';
 import { ActivitiesPageModule } from '../pages/activities/activities.module';
 import { EventsPageModule } from '../pages/events/events.module';
 import { ContactPage } from '../pages/contact/contact';
+import { SettingsPage } from '../pages/settings/settings';
 // import { DashboardPage } from '../pages/dashboard/dashboard';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -49,7 +50,8 @@ export function createTranslateLoader(http: HttpClient) {
     EventDetailsPage,
     LoginPage,
     HomePage,
-    ContactPage
+    ContactPage,
+    SettingsPage
     // DashboardPage
     
   ],
@@ -86,7 +88,8 @@ export function createTranslateLoader(http: HttpClient) {
     EventDetailsPage,
     HomePage,
     LoginPage,    
-    ContactPage
+    ContactPage,
+    SettingsPage
     // DashboardPage
   ],
   providers: [

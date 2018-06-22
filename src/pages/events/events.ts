@@ -25,6 +25,7 @@ export class EventsPage {
     this.navCtrl.push(EventDetailsPage,{event: evtId});
   }
   getEvents() {
+    try{
     let loader = this.loadingCtrl.create({
       content: "Loading Events..."
     });
@@ -43,6 +44,8 @@ export class EventsPage {
           console.log(this.eventList);
         }
       );
+    }
+    catch (ex) { console.log(ex) }
   }
 
   createAuthorizationHeader() {
