@@ -28,7 +28,7 @@
     
     <ion-card center text-center *ngIf ="service.loginState" >
       <button ion-button (click)="goToLoginPage()" round>Logout</button>
-      <button ion-button (click)="()" round>Change Password</button>
+      <button ion-button (click)="goToChangePasswordPage()" round>Change Password</button>
       <button ion-button *ngIf ="service.UserDetails.customer_type === 'RACER'" (click)="gotoMyEvents()" round>Manage my events</button>
       <button ion-button *ngIf ="service.UserDetails.customer_type !== 'RACER'" (click)="gotoMyactivities()" round>Manage my activities</button>
     </ion-card>
