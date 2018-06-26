@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ServiceProvider } from '../../providers/service/service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the MyActivitiesPage page.
@@ -19,7 +20,7 @@ import { map } from 'rxjs/operators';
 export class MyActivitiesPage {
   activitiesList;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,   
-    public loadingCtrl: LoadingController,  public service: ServiceProvider) {
+    public loadingCtrl: LoadingController, public translate: TranslateService,   public service: ServiceProvider) {
   }
 
   ionViewDidLoad() {
@@ -32,13 +33,15 @@ export class MyActivitiesPage {
       let loader = this.loadingCtrl.create({
         content: "Canceling your activity..."
       });
-      loader.present();
+      // loader.present();
       const options = {
-        headers: this.createAuthorizationHeaderCancel(activity.book_id)
+        headers: this.createAuthorizationHeader()
       };
+      const param = { 'book_id':activity.booking_id,
+      'customer_type':this.service.UserDetails.CustomerType}
   
       this.http
-        .post<any>('http://trendix.qa/dmsc/api/dmsc/CancelEvent', '', options)
+        .post<any>('http://trendix.qa/dmsc/api/dmsc/CancelEvent', param, options)
         .pipe(map(data => data))
         .subscribe(
           restItems => {

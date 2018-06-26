@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
 import { EventDetailsPage } from '../event-details/event-details';
+import { TranslateService } from '@ngx-translate/core';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,7 @@ import { EventDetailsPage } from '../event-details/event-details';
 export class EventsPage {
   eventList;
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,   
-    public loadingCtrl: LoadingController,  public service: ServiceProvider) {
+    public loadingCtrl: LoadingController, public translate: TranslateService,   public service: ServiceProvider) {
   }
 
   ionViewDidLoad() {

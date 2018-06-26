@@ -14,5 +14,16 @@
     "language": "لغة",
     "login": "تسجيل الدخول",
     "eventDetails": "تفاصيل الحدث",
-    "logout": "الخروج"
+    "settings":"إعدادات",
+    "myEvents":"أحداثي",
+    "myActivities":"نشاطاتي",
+    "changePassword":"تغيير كلمة السر",
+    "contactUs":"اتصل بنا",
+    "forgotPassword":"هل نسيت كلمة المرور",
+    "logout": "الخروج",
+    "book":"الحجز",
+    "participate":"مشاركة",
+    "joinClub":"انضم لنادينا",
+    "callUs":"اتصل بنا",
+    "bookActivities":"أنشطة الحجز"
 }

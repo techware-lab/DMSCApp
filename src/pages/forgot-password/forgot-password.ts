@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ServiceProvider } from '../../providers/service/service';
 import { map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the ForgotPasswordPage page.
@@ -18,7 +19,7 @@ import { map } from 'rxjs/operators';
 })
 export class ForgotPasswordPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,   
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,    public translate: TranslateService, 
     public loadingCtrl: LoadingController,  public service: ServiceProvider, public alertCtrl: AlertController) {
   }
   response;

@@ -8,6 +8,8 @@ import { LoginPage } from '../login/login';
 import { ServiceProvider } from '../../providers/service/service';
 import { MyEventsPage } from '../my-events/my-events';
 import { MyActivitiesPage } from '../my-activities/my-activities';
+import { TranslateService } from '@ngx-translate/core';
+import { ChangePasswordPage } from '../change-password/change-password';
 
 @IonicPage()
 
@@ -20,7 +22,7 @@ export class ProfilePage {
   LoggedIn = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams
-    , public storage: Storage, public service: ServiceProvider) {
+    , public storage: Storage, public translate: TranslateService,  public service: ServiceProvider) {
   }
   goToSignupMembershipPage() {
     this.navCtrl.push(SignupMembershipPage);
@@ -32,7 +34,7 @@ export class ProfilePage {
     this.navCtrl.push(LoginPage);
   }
   goToChangePasswordPage(){
-    
+    this.navCtrl.push(ChangePasswordPage);
   }
   gotoMyEvents() {
     this.navCtrl.push(MyEventsPage);

@@ -6,6 +6,7 @@ import { ServiceProvider } from '../../providers/service/service';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { ProfilePage } from '../profile/profile';
 import { HomePage } from '../home/home';
+import { TranslateService } from '@ngx-translate/core';
 
 @IonicPage()
 @Component({
@@ -18,7 +19,7 @@ export class LoginPage {
   loginStatus;
   loginMessage;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient, public alertCtrl: AlertController,
+    public http: HttpClient, public alertCtrl: AlertController, public translate: TranslateService, 
     public loadingCtrl: LoadingController, public service: ServiceProvider) {
   }
   ionViewDidLoad() {

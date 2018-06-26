@@ -4,6 +4,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
 import { ProfilePage } from '../profile/profile';
+import { TranslateService } from '@ngx-translate/core';
 
 @IonicPage()
 @Component({
@@ -13,7 +14,7 @@ import { ProfilePage } from '../profile/profile';
 export class EventDetailsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public viewCtrl: ViewController,
+    public viewCtrl: ViewController, public translate: TranslateService, 
     public http: HttpClient, public alertCtrl: AlertController, public service: ServiceProvider,
      public loadingCtrl: LoadingController ) {
     this.Events = this.navParams.data.event;
@@ -25,6 +26,13 @@ export class EventDetailsPage {
     debugger;
     this.Events = this.navParams.data.event;
     this.getEventPostList(this.Events.category_id)
+  }
+  doRefresh(refresher){
+    this.getEventPostList(this.Events.category_id);    
+
+    setTimeout(() => {
+      refresher.complete();
+    }, 2000);
   }
   ParticipateClick() {
     if (this.service.loginState) {

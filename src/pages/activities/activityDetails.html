@@ -1,16 +1,24 @@
 <ion-header>
-    <ion-toolbar>
+    <!-- <ion-toolbar>
         <ion-title>
-            Book Activities
+            Activity Details
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
                 <span ion-text color="primary" showWhen="ios">Cancel</span>
-                <!-- <ion-icon name="md-close" showWhen="android,windows"></ion-icon> -->
                 <ion-icon name="close"></ion-icon>
             </button>
         </ion-buttons>
-    </ion-toolbar>
+    </ion-toolbar> -->
+
+    <ion-navbar color='navbarColor'>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>
+            <label>{{"activities" | translate}}</label>
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
@@ -27,18 +35,6 @@
             <p [innerHTML]="Activity.description">
             </p>
         </ion-card-content>
+        <button ion-button block (click)="navigateTraningList(training)">Show Timing</button>
     </ion-card>
-    <ion-list *ngFor='let training of trainingList'>
-        <ion-item>
-            <!-- <ion-avatar item-start>
-                <img src="{{training.image}}">
-            </ion-avatar> -->
-            <h1>{{training.training_name}}</h1>
-            <h3>
-                <strong>{{training.start_date}} {{training.start_time}} to {{training.end_date}} {{training.end_time}}</strong>
-            </h3>
-            <p [innerHTML]="training.description"></p>
-            <button ion-button block>Book</button>
-        </ion-item>
-    </ion-list>
 </ion-content>

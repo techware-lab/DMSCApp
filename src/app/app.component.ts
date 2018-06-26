@@ -13,6 +13,7 @@ import { ServiceProvider } from '../providers/service/service';
 import { ContactPage } from '../pages/contact/contact';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
+import { TranslateService } from '@ngx-translate/core';
 // import { DashboardPage } from '../pages/dashboard/dashboard';
 
 @Component({
@@ -27,31 +28,32 @@ export class MyApp {
   pages: Array<{ title: string, component: any, icon: string, index: number }>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-    public modalCtrl: ModalController, public service: ServiceProvider) {
+    public modalCtrl: ModalController, public service: ServiceProvider, public translate: TranslateService) {
 
     try {
       this.initializeApp();
       platform.ready().then(() => {
         let splash = modalCtrl.create(IntroPage);
         splash.present();
-        if (this.service.loginState) {
+        // if (this.service.loginState) {
 
-          this.rootPage = HomePage;
-        } else {
-          this.rootPage = ProfilePage;
-        }
-
+        //   this.rootPage = HomePage;
+        // } else {
+        //   this.rootPage = ProfilePage;
+        // }
+        // this.nav.setRoot(DashboardPage);
+        this.rootPage = HomePage;
       });
     }
     catch (ex) { console.log(ex) }
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'home', index: 0 },
-      { title: 'Fees', component: FeesPage, icon: 'cash', index: 1 },
-      { title: 'Activities', component: ActivitiesPage, icon: 'basketball', index: 2 },
-      { title: 'Events', component: EventsPage, icon: 'boat', index: 3 },
-      { title: 'Contact us', component: ContactPage, icon: 'contacts', index: 4 },
-      { title: 'Settings', component: SettingsPage, icon: 'cog', index: 5 }
+      { title: 'home', component: HomePage, icon: 'home', index: 0 },
+      { title: 'fees', component: FeesPage, icon: 'cash', index: 1 },
+      { title: 'activities', component: ActivitiesPage, icon: 'basketball', index: 2 },
+      { title: 'events', component: EventsPage, icon: 'boat', index: 3 },
+      { title: 'contactUs', component: ContactPage, icon: 'contacts', index: 4 },
+      { title: 'settings', component: SettingsPage, icon: 'cog', index: 5 }
     ];
 
   }
@@ -62,6 +64,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+      this.translate.setDefaultLang('en');
     });
   }
 
@@ -73,16 +76,17 @@ export class MyApp {
   }
   openPage(page) {
     // debugger;
-    // let params = {};
-    // if (page.index) {
-    //   params = { tabIndex: page.index };
-    // }
-    // if (this.nav.getActiveChildNavs() && page.index != undefined) {
-    //   this.nav.getActiveChildNavs()[page.index];
-    // }
-    // else {
-    //  this.nav.setRoot(page.component, params);
-    // }
+    let params = {};
+    if (page.index) {
+      params = { tabIndex: page.index };
+    }
+    if (this.nav.getActiveChildNavs() && page.index != undefined) {
+      debugger;
+      // this.nav.getActiveChildNavs();
+    }
+    else {
+     this.nav.setRoot(page.component, params);
+    }
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);

@@ -9,7 +9,7 @@ import { ListPage } from '../pages/list/list';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { ActivitiesPage, ModalContentPage } from '../pages/activities/activities';
+import { ActivitiesPage, ModalContentPage, TrainingBookingPage } from '../pages/activities/activities';
 import { EventsPage } from '../pages/events/events';
 import { FeesPage } from '../pages/fees/fees';
 // import { DashboardPage } from '../pages/dashboard/dashboard';
@@ -34,6 +34,8 @@ import { ContactPageModule } from '../pages/contact/contact.module';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 import { MyActivitiesPage } from '../pages/my-activities/my-activities';
 import { MyEventsPage } from '../pages/my-events/my-events';
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { DashboardPageModule } from '../pages/dashboard/dashboard.module';
 // import { DashboardPage } from '../pages/dashboard/dashboard';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -57,7 +59,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomePage,
     MyActivitiesPage,
     MyEventsPage,
-    SettingsPage
+    SettingsPage,
+    TrainingBookingPage
     // DashboardPage
     
   ],
@@ -72,6 +75,7 @@ export function createTranslateLoader(http: HttpClient) {
     ContactPageModule,
     ActivitiesPageModule,
     EventsPageModule,
+    DashboardPageModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -99,7 +103,9 @@ export function createTranslateLoader(http: HttpClient) {
     ContactPage,
     SettingsPage,
     MyActivitiesPage,
-    MyEventsPage
+    MyEventsPage,
+    DashboardPage,
+    TrainingBookingPage
     // DashboardPage
   ],
   providers: [

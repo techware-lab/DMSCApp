@@ -1,17 +1,23 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-item *ngIf="service.loginState" (click)="goToProfilePage()">
-        <ion-avatar item-start>
-          <img id="profile-image" src="{{service.UserDetails.Image !== ''? service.UserDetails.Image :'assets/imgs/avathar-default.png' }}">
-        </ion-avatar>
-        <h2>{{service.UserDetails.FullName}}</h2>
-        <p>{{service.UserDetails.CustomerType}}</p>
+      <ion-item *ngIf="service.loginState">
+        <button class="nav-btn" menuClose ion-item (click)="goToProfilePage()">
+          <ion-avatar item-start>
+            <img id="profile-image" src="{{service.UserDetails.Image !== ''? service.UserDetails.Image :'assets/imgs/avathar-default.png' }}">
+          </ion-avatar>
+          <h2>{{service.UserDetails.FullName}}</h2>
+          <p>{{service.UserDetails.CustomerType}}</p>
+        </button>
       </ion-item>
       <ion-item *ngIf="!service.loginState">
-        <button class="nav-btn" menuClose ion-item (click)="goToLoginPage()">
-          Login to My Account
-        </button>
+        <ion-avatar item-start>
+          <img src='assets/imgs/avathar-default.png'>
+        </ion-avatar>
+          <h2>Hi Guest <button menuClose ion-item (click)="goToLoginPage()">
+            Login to My Account
+          </button></h2>
+          
       </ion-item>
     </ion-toolbar>
   </ion-header>
@@ -20,13 +26,13 @@
     <ion-list>
       <button class="nav-btn" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon name="{{p.icon}}"></ion-icon>
-        {{p.title}}
+        {{p.title | translate}}
       </button>
     </ion-list>
     <ion-list *ngIf="service.loginState">
       <button class="nav-btn" menuClose ion-item (click)="service.logout()">
         <ion-icon name="log-out"></ion-icon>
-        Logout
+        {{"logout" | translate}}
       </button>
     </ion-list>
     <ion-list>

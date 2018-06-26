@@ -14,6 +14,17 @@
     "language": "Language",
     "login": "Login",
     "eventDetails":"Event Details",
-    "logout": "Logout"
+    "settings":"Settings",
+    "myEvents":"My Events",
+    "myActivities":"My Activities",
+    "changePassword":"Change Password",
+    "contactUs":"Contact Us",
+    "forgotPassword":"Forgot Password",
+    "logout": "Logout",
+    "book":"Book",
+    "participate":"Participate",
+    "joinClub":"Join our Club",
+    "callUs":"Call Us",
+    "bookActivities":"Book Activities"
 
 }
