@@ -22,7 +22,7 @@ import { SignupEventsPage } from '../pages/signup-events/signup-events'
 import { SignupMembershipPage } from '../pages/signup-membership/signup-membership'
 import { IonicStorageModule } from '@ionic/storage';
 import { EventDetailsPage } from '../pages/event-details/event-details';
-import { ProfilePage } from '../pages/profile/profile';
+import { ProfilePage, ProfileActionPage } from '../pages/profile/profile';
 import { LoginPage } from '../pages/login/login';
 import { ProfilePageModule } from '../pages/profile/profile.module';
 import { FeesPageModule } from '../pages/fees/fees.module';
@@ -36,15 +36,23 @@ import { MyActivitiesPage } from '../pages/my-activities/my-activities';
 import { MyEventsPage } from '../pages/my-events/my-events';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { DashboardPageModule } from '../pages/dashboard/dashboard.module';
-// import { DashboardPage } from '../pages/dashboard/dashboard';
+import { ChangePasswordPage } from '../pages/change-password/change-password';
+import { AquaBikeFormPage } from '../pages/aqua-bike-form/aqua-bike-form';
+import { SailingFormPage } from '../pages/sailing-form/sailing-form';
+import { RowingFormPage } from '../pages/rowing-form/rowing-form';
+import { FishingFormPage } from '../pages/fishing-form/fishing-form';
+import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+import { Camera } from '@ionic-native/camera';
+import {FileChooser } from '@ionic-native/file-chooser';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
- }
+}
 @NgModule({
   declarations: [
     MyApp,
-   // ProfilePage,
+    // ProfilePage,
     ListPage,
     // ActivitiesPage,
     // EventsPage,
@@ -60,9 +68,15 @@ export function createTranslateLoader(http: HttpClient) {
     MyActivitiesPage,
     MyEventsPage,
     SettingsPage,
-    TrainingBookingPage
+    TrainingBookingPage,
+    ChangePasswordPage,
+    AquaBikeFormPage,
+    SailingFormPage,
+    RowingFormPage,
+    FishingFormPage,
+    ProfileActionPage
     // DashboardPage
-    
+
   ],
   imports: [
     BrowserModule,
@@ -99,21 +113,33 @@ export function createTranslateLoader(http: HttpClient) {
     ForgotPasswordPage,
     EventDetailsPage,
     HomePage,
-    LoginPage,    
+    LoginPage,
     ContactPage,
     SettingsPage,
     MyActivitiesPage,
     MyEventsPage,
     DashboardPage,
-    TrainingBookingPage
+    TrainingBookingPage,
+    AquaBikeFormPage,
+    SailingFormPage,
+    RowingFormPage,
+    FishingFormPage,
+    ChangePasswordPage,
+    ProfileActionPage
     // DashboardPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ServiceProvider,
-    ActivitiesPage
+    ActivitiesPage,
+    FileTransfer,
+    //FileUploadOptions,
+    FileTransferObject,
+    File,
+    Camera,
+    FileChooser
   ]
 })
 export class AppModule {

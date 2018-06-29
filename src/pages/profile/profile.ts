@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, PopoverController } from 'ionic-angular';
 import { SignupEventsPage } from '../signup-events/signup-events'
 import { SignupMembershipPage } from '../signup-membership/signup-membership'
 import { Storage } from '@ionic/storage';
@@ -22,7 +22,8 @@ export class ProfilePage {
   LoggedIn = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams
-    , public storage: Storage, public translate: TranslateService,  public service: ServiceProvider) {
+    , public storage: Storage, public translate: TranslateService, public service: ServiceProvider,
+    private popoverCtrl: PopoverController) {
   }
   goToSignupMembershipPage() {
     this.navCtrl.push(SignupMembershipPage);
@@ -33,7 +34,7 @@ export class ProfilePage {
   goToLoginPage() {
     this.navCtrl.push(LoginPage);
   }
-  goToChangePasswordPage(){
+  goToChangePasswordPage() {
     this.navCtrl.push(ChangePasswordPage);
   }
   gotoMyEvents() {
@@ -52,5 +53,50 @@ export class ProfilePage {
     }
     catch (ex) { console.log(ex) }
   }
+  presentPopover() {
+    const popover = this.popoverCtrl.create(ProfileActionPage);
+    popover.present();
 
+  }
+}
+@Component({
+  template: `     
+    <ion-list>
+    <button class="nav-btn" menuClose ion-item >
+      <ion-icon name="lock"></ion-icon>
+      {{"changePassword" | translate}}
+    </button>
+  </ion-list>
+  <ion-list>
+  <button class="nav-btn" menuClose ion-item >
+  <ion-icon name="boat"></ion-icon>
+  {{"myEvents" | translate}}
+  </button>
+  </ion-list>
+  <ion-list>
+  <button class="nav-btn" menuClose ion-item >
+  <ion-icon name="cog"></ion-icon>
+  {{"language" | translate}}
+  </button>
+  </ion-list>
+  <ion-list>
+  <button class="nav-btn" menuClose ion-item >
+  <ion-icon name="log-out"></ion-icon>
+  {{"logout" | translate}}
+  </button>
+  </ion-list>
+  
+  
+  `
+})
+export class ProfileActionPage {
+
+
+  constructor() {
+
+  }
+
+  ngOnInit() {
+
+  }
 }

@@ -3,16 +3,21 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-  </ion-navbar>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </ion-buttons>
+</ion-navbar>
 </ion-header>
-<ion-content *ngIf ="service.loginState" has-header="true">
+<ion-content *ngIf="service.loginState" has-header="true">
   <div id="profile-bg"></div>
   <div id="content">
     <div id="profile-info">
       <img id="profile-image" src="{{service.UserDetails.Image !== ''? service.UserDetails.Image :'assets/imgs/avathar-default.png' }}">
       <h3 id="profile-name">{{service.UserDetails.FullName}}</h3>
       <span id="profile-description">
-          <p>{{service.UserDetails.CustomerType}}</p>
+        <p>{{service.UserDetails.CustomerType}}</p>
       </span>
     </div>
 
@@ -20,17 +25,17 @@
 </ion-content>
 <ion-content class="card-background-page">
   <div align-items-center>
-    <ion-card center text-center *ngIf ="!service.loginState">
+    <ion-card center text-center *ngIf="!service.loginState">
       <button ion-button (click)="goToLoginPage()" round>Login</button>
       <button ion-button (click)="goToSignupEventsPage()" round>Signup for Events</button>
       <button ion-button (click)="goToSignupMembershipPage()" round>Signup for Membership</button>
     </ion-card>
-    
-    <ion-card center text-center *ngIf ="service.loginState" >
+
+    <ion-card center text-center *ngIf="service.loginState">
       <button ion-button (click)="goToLoginPage()" round>Logout</button>
       <button ion-button (click)="goToChangePasswordPage()" round>Change Password</button>
-      <button ion-button *ngIf ="service.UserDetails.customer_type === 'RACER'" (click)="gotoMyEvents()" round>Manage my events</button>
-      <button ion-button *ngIf ="service.UserDetails.customer_type !== 'RACER'" (click)="gotoMyactivities()" round>Manage my activities</button>
+      <button ion-button *ngIf="service.UserDetails.customer_type !== 'RACER'" (click)="gotoMyEvents()" round>Manage my events</button>
+      <button ion-button *ngIf="service.UserDetails.customer_type === 'RACER'" (click)="gotoMyactivities()" round>Manage my activities</button>
     </ion-card>
   </div>
 </ion-content>

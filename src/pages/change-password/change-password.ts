@@ -21,8 +21,10 @@ export class ChangePasswordPage {
   Username: any;
   OldPassword: any;
   NewPassword: any;
+  Message;
+  Status = false;
 
-  constructor(public navCtrl: NavController, public translate: TranslateService,public service:ServiceProvider,
+  constructor(public navCtrl: NavController, public translate: TranslateService, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
     public navParams: NavParams) {
   }
@@ -39,8 +41,10 @@ export class ChangePasswordPage {
       const options = {
         headers: this.createAuthorizationHeader()
       };
-      const para = { 'customer_id': this.service.UserDetails.CustomerID, 'old_password': this.OldPassword, 
-      'new_password': this.NewPassword }
+      const para = {
+        'customer_id': this.service.UserDetails.CustomerID, 'old_password': this.OldPassword,
+        'new_password': this.NewPassword
+      }
       this.http
         .post<any>('http://trendix.qa/dmsc/api/dmsc/changepassword ', para, options)
         .pipe(map(data => data))
@@ -51,7 +55,15 @@ export class ChangePasswordPage {
             let alert = this.alertCtrl.create({
               title: 'Password Reset',
               subTitle: restItems.message,
-              buttons: ['OK']
+              buttons: [{
+                text: 'OK', handler: () => {
+                  this.Message = "";
+                  this.Username = "";
+                  this.OldPassword = "";
+                  this.NewPassword = "";
+                  this.Status = false;
+                }
+              }]
             });
             alert.present();
           }

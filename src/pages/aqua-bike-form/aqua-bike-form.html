@@ -1,18 +1,126 @@
-<!--
-  Generated template for the AquaBikeFormPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>aquaBikeForm</ion-title>
+  <ion-navbar color='navbarColor'>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <label></label>
+    </ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <label>Personal Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Full Name</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="FullName" type="text"></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label floating>Mobile</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="Mobile" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nationality</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="Nationality" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Date of Birth</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="DOB" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Blood Group</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="Blood" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>ID No</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="IDNo" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <p>{{IDFile}}</p>
+      <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
+      <ion-card *ngFor="let image of IDFile; let i = index;">
+          <img [src]="image" />
+          <ion-card-content>
+              <ion-card-title>
+                  Image number # {{i}}
+              </ion-card-title>
+          </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+  <label>Bike Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Bike Number</ion-label>
+      <ion-input [(ngModel)]="BikeNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Licence Number</ion-label>
+      <ion-input [(ngModel)]="LicenceNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Previous Licence Number if exists</ion-label>
+      <ion-input [(ngModel)]="PrevLicenceNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Category/Class</ion-label>
+      <ion-input [(ngModel)]="CategoryClass" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+  <label>Bank Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Account Name</ion-label>
+      <ion-input [(ngModel)]="ACName" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Bank Name</ion-label>
+      <ion-input [(ngModel)]="BankName" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Account Number</ion-label>
+      <ion-input [(ngModel)]="ACNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>IBAN Number</ion-label>
+      <ion-input [(ngModel)]="IBANNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Swift Code</ion-label>
+      <ion-input [(ngModel)]="SwiftCode" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <label>Medical Form</label>
+  <ion-list>
+
+    <ion-item>
+      <ion-label>
+        Please Click here to download the medical form, print out and sign by a doctor
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  <label>Important Note</label>
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        It is strictly forbidden to subscribe any rider without:
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Life Jacket</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Safety helmet for the head</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Protective legs</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Shoes, glasses, gloves</ion-label>
+    </ion-item>
+  </ion-list>
+  <button ion-button color="secondary" (click)="SaveAquaBikeForm()">Submit</button>
 </ion-content>

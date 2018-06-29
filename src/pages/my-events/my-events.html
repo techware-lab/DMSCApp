@@ -1,9 +1,4 @@
-<!--
-  Generated template for the MyEventsPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
@@ -14,5 +9,13 @@
 
 
 <ion-content padding>
-
+    <ion-list *ngFor='let event of eventsList'>
+        <ion-item>
+          <h1>{{event.training_name}} </h1>
+          <h3>
+            <strong>{{event.start_date}} {{event.start_time}} to {{event.end_date}} {{event.end_time}}</strong>
+          </h3>
+          <button ion-button (click)="cancelEvent(event)" block>Cancel this Event</button>
+        </ion-item>
+      </ion-list>
 </ion-content>

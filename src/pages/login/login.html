@@ -13,22 +13,27 @@
 </ion-header>
 
 
-<ion-content padding><ion-list>
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <img src="assets/imgs/logo TRANS.png" />
+        <ion-item>
+          <ion-label floating>Username</ion-label>
+          <ion-input [(ngModel)]="Username" type="text"></ion-input>
+        </ion-item>
 
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input [(ngModel)]="Username" type="text"></ion-input>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input [(ngModel)]="Password" type="password"></ion-input>
-    </ion-item>
-  
-  </ion-list>
-  
-  <div padding>
-    <button ion-button (click)="Login()" round>Sign In</button>
-    <button ion-button (click)="ForgotPassword()" round>Forgot</button>
-  </div>
+        <ion-item>
+          <ion-label floating>Password</ion-label>
+          <ion-input [(ngModel)]="Password" type="password"></ion-input>
+        </ion-item>
+
+      </ion-list>
+
+      <div padding>
+        <button ion-button (click)="Login()" round>Sign In</button>
+        <button ion-button (click)="ForgotPassword()" round>Forgot</button>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

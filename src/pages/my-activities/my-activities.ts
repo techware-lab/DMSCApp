@@ -41,7 +41,7 @@ export class MyActivitiesPage {
       'customer_type':this.service.UserDetails.CustomerType}
   
       this.http
-        .post<any>('http://trendix.qa/dmsc/api/dmsc/CancelEvent', param, options)
+        .post<any>('http://trendix.qa/dmsc/api/dmsc/CancelActivity', param, options)
         .pipe(map(data => data))
         .subscribe(
           restItems => {
@@ -68,7 +68,7 @@ export class MyActivitiesPage {
     'customer_type':this.service.UserDetails.CustomerType}
 
     this.http
-      .post<any>('http://trendix.qa/dmsc/api/dmsc/MyEvents', param, options)
+      .post<any>('http://trendix.qa/dmsc/api/dmsc/MyActivities', param, options)
       .pipe(map(data => data))
       .subscribe(
         restItems => {

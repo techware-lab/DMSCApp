@@ -11,6 +11,132 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-<!-- sadasdsadsad -->
+  <label>Personal Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Full Name</ion-label>
+      <ion-input [(ngModel)]="FullName" type="text"></ion-input>
+    </ion-item>
 
+    <ion-item>
+      <ion-label floating>Mobile</ion-label>
+      <ion-input [(ngModel)]="Mobile" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nationality</ion-label>
+      <ion-input [(ngModel)]="Nationality" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Date of Birth</ion-label>
+      <ion-input [(ngModel)]="DOB" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Employer</ion-label>
+      <ion-input [(ngModel)]="Employer" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Occupation</ion-label>
+      <ion-input [(ngModel)]="Occupation" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>PO Box No</ion-label>
+      <ion-input [(ngModel)]="PBox" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Fax No</ion-label>
+      <ion-input [(ngModel)]="Fax" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list radio-group [(ngModel)]="MembershipType">
+    <ion-list-header>
+      Type of Membership
+    </ion-list-header>
+    <ion-item>
+      <ion-label>Single</ion-label>
+      <ion-radio checked="true" value="Single"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Family</ion-label>
+      <ion-radio value="Family"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Temporary</ion-label>
+      <ion-radio value="Temporary"></ion-radio>
+    </ion-item>
+  </ion-list>
+  <label>Dependent Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Family Membership Name</ion-label>
+      <ion-input [(ngModel)]="Dependant.MemberName" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Date of Birth</ion-label>
+      <ion-input [(ngModel)]="Dependant.DOB" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Email</ion-label>
+      <ion-input [(ngModel)]="Dependant.Email" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Mobile</ion-label>
+      <ion-input [(ngModel)]="Dependant.Mobile" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button color="secondary" (click)="AddDependent()">Add Dependent</button>
+  <ion-list *ngFor='let dependent of Dependents;let i = index'>
+    <ion-item>
+      <ion-icon *ngIf="dependent.MemberName!==''" end name="close" (click)="removeDependent(i)"></ion-icon>
+      <h2>{{dependent.MemberName}}</h2>
+      <h3>{{dependent.DOB}}</h3>
+      <p>{{dependent.Email}}</p>
+      <p>{{dependent.Mobile}}</p>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <button ion-button color="secondary" (click)="chooseMemberPhoto()">Choose Member Photo</button>
+      <ion-card>
+        <ion-card-content>
+          <img [src]="MemberImage" />
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+    <ion-item>
+      <button ion-button color="secondary" (click)="chooseSpousePhoto()">Choose Spouse Photo</button>
+      <ion-card>
+        <ion-card-content>
+          <img [src]="SpouseImage" />
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+  <label>Previous Experience Information(Optional)</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Previous Sailing Experience</ion-label>
+      <ion-input [(ngModel)]="PrevSailingExp" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Type of Classes Sailed/Raced</ion-label>
+      <ion-input [(ngModel)]="TypeOfClass" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Previous Sailing Club Membership</ion-label>
+      <ion-input [(ngModel)]="PrevSailMembership" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+  <label>Login Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Email(User Name)</ion-label>
+      <ion-input [(ngModel)]="Username" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input [(ngModel)]="Password" type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button (click)="RegisterActivities()">Register New Account</button>
 </ion-content>

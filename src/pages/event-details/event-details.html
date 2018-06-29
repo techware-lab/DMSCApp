@@ -1,13 +1,14 @@
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>{{"eventDetails" | translate}}</ion-title>
-  </ion-navbar>
-
+    <ion-navbar color='navbarColor'>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{"eventDetails" | translate}}</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
-  <ion-content>
+<ion-content>
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
         </ion-refresher-content>
@@ -23,16 +24,16 @@
         </ion-card-content>        
     </ion-card>  -->
     <ion-list *ngFor='let training of EventsPostList'>
-      <ion-item>
-          <ion-avatar item-start>
-              <img src="{{training.image}}">
-          </ion-avatar>
-          <h1>{{service.lang==='ar'?training.training_name_ar:training.training_name}} </h1>
-          <h3>
-              <strong>{{training.start_date}} {{training.start_time}} to {{training.end_date}} {{training.end_time}}</strong>
-          </h3>
-          <p [innerHTML]="service.lang==='ar'?training.description_ar:training.description"></p>
-          <button (click)="ParticipateClick()"  ion-button block>Participate</button>
-      </ion-item>
-  </ion-list>  
+        <ion-item>
+            <ion-avatar item-start>
+                <img src="{{training.image}}">
+            </ion-avatar>
+            <h1>{{service.lang==='ar'?training.training_name_ar:training.training_name}} </h1>
+            <h3>
+                <strong>{{training.start_date}} {{training.start_time}} to {{training.end_date}} {{training.end_time}}</strong>
+            </h3>
+            <p [innerHTML]="service.lang==='ar'?training.description_ar:training.description"></p>
+            <button (click)="ParticipateClick(training)" ion-button block>Participate</button>
+        </ion-item>
+    </ion-list>
 </ion-content>

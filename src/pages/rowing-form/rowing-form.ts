@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { ServiceProvider } from '../../providers/service/service';
+import { FileChooser } from '@ionic-native/file-chooser';
+import { CameraOptions, Camera } from '@ionic-native/camera';
+// import { FileTransfer } from '@ionic-native/file-transfer';
 
-/**
- * Generated class for the RowingFormPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +14,214 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'rowing-form.html',
 })
 export class RowingFormPage {
+  FileNameID: any;
+  FileNameMember: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  Events: any;
+  FullName: any;
+  Mobile: any;
+  Nationality: any;
+  DOB: any;
+  Blood: any;
+  IDNo: any;
+  IDFile: any;
+  ACName: any;
+  BankName: any;
+  ACNumber: any;
+  SwiftCode: any;
+  IBANNumber: any;
+
+  TLName: any;
+  TeamName: any;
+  BoatNumber: any;
+  Participants: any;
+  TLMobile: any;
+
+  IDFileURI: string;
+  membersfileURI: string;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
+    public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
+    //  private transfer: FileTransfer,
+    private camera: Camera,
+    public toastCtrl: ToastController,
+    private fileChooser: FileChooser) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RowingFormPage');
+    this.Events = this.navParams.data;
+    this.AquaBikeForm();
   }
+
+
+  AquaBikeForm() {
+
+    try {
+      let loader = this.loadingCtrl.create({
+        content: "Loading " + this.Events.training_name + " details..."
+      });
+      loader.present();
+      const options = {
+        headers: this.createAuthorizationHeader()
+      };
+      const para = {
+        'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id, 'customer_id': this.service.UserDetails.CustomerID,
+        'customer_type': this.service.UserDetails.CustomerType
+      }
+      this.http
+        .post<any>('http://trendix.qa/dmsc/api/dmsc/rowingForm', para, options)
+        .pipe(map(data => data))
+        .subscribe(
+          restItems => {
+            loader.dismissAll();
+            if (!restItems.status) {
+              let alert = this.alertCtrl.create({
+                title: this.Events.training_name + ' Booking',
+                subTitle: restItems.message,
+                buttons: [{
+                  text: 'OK', handler: () => {
+                  }
+                }]
+              });
+              alert.present();
+            } else {
+              this.FullName = restItems.response.full_name;
+              this.Mobile = restItems.response.mobile_no;
+              this.Nationality = restItems.response.nationality;
+              this.DOB = restItems.response.date_birth;
+              this.Blood = restItems.response.blood_group;
+              this.IDNo = restItems.response.id_no;
+              this.ACName = restItems.response.account_name;
+              this.BankName = restItems.response.bank_name;
+              this.ACNumber = restItems.response.account_number;
+              this.IBANNumber = restItems.response.iban_number;
+              this.SwiftCode = restItems.response.swift_code;
+            }
+          }
+        );
+    }
+    catch (ex) { console.log(ex) }
+  }
+  createAuthorizationHeader() {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json; charset=utf-8',
+      'x-api-key': '123456'
+    });
+    return headers;
+  }
+
+
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+  chooseUserIDCard() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    let loader = this.loadingCtrl.create({
+      content: "Loading Image.." 
+    });
+    loader.present();
+      this.camera.getPicture(options)
+        .then(uri => {
+          console.log(uri);
+          this.IDFile = uri;
+          let base64Image = 'data:image/jpeg;base64,' + uri;
+          this.IDFile.push(base64Image);
+          loader.dismissAll();
+        })
+        .catch(e => {
+          loader.dismissAll();
+          console.log(e);
+          this.presentToast(e);
+        });
+    }
+  getMembersIds() {
+    this.fileChooser.open()
+      .then(uri => {
+        console.log(uri);
+        this.membersfileURI = uri;
+      })
+      .catch(e => {
+        console.log(e);
+        this.presentToast(e);
+      });
+  }
+
+  SaveAquaBikeForm() {
+    debugger;
+    try {
+      const para = {
+        'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
+        'customer_id': this.service.UserDetails.CustomerID,
+        'customer_type': this.service.UserDetails.CustomerType,
+        'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
+        'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_member': this.Participants,
+        'team_card': [this.membersfileURI]
+      }
+      let loader = this.loadingCtrl.create({
+        content: "Saving " + this.Events.training_name + "..."
+      });
+      loader.present();
+      // const fileTransfer: FileTransferObject = this.transfer.create();
+
+      // let options: FileUploadOptions = {
+      //   fileKey: 'ionicfile',
+      //   fileName: 'ionicfile',
+      //   chunkedMode: false,
+      //   mimeType: "image/jpeg",
+      //   headers: {}
+      // }
+
+      // fileTransfer.upload(this.FileNameID, 'http://192.168.0.7:8080/api/uploadImage', options)
+      //   .then((data) => {
+      //     console.log(data + " Uploaded Successfully");
+      //     this.FileNameID = "http://192.168.0.7:8080/static/images/ionicfile.jpg"
+      //     loader.dismiss();
+      //     this.presentToast("Image uploaded successfully");
+      //   }, (err) => {
+      //     console.log(err);
+      //     loader.dismiss();
+      //     this.presentToast(err);
+      //   });
+
+      const options = {
+        headers: this.createAuthorizationHeader()
+      };
+      this.http
+        .post<any>('http://trendix.qa/dmsc/api/dmsc/rowingBooking ', para, options)
+        .pipe(map(data => data))
+        .subscribe(
+          restItems => {
+            loader.dismissAll();
+
+            let alert = this.alertCtrl.create({
+              title: 'Activity Booking',
+              subTitle: restItems.message,
+              buttons: [{
+                text: 'OK', handler: () => {
+                  this.AquaBikeForm();
+                }
+              }]
+            });
+            alert.present();
+          }
+        );
+    }
+    catch (ex) { console.log(ex) }
+  }
+
 
 }

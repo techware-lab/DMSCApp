@@ -3,8 +3,13 @@ import { IonicPage, NavController, NavParams, ViewController, AlertController, L
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
-import { ProfilePage } from '../profile/profile';
+// import { ProfilePage } from '../profile/profile';
 import { TranslateService } from '@ngx-translate/core';
+import { AquaBikeFormPage } from '../aqua-bike-form/aqua-bike-form';
+import { SailingFormPage } from '../sailing-form/sailing-form';
+import { RowingFormPage } from '../rowing-form/rowing-form';
+import { FishingFormPage } from '../fishing-form/fishing-form';
+import { ProfilePage } from '../profile/profile';
 
 @IonicPage()
 @Component({
@@ -14,9 +19,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class EventDetailsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public viewCtrl: ViewController, public translate: TranslateService, 
+    public viewCtrl: ViewController, public translate: TranslateService,
     public http: HttpClient, public alertCtrl: AlertController, public service: ServiceProvider,
-     public loadingCtrl: LoadingController ) {
+    public loadingCtrl: LoadingController) {
     this.Events = this.navParams.data.event;
   }
   Events;
@@ -27,21 +32,31 @@ export class EventDetailsPage {
     this.Events = this.navParams.data.event;
     this.getEventPostList(this.Events.category_id)
   }
-  doRefresh(refresher){
-    this.getEventPostList(this.Events.category_id);    
+  doRefresh(refresher) {
+    this.getEventPostList(this.Events.category_id);
 
     setTimeout(() => {
       refresher.complete();
     }, 2000);
   }
-  ParticipateClick() {
+  ParticipateClick(evnt) {
     if (this.service.loginState) {
-
+      console.log(evnt);
+      if (evnt.category_id === '1') {
+        this.navCtrl.push(AquaBikeFormPage, evnt);
+      } else if (evnt.category_id === '2') {
+        this.navCtrl.push(SailingFormPage, evnt);
+      }
+      else if (evnt.category_id === '3') {
+        this.navCtrl.push(RowingFormPage, evnt);
+      }
+      else if (evnt.category_id === '5') {
+        this.navCtrl.push(FishingFormPage, evnt);
+      }
     }
     else {
       let alert = this.alertCtrl.create({
         title: 'Login Required',
-        subTitle: "Please Login/Register for participating this event",
         message: 'Do you want to Login/Register now?',
         buttons: [
           {
@@ -60,25 +75,25 @@ export class EventDetailsPage {
     }
   }
   getEventPostList(id) {
-    try{
+    try {
       let loader = this.loadingCtrl.create({
         content: "Loading Events..."
       });
       loader.present();
-    const options = {
-      headers: this.createAuthorizationHeader()
-    };
-    const arg = { 'event_id': id };
-    this.http
-      .post<any>('http://trendix.qa/dmsc/api/dmsc/eventPosts', arg, options)
-      .pipe(map(data => data))
-      .subscribe(
-        restItems => {
-          this.EventsPostList = restItems.response;
-          loader.dismissAll();
-          console.log(this.EventsPostList);
-        }
-      );
+      const options = {
+        headers: this.createAuthorizationHeader()
+      };
+      const arg = { 'event_id': id };
+      this.http
+        .post<any>('http://trendix.qa/dmsc/api/dmsc/eventPosts', arg, options)
+        .pipe(map(data => data))
+        .subscribe(
+          restItems => {
+            this.EventsPostList = restItems.response;
+            loader.dismissAll();
+            console.log(this.EventsPostList);
+          }
+        );
     }
     catch (ex) { console.log(ex) }
   }
