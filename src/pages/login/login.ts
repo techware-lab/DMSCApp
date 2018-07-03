@@ -19,7 +19,7 @@ export class LoginPage {
   loginStatus;
   loginMessage;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient, public alertCtrl: AlertController, public translate: TranslateService, 
+    public http: HttpClient, public alertCtrl: AlertController, public translate: TranslateService,
     public loadingCtrl: LoadingController, public service: ServiceProvider) {
   }
   ionViewDidLoad() {
@@ -55,7 +55,9 @@ export class LoginPage {
               Image: restItems.response.member_img, FullName: restItems.response.full_name
             };
             this.service.loginState = restItems.status;
+            //this.navCtrl.setRoot(HomePage);
             this.navCtrl.push(HomePage);
+            //this.navCtrl.getActiveChildNavs()[0].select(0);
           }
           else {
             let alert = this.alertCtrl.create({

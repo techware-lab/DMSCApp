@@ -6,10 +6,7 @@ import { Storage } from '@ionic/storage';
 // import { MyApp } from '../../app/app.component';
 import { LoginPage } from '../login/login';
 import { ServiceProvider } from '../../providers/service/service';
-import { MyEventsPage } from '../my-events/my-events';
-import { MyActivitiesPage } from '../my-activities/my-activities';
 import { TranslateService } from '@ngx-translate/core';
-import { ChangePasswordPage } from '../change-password/change-password';
 
 @IonicPage()
 
@@ -25,25 +22,6 @@ export class ProfilePage {
     , public storage: Storage, public translate: TranslateService, public service: ServiceProvider,
     private popoverCtrl: PopoverController) {
   }
-  goToSignupMembershipPage() {
-    this.navCtrl.push(SignupMembershipPage);
-  }
-  goToSignupEventsPage() {
-    this.navCtrl.push(SignupEventsPage);
-  }
-  goToLoginPage() {
-    this.navCtrl.push(LoginPage);
-  }
-  goToChangePasswordPage() {
-    this.navCtrl.push(ChangePasswordPage);
-  }
-  gotoMyEvents() {
-    this.navCtrl.push(MyEventsPage);
-  }
-
-  gotoMyactivities() {
-    this.navCtrl.push(MyActivitiesPage);
-  }
   ionViewDidLoad() {
     try {
       this.storage.set('LoggedIn', this.service.loginState);
@@ -57,6 +35,15 @@ export class ProfilePage {
     const popover = this.popoverCtrl.create(ProfileActionPage);
     popover.present();
 
+  }
+  goToSignupMembershipPage() {
+    this.navCtrl.push(SignupMembershipPage);
+  }
+  goToSignupEventsPage() {
+    this.navCtrl.push(SignupEventsPage);
+  }
+  goToLoginPage() {
+    this.navCtrl.push(LoginPage);
   }
 }
 @Component({

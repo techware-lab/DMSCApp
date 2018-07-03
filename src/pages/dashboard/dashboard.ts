@@ -17,6 +17,7 @@ export class DashboardPage {
     public translate: TranslateService,public alertCtrl: AlertController, public modalCtrl: ModalController) {
 
       this.translate.setDefaultLang('en');
+
   }
 
   ionViewDidLoad() {
@@ -36,30 +37,8 @@ export class DashboardPage {
     this.navCtrl.push(ProfilePage);
   }
   openModal(characterNum) {
-    if(this.service.loginState){
     this.activity = this.activityList.filter(x => x.category_id == characterNum.charNum)[0];
-    console.log(this.activity);
-    this.navCtrl.push(ModalContentPage, this.activity);
-  }
-  else {
-    let alert = this.alertCtrl.create({
-      title: 'Login Required',
-      message: 'Do you want to Login/Register now?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Login/Register',
-          handler: () => {
-            this.navCtrl.push(ProfilePage);
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+    this.navCtrl.push(ModalContentPage, this.activity);  
   }
 
 }

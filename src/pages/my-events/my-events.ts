@@ -40,9 +40,19 @@ export class MyEventsPage {
         .pipe(map(data => data))
         .subscribe(
           restItems => {
-            this.eventsList = restItems.response;
+            if (restItems.status) {
+              this.eventsList = restItems.response;
+              console.log(this.eventsList);
+            } else{
+              const confirm = this.alertCtrl.create({
+                title: 'My Event',
+                message: restItems.message,
+                buttons: ['OK']
+                });  
+                confirm.present();            
+            }          
+            
             loader.dismissAll();
-            console.log(this.eventsList);
           }
         );
     }
@@ -105,7 +115,7 @@ export class MyEventsPage {
               ]
             });
             confirm.present();
-            
+
           }
         );
     }

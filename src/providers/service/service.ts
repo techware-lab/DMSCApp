@@ -31,6 +31,14 @@ export class ServiceProvider {
     .pipe(map(data => data))
     .catch((e: any) => Observable.throw(this.errorHandler(e)));
   }
+  getCountryList(): Observable<any> {
+    const options = {
+      headers: this.createAuthorizationHeader()
+    };
+    return this.http.get('http://trendix.qa/dmsc/api/dmsc/getCountry', options)
+    .pipe(map(data => data))
+    .catch((e: any) => Observable.throw(this.errorHandler(e)));
+  }
   errorHandler(error: any): void {
     this.presentAlert('Connection Error', error);
   }
@@ -47,5 +55,16 @@ export class ServiceProvider {
     debugger;
     this.loginState =false;
     this.UserDetails =null;
+  }
+  
+  isEmail(search:string):boolean
+  {
+      var  serchfind:boolean;
+
+      let regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
+      serchfind = regexp.test(search);
+
+      return serchfind
   }
 }

@@ -1,78 +1,111 @@
 <ion-header>
-    <ion-navbar color='navbarColor'>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-      <ion-title>
-        <label></label>
-      </ion-title>
-    </ion-navbar>
-  </ion-header>
+  <ion-navbar color='navbarColor'>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <label></label>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
 
 
 <ion-content padding>
-    <label>Personal Information</label>
-    <ion-list>
-        <ion-item>
-          <ion-label floating>Full Name</ion-label>
-          <ion-input [disabled] ='true' [(ngModel)]="FullName" type="text"></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label floating>Mobile</ion-label>
-          <ion-input [disabled] ='true' [(ngModel)]="Mobile" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Nationality</ion-label>
-          <ion-input [disabled] ='true' [(ngModel)]="Nationality" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Date of Birth</ion-label>
-          <ion-input [disabled] ='true' [(ngModel)]="DOB" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Blood Group</ion-label>
-          <ion-input [disabled] ='true' [(ngModel)]="Blood" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>ID No</ion-label>
-          <ion-input [disabled] ='true' [(ngModel)]="IDNo" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <p>{{IDFile}}</p>
-          <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
-          <ion-card *ngFor="let image of IDFile; let i = index;">
-              <img [src]="image" />
-              <ion-card-content>
-                  <ion-card-title>
-                      Image number # {{i}}
-                  </ion-card-title>
-              </ion-card-content>
-          </ion-card>
-        </ion-item>
-      </ion-list>
-      <label>Bank Information</label>
-      <ion-list>        
-          <ion-item>
-              <ion-label floating>Account Name</ion-label>
-              <ion-input  [(ngModel)]="ACName" type="text"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>Bank Name</ion-label>
-              <ion-input  [(ngModel)]="BankName" type="text"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>Account Number</ion-label>
-              <ion-input  [(ngModel)]="ACNumber" type="text"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>IBAN Number</ion-label>
-              <ion-input [(ngModel)]="IBANNumber" type="text"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label floating>Swift Code</ion-label>
-              <ion-input [(ngModel)]="SwiftCode" type="text"></ion-input>
-            </ion-item>
-      </ion-list>
-      <button ion-button (click)="SaveSailingForm()">Submit</button>
+  <label>Personal Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Full Name</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="FullName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Mobile</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="Mobile" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nationality</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="Nationality" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Date of Birth</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="DOB" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Blood Group</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="Blood" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>ID No</ion-label>
+      <ion-input [disabled]='true' [(ngModel)]="IDNo" type="text"></ion-input>
+    </ion-item>
+    <ion-item>        
+        <span ion-button icon-left (click)="chooseUserIDCard()">
+          <ion-icon name="document"></ion-icon>Select Member ID
+        </span>
+        <ion-card>
+          <ion-card-content>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+  </ion-list>
+  <label>Team Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Team Name</ion-label>
+      <ion-input  [(ngModel)]="TeamName" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Boat Number</ion-label>
+      <ion-input [(ngModel)]="BoatNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Team Leader Name</ion-label>
+      <ion-input [(ngModel)]="TLName" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Team Leader Mobile</ion-label>
+      <ion-input [(ngModel)]="TLMobile" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Boat Owner</ion-label>
+      <ion-input [(ngModel)]="BoatOwner" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Boat Owner Mobile</ion-label>
+      <ion-input [(ngModel)]="BoatOwnerMobile" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Owner ID</ion-label>
+      <ion-input [(ngModel)]="BoatOwnerID" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>No. of Participants</ion-label>
+      <ion-input [(ngModel)]="Participants" type="number"></ion-input>
+    </ion-item>
+  </ion-list>
+  <label>Bank Information</label>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Account Name</ion-label>
+      <ion-input [(ngModel)]="ACName" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Bank Name</ion-label>
+      <ion-input [(ngModel)]="BankName" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Account Number</ion-label>
+      <ion-input [(ngModel)]="ACNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>IBAN Number</ion-label>
+      <ion-input [(ngModel)]="IBANNumber" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Swift Code</ion-label>
+      <ion-input [(ngModel)]="SwiftCode" type="text"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button ion-button (click)="SaveSailingForm()">Submit</button>
 </ion-content>

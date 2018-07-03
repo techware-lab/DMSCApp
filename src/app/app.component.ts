@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ModalController } from 'ionic-angular';
+import { Nav, Platform, ModalController, App } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -14,7 +14,9 @@ import { ContactPage } from '../pages/contact/contact';
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { TranslateService } from '@ngx-translate/core';
-// import { DashboardPage } from '../pages/dashboard/dashboard';
+import { ChangePasswordPage } from '../pages/change-password/change-password';
+import { MyEventsPage } from '../pages/my-events/my-events';
+import { MyActivitiesPage } from '../pages/my-activities/my-activities';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,9 +27,9 @@ export class MyApp {
 
   rootPage;
 
-  pages: Array<{ title: string, component: any, icon: string, index: number }>;
+  pages: Array<{ title: string, component: any, icon: string, index?: number, pageName?: any }>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public app: App,
     public modalCtrl: ModalController, public service: ServiceProvider, public translate: TranslateService) {
 
     try {
@@ -48,12 +50,12 @@ export class MyApp {
     catch (ex) { console.log(ex) }
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'home', component: HomePage, icon: 'home', index: 0 },
-      { title: 'fees', component: FeesPage, icon: 'cash', index: 1 },
-      { title: 'activities', component: ActivitiesPage, icon: 'basketball', index: 2 },
-      { title: 'events', component: EventsPage, icon: 'boat', index: 3 },
-      { title: 'contactUs', component: ContactPage, icon: 'contacts', index: 4 },
-      { title: 'settings', component: SettingsPage, icon: 'cog', index: 5 }
+      { title: 'home', pageName: HomePage, component: HomePage, icon: 'home', index: 0 },
+      { title: 'events', pageName: EventsPage, component: EventsPage, icon: 'boat', index: 1 },
+      { title: 'activities', pageName: ActivitiesPage, component: ActivitiesPage, icon: 'basketball', index: 2 },
+      { title: 'fees', pageName: HomePage, component: FeesPage, icon: 'cash', index: 0 },
+      { title: 'settings', pageName: HomePage, component: SettingsPage, icon: 'cog', index: 0 },
+      { title: 'contactUs', pageName: ContactPage, component: ContactPage, icon: 'contacts', index: 3 }
     ];
 
   }
@@ -65,6 +67,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.translate.setDefaultLang('en');
+      this.nav.setRoot(HomePage);
     });
   }
 
@@ -75,20 +78,36 @@ export class MyApp {
     this.nav.push(LoginPage);
   }
   openPage(page) {
-    // debugger;
     let params = {};
+
+    // The index is equal to the order of our tabs inside tabs.ts
     if (page.index) {
       params = { tabIndex: page.index };
     }
-    if (this.nav.getActiveChildNavs() && page.index != undefined) {
-      debugger;
-      // this.nav.getActiveChildNavs();
+    else { params = { tabIndex: 0 }; }
+    // If tabs page is already active just change the tab index
+    if (this.nav.getActiveChildNavs().length && page.index != undefined && page.index > 0) {
+      this.nav.getActiveChildNavs()[0].select(page.index);
     }
     else {
-     this.nav.setRoot(page.component, params);
+      // Tabs are not active, so reset the root page 
+      // In this case: moving to or from SpecialPage
+      // this.nav.getActiveChildNavs()[0].select(0);
+      // this.nav.setRoot(page.component, params);
+      // this.app.getRootNav().setRoot(page.component, params);
+      this.rootPage = HomePage;
+      this.nav.setRoot(page.component, params);
     }
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+  }
+
+  goToChangePasswordPage() {
+    this.nav.push(ChangePasswordPage);
+  }
+  gotoMyEvents() {
+    this.nav.push(MyEventsPage);
+  }
+
+  gotoMyactivities() {
+    this.nav.push(MyActivitiesPage);
   }
 }

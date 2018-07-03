@@ -45,6 +45,10 @@ import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import {FileChooser } from '@ionic-native/file-chooser';
+import { ImagePicker } from '@ionic-native/image-picker';
+import { Base64 } from '@ionic-native/base64';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -139,7 +143,11 @@ export function createTranslateLoader(http: HttpClient) {
     FileTransferObject,
     File,
     Camera,
-    FileChooser
+    FileChooser,
+    ImagePicker,
+    Base64,   
+    Transfer,
+    FilePath,
   ]
 })
 export class AppModule {

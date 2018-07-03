@@ -13,7 +13,7 @@ import { ProfilePage } from '../profile/profile';
 })
 export class ActivitiesPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public service: ServiceProvider,
     public modalCtrl: ModalController, public translate: TranslateService,
     public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
@@ -21,33 +21,8 @@ export class ActivitiesPage {
   activityList;
   activity;
   openModal(characterNum) {
-    if(this.service.loginState){
     this.activity = this.activityList.filter(x => x.category_id == characterNum.charNum)[0];
-    console.log(this.activity);
-    // let modal = this.modalCtrl.create(ModalContentPage, this.activity);
-    // modal.present();
     this.navCtrl.push(ModalContentPage, this.activity);
-  }
-  else {
-    let alert = this.alertCtrl.create({
-      title: 'Login Required',
-      subTitle: "Please Login/Register for participating this event",
-      message: 'Do you want to Login/Register now?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Login/Register',
-          handler: () => {
-            this.navCtrl.push(ProfilePage);
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActivitiesPage');
@@ -61,9 +36,9 @@ export class ActivitiesPage {
     }, 2000);
   }
   getActivities() {
-      let loader = this.loadingCtrl.create({
-        content: "Loading Activities..."
-      });
+    let loader = this.loadingCtrl.create({
+      content: "Loading Activities..."
+    });
     try {
       loader.present();
       const options = {
@@ -83,7 +58,8 @@ export class ActivitiesPage {
     }
     catch (ex) {
       loader.dismissAll();
-       console.log(ex) }
+      console.log(ex)
+    }
   }
 
   createAuthorizationHeader() {
@@ -100,7 +76,9 @@ export class ModalContentPage {
     public platform: Platform,
     public params: NavParams,
     public navCtrl: NavController, public viewCtrl: ViewController, public loadingCtrl: LoadingController,
-    public http: HttpClient
+    public http: HttpClient, public service: ServiceProvider,
+    public translate: TranslateService,
+    public alertCtrl: AlertController
   ) {
     this.Activity = this.params.data;
   }
@@ -113,7 +91,50 @@ export class ModalContentPage {
   }
 
   navigateTraningList(acticity) {
-    this.navCtrl.push(TrainingBookingPage, acticity);
+
+    if (this.service.loginState) {
+      if (this.service.UserDetails.CustomerType === 'MEMBERSHIP') {
+        this.navCtrl.push(TrainingBookingPage, acticity);
+      }
+      else {
+        let alert = this.alertCtrl.create({
+          title: 'Membership Login Required',
+          message: 'Do you want to Login/Register as Membership now?',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel'
+            },
+            {
+              text: 'Login/Register',
+              handler: () => {
+                this.navCtrl.push(ProfilePage);
+              }
+            }
+          ]
+        });
+        alert.present();
+      }
+    }
+    else {
+      let alert = this.alertCtrl.create({
+        title: 'Login Required',
+        message: 'Do you want to Login/Register now?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel'
+          },
+          {
+            text: 'Login/Register',
+            handler: () => {
+              this.navCtrl.push(ProfilePage);
+            }
+          }
+        ]
+      });
+      alert.present();
+    }
   }
 }
 
@@ -134,9 +155,9 @@ export class TrainingBookingPage {
     this.getTrainingList(this.params.data.category_id);
   }
   getTrainingList(id) {
-      let loader = this.loadingCtrl.create({
-        content: "Loading Training Schedules..."
-      });
+    let loader = this.loadingCtrl.create({
+      content: "Loading Training Schedules..."
+    });
     try {
       loader.present();
       const options = {
@@ -153,9 +174,10 @@ export class TrainingBookingPage {
           }
         );
     }
-    catch (ex) { 
+    catch (ex) {
       loader.dismissAll();
-      console.log(ex);}
+      console.log(ex);
+    }
   }
 
   BookActivity(training) {
@@ -178,8 +200,12 @@ export class TrainingBookingPage {
         .subscribe(
           restItems => {
             loader.dismissAll();
-            this.service.presentAlert('Activity Booking', restItems.response);
-            console.log(restItems.response);
+            if (restItems.status) {
+              this.service.presentAlert('Activity Booking', restItems.message);
+              console.log(restItems.response);
+            } else {
+              this.service.presentAlert('Activity Booking', restItems.message);
+            }
           }
         );
     }

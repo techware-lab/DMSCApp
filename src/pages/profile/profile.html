@@ -8,7 +8,7 @@
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
-</ion-navbar>
+  </ion-navbar>
 </ion-header>
 <ion-content *ngIf="service.loginState" has-header="true">
   <div id="profile-bg"></div>
@@ -26,16 +26,21 @@
 <ion-content class="card-background-page">
   <div align-items-center>
     <ion-card center text-center *ngIf="!service.loginState">
-      <button ion-button (click)="goToLoginPage()" round>Login</button>
-      <button ion-button (click)="goToSignupEventsPage()" round>Signup for Events</button>
-      <button ion-button (click)="goToSignupMembershipPage()" round>Signup for Membership</button>
-    </ion-card>
-
-    <ion-card center text-center *ngIf="service.loginState">
-      <button ion-button (click)="goToLoginPage()" round>Logout</button>
-      <button ion-button (click)="goToChangePasswordPage()" round>Change Password</button>
-      <button ion-button *ngIf="service.UserDetails.customer_type !== 'RACER'" (click)="gotoMyEvents()" round>Manage my events</button>
-      <button ion-button *ngIf="service.UserDetails.customer_type === 'RACER'" (click)="gotoMyactivities()" round>Manage my activities</button>
+      <ion-card-content align-items-center>
+        <ion-list>
+          <img src="assets/imgs/logo TRANS.png" />
+          <ion-item align-items-center>
+            <button ion-button (click)="goToLoginPage()" round>Login</button>
+          </ion-item>
+          <ion-item align-items-center>
+              <span floating> OR </span>
+          </ion-item>
+          <ion-item align-items-center>
+            <button ion-button (click)="goToSignupEventsPage()" round>Signup for Events</button>
+            <button ion-button (click)="goToSignupMembershipPage()" round>Signup for Membership</button>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
     </ion-card>
   </div>
 </ion-content>

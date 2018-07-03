@@ -201,9 +201,9 @@ export class AquaBikeFormPage {
     this.camera.getPicture(options)
       .then(uri => {
         console.log(uri);
-        this.IDFile = uri;
+        this.fileURI = uri;
         let base64Image = 'data:image/jpeg;base64,' + uri;
-        this.IDFile.push(base64Image);
+        this.IDFile = base64Image;
       })
       .catch(e => {
         console.log(e);

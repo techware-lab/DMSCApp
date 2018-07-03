@@ -1,142 +1,238 @@
-<!--
-  Generated template for the SignupMembershipPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <ion-title>{{"SignupMembership" | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <label>Personal Information</label>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Full Name</ion-label>
-      <ion-input [(ngModel)]="FullName" type="text"></ion-input>
-    </ion-item>
+  <form novalidate [formGroup]="SignupMembership" (ngSubmit)="RegisterActivities()">
+    <label class="bold">Personal Information</label>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Full Name</ion-label>
+        <ion-input formControlName="FullName" [class.error1]="!SignupMembership.controls.FullName.valid 
+        && SignupMembership.controls.FullName.dirty" type="text"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('FullName').hasError('required') ) && SignupMembership.get('FullName').touched">
+        <div class="error" *ngIf="SignupMembership.get('FullName').hasError('required') && SignupMembership.get('FullName').touched">
+          Please input your fullname
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Mobile</ion-label>
+        <ion-input formControlName="Mobile" [class.error1]="!SignupMembership.controls.Mobile.valid 
+        && SignupMembership.controls.Mobile.dirty" type="number"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('Mobile').hasError('required') ) 
+      && SignupMembership.get('Mobile').touched">
+        <div class="error" *ngIf="SignupMembership.get('Mobile').hasError('required') 
+        && SignupMembership.get('Mobile').touched">
+          Please input your mobile
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Nationality</ion-label>
+        <ion-select formControlName="Nationality" [class.error1]="!SignupMembership.controls.Nationality.valid 
+        && SignupMembership.controls.Nationality.dirty">
+          <ion-option *ngFor='let nation of NationlaityList' [value]="nation.id">{{nation.country_name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('Nationality').hasError('required') ) 
+      && SignupMembership.get('Nationality').touched">
+        <div class="error" *ngIf="SignupMembership.get('Nationality').hasError('required') 
+        && SignupMembership.get('Nationality').touched">
+          Please input your nationality
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Date of Birth</ion-label>
+        <ion-datetime displayFormat="MMM DD YYYY" formControlName="DOB" [class.error1]="!SignupMembership.controls.DOB.valid 
+        && SignupMembership.controls.DOB.dirty"></ion-datetime>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('DOB').hasError('required') ) 
+      && SignupMembership.get('DOB').touched">
+        <div class="error" *ngIf="SignupMembership.get('DOB').hasError('required') 
+        && SignupMembership.get('DOB').touched">
+          Please input your date of birth
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Employer</ion-label>
+        <ion-input formControlName="Employer" [class.error1]="!SignupMembership.controls.Employer.valid 
+        && SignupMembership.controls.Employer.dirty" type="text"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('Employer').hasError('required') ) 
+      && SignupMembership.get('Employer').touched">
+        <div class="error" *ngIf="SignupMembership.get('Employer').hasError('required') 
+        && SignupMembership.get('Employer').touched">
+          Please input your employer
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Occupation</ion-label>
+        <ion-input formControlName="Occupation" [class.error1]="!SignupMembership.controls.Occupation.valid 
+        && SignupMembership.controls.Occupation.dirty" type="text"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('Occupation').hasError('required') ) 
+      && SignupMembership.get('Occupation').touched">
+        <div class="error" *ngIf="SignupMembership.get('Occupation').hasError('required') 
+        && SignupMembership.get('Occupation').touched">
+          Please input your occupation
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>PO Box No</ion-label>
+        <ion-input type="text" formControlName="PBox" [class.error1]="!SignupMembership.controls.Occupation.valid 
+        && SignupMembership.controls.PBox.dirty"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('PBox').hasError('required') ) 
+      && SignupMembership.get('PBox').touched">
+        <div class="error" *ngIf="SignupMembership.get('PBox').hasError('required') 
+        && SignupMembership.get('PBox').touched">
+          Please input your PO Box No
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Fax No</ion-label>
+        <ion-input type="text" formControlName="Fax" [class.error1]="!SignupMembership.controls.Fax.valid 
+        && SignupMembership.controls.Fax.dirty"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('Fax').hasError('required') ) 
+      && SignupMembership.get('Fax').touched">
+        <div class="error" *ngIf="SignupMembership.get('Fax').hasError('required') 
+        && SignupMembership.get('Fax').touched">
+          Please input your fax
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list radio-group formControlName="MembershipType" [class.error1]="!SignupMembership.controls.MembershipType.valid 
+    && SignupMembership.controls.MembershipType.dirty">
+      <ion-list-header>
+        Type of Membership
+      </ion-list-header>
+      <ion-item>
+        <ion-label>Single</ion-label>
+        <ion-radio checked="true" value="Single"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Family</ion-label>
+        <ion-radio value="Family"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Temporary</ion-label>
+        <ion-radio value="Temporary"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list>
+      <ion-item no-lines *ngIf="( SignupMembership.get('MembershipType').hasError('required') ) 
+    && SignupMembership.get('MembershipType').touched">
+        <div class="error" *ngIf="SignupMembership.get('MembershipType').hasError('required') 
+      && SignupMembership.get('MembershipType').touched">
+          Please input your membership type
+        </div>
+      </ion-item>
+    </ion-list>
 
-    <ion-item>
-      <ion-label floating>Mobile</ion-label>
-      <ion-input [(ngModel)]="Mobile" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Nationality</ion-label>
-      <ion-input [(ngModel)]="Nationality" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Date of Birth</ion-label>
-      <ion-input [(ngModel)]="DOB" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Employer</ion-label>
-      <ion-input [(ngModel)]="Employer" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Occupation</ion-label>
-      <ion-input [(ngModel)]="Occupation" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>PO Box No</ion-label>
-      <ion-input [(ngModel)]="PBox" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Fax No</ion-label>
-      <ion-input [(ngModel)]="Fax" type="text"></ion-input>
-    </ion-item>
-  </ion-list>
-  <ion-list radio-group [(ngModel)]="MembershipType">
-    <ion-list-header>
-      Type of Membership
-    </ion-list-header>
-    <ion-item>
-      <ion-label>Single</ion-label>
-      <ion-radio checked="true" value="Single"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Family</ion-label>
-      <ion-radio value="Family"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>Temporary</ion-label>
-      <ion-radio value="Temporary"></ion-radio>
-    </ion-item>
-  </ion-list>
-  <label>Dependent Information</label>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Family Membership Name</ion-label>
-      <ion-input [(ngModel)]="Dependant.MemberName" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Date of Birth</ion-label>
-      <ion-input [(ngModel)]="Dependant.DOB" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Email</ion-label>
-      <ion-input [(ngModel)]="Dependant.Email" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Mobile</ion-label>
-      <ion-input [(ngModel)]="Dependant.Mobile" type="text"></ion-input>
-    </ion-item>
-  </ion-list>
-  <button ion-button color="secondary" (click)="AddDependent()">Add Dependent</button>
-  <ion-list *ngFor='let dependent of Dependents;let i = index'>
-    <ion-item>
-      <ion-icon *ngIf="dependent.MemberName!==''" end name="close" (click)="removeDependent(i)"></ion-icon>
-      <h2>{{dependent.MemberName}}</h2>
-      <h3>{{dependent.DOB}}</h3>
-      <p>{{dependent.Email}}</p>
-      <p>{{dependent.Mobile}}</p>
-    </ion-item>
-  </ion-list>
+    <label class="bold">Dependent Information</label>
+    <form novalidate [formGroup]="DepandantForm" (ngSubmit)="AddDependent()">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Family Membership Name</ion-label>
+          <ion-input formControlName="MemberName" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Date of Birth</ion-label>
+          <ion-datetime displayFormat="MMM DD YYYY" formControlName="DOB"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input formControlName="Email" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Mobile</ion-label>
+          <ion-input formControlName="Mobile" type="number"></ion-input>
+        </ion-item>
+      </ion-list>
+      <button ion-button color="secondary" [disabled]="!DepandantForm.valid" type="submit">Add Dependent</button>
+    </form>
+    <ion-list *ngFor='let dependent of Dependents;let i = index'>
+      <ion-item>
+        <ion-icon *ngIf="dependent.MemberName!==''" end name="close" (click)="removeDependent(i)"></ion-icon>
+        <h2>{{dependent.MemberName}}</h2>
+        <h3>{{dependent.DOB}}</h3>
+        <p>{{dependent.Email}}</p>
+        <p>{{dependent.Mobile}}</p>
+      </ion-item>
+    </ion-list>
 
-  <ion-list>
-    <ion-item>
-      <button ion-button color="secondary" (click)="chooseMemberPhoto()">Choose Member Photo</button>
-      <ion-card>
-        <ion-card-content>
-          <img [src]="MemberImage" />
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
-    <ion-item>
-      <button ion-button color="secondary" (click)="chooseSpousePhoto()">Choose Spouse Photo</button>
-      <ion-card>
-        <ion-card-content>
-          <img [src]="SpouseImage" />
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
-  </ion-list>
-  <label>Previous Experience Information(Optional)</label>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Previous Sailing Experience</ion-label>
-      <ion-input [(ngModel)]="PrevSailingExp" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Type of Classes Sailed/Raced</ion-label>
-      <ion-input [(ngModel)]="TypeOfClass" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Previous Sailing Club Membership</ion-label>
-      <ion-input [(ngModel)]="PrevSailMembership" type="text"></ion-input>
-    </ion-item>
-  </ion-list>
-  <label>Login Information</label>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Email(User Name)</ion-label>
-      <ion-input [(ngModel)]="Username" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input [(ngModel)]="Password" type="password"></ion-input>
-    </ion-item>
-  </ion-list>
-  <button ion-button (click)="RegisterActivities()">Register New Account</button>
+    <ion-list>
+      <ion-item>
+        <!-- <button ion-button color="secondary" (click)="chooseMemberPhoto()">Choose Member Photo</button> -->
+        <span ion-button icon-left (click)="presentActionSheet('Member')">
+          <ion-icon name="camera"></ion-icon>Select Member Image
+        </span>
+        <ion-card>
+          <ion-card-content>
+            <img src="{{pathForImage(lastImageMember)}}" />
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      <ion-item>
+        <!-- <button ion-button color="secondary" (click)="chooseSpousePhoto()">Choose Spouse Photo</button> -->
+        <span ion-button icon-left (click)="presentActionSheet('Spouse')">
+          <ion-icon name="camera"></ion-icon>Select Spouse Image
+        </span>
+        <ion-card>
+          <ion-card-content>
+            <img src="{{pathForImage(lastImageSpouse)}}" />
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+    </ion-list>
+    <label class="bold">Previous Experience Information(Optional)</label>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Previous Sailing Experience</ion-label>
+        <ion-input formControlName="PrevSailingExp" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Type of Classes Sailed/Raced</ion-label>
+        <ion-input formControlName="TypeOfClass" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Previous Sailing Club Membership</ion-label>
+        <ion-input formControlName="PrevSailMembership" type="text"></ion-input>
+      </ion-item>
+    </ion-list>
+    <label class="bold">Login Information</label>
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Email(User Name)</ion-label>
+        <ion-input type="text" formControlName="Username" [class.error1]="!SignupMembership.controls.Username.valid 
+        && SignupMembership.controls.Username.dirty"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('Username').hasError('required') || signupform.get('Username').hasError('email') ) 
+    && SignupMembership.get('Username').touched">
+        <div class="error" *ngIf="SignupMembership.get('Username').hasError('required') 
+      && SignupMembership.get('Username').touched">
+          Please input your email
+        </div>
+        <div class="error" *ngIf="signupform.get('Username').hasError('email') && signupform.get('Username').touched">
+          Please input a valid email
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="password" formControlName="Password" [class.error1]="!SignupMembership.controls.Password.valid 
+        && SignupMembership.controls.Password.dirty"></ion-input>
+      </ion-item>
+      <ion-item no-lines *ngIf="( SignupMembership.get('Password').hasError('required') ) 
+    && SignupMembership.get('Password').touched">
+        <div class="error" *ngIf="SignupMembership.get('Password').hasError('required') 
+      && SignupMembership.get('Password').touched">
+          Please input your password
+        </div>
+      </ion-item>
+    </ion-list>
+    <button ion-button type="submit" [disabled]="!SignupMembership.valid">Register New Account</button>
+  </form>
 </ion-content>

@@ -41,17 +41,38 @@ export class EventDetailsPage {
   }
   ParticipateClick(evnt) {
     if (this.service.loginState) {
-      console.log(evnt);
-      if (evnt.category_id === '1') {
-        this.navCtrl.push(AquaBikeFormPage, evnt);
-      } else if (evnt.category_id === '2') {
-        this.navCtrl.push(SailingFormPage, evnt);
+      if (this.service.UserDetails.CustomerType === 'RACER') {
+        console.log(evnt);
+        if (evnt.category_id === '1') {
+          this.navCtrl.push(AquaBikeFormPage, evnt);
+        } else if (evnt.category_id === '2') {
+          this.navCtrl.push(SailingFormPage, evnt);
+        }
+        else if (evnt.category_id === '3') {
+          this.navCtrl.push(RowingFormPage, evnt);
+        }
+        else if (evnt.category_id === '5') {
+          this.navCtrl.push(FishingFormPage, evnt);
+        }
       }
-      else if (evnt.category_id === '3') {
-        this.navCtrl.push(RowingFormPage, evnt);
-      }
-      else if (evnt.category_id === '5') {
-        this.navCtrl.push(FishingFormPage, evnt);
+      else {
+        let alert = this.alertCtrl.create({
+          title: 'Racer Login Required',
+          message: 'Do you want to Login/Register as Racer now?',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel'
+            },
+            {
+              text: 'Login/Register',
+              handler: () => {
+                this.navCtrl.push(ProfilePage);
+              }
+            }
+          ]
+        });
+        alert.present();
       }
     }
     else {

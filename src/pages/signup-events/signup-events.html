@@ -18,23 +18,25 @@
 
     <ion-item>
       <ion-label floating>Mobile</ion-label>
-      <ion-input  [(ngModel)]="Mobile" type="text"></ion-input>
+      <ion-input  [(ngModel)]="Mobile" type="number"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Nationality</ion-label>
-      <ion-input  [(ngModel)]="Nationality" type="text"></ion-input>
+      <ion-select [(ngModel)]="Nationality">
+        <ion-option *ngFor='let nation of NationlaityList' [value]="nation.country_code">{{nation.country_name}}</ion-option>
+      </ion-select>
     </ion-item>
     <ion-item>
       <ion-label floating>Date of Birth</ion-label>
-      <ion-input  [(ngModel)]="DOB" type="text"></ion-input>
+      <ion-datetime displayFormat="MMM DD YYYY" [(ngModel)]="DOB"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-label floating>Blood Group</ion-label>
-      <ion-input  [(ngModel)]="Blood" type="text"></ion-input>
+      <ion-input [(ngModel)]="Blood" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>ID No</ion-label>
-      <ion-input  [(ngModel)]="IDNo" type="text"></ion-input>
+      <ion-input [(ngModel)]="IDNo" type="text"></ion-input>
     </ion-item>
   </ion-list>
   <label>Bank Information(Optional)</label>
@@ -64,7 +66,7 @@
   <ion-list>
     <ion-item>
       <ion-label floating>EMail(User Name)</ion-label>
-      <ion-input [(ngModel)]="Username" type="text"></ion-input>
+      <ion-input [(ngModel)]="Username" type="email"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Password</ion-label>
