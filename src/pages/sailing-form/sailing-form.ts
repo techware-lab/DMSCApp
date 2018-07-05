@@ -40,8 +40,8 @@ export class SailingFormPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
-    public loadingCtrl: LoadingController, public alertCtrl: AlertController,    
-    public toastCtrl: ToastController, public http: HttpClient,public camera: Camera ) {
+    public loadingCtrl: LoadingController, public alertCtrl: AlertController,
+    public toastCtrl: ToastController, public http: HttpClient, public camera: Camera) {
   }
 
   ionViewDidLoad() {
@@ -111,44 +111,67 @@ export class SailingFormPage {
     let loader = this.loadingCtrl.create({
       content: "Saving " + this.Events.training_name + "..."
     });
-    try {
-      const para = {
-        'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
-        'customer_id': this.service.UserDetails.CustomerID,
-        'customer_type': this.service.UserDetails.CustomerType,
-        'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
-        'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_participant': this.Participants,
-        'owner_id': this.BoatOwnerID, 'owner_name': this.BoatOwner, 'owner_mobile': this.BoatOwnerMobile
-
-        //'team_card': [this.membersfileURI]
-      }
-      loader.present();
-
-      const options = {
-        headers: this.createAuthorizationHeader()
-      };
-      this.http
-        .post<any>('http://trendix.qa/dmsc/api/dmsc/sailingBooking ', para, options)
-        .pipe(map(data => data))
-        .subscribe(
-          restItems => {
-            loader.dismissAll();
-
-            let alert = this.alertCtrl.create({
-              title: this.Events.training_name + ' Booking',
-              subTitle: restItems.message,
-              buttons: [{
-                text: 'OK', handler: () => {
-                }
-              }]
-            });
-            alert.present();
-          }
-        );
+    let validationMessage: string = '';
+    if (this.TeamName === undefined || this.TeamName === '') {
+      validationMessage = 'Team Name required.';
+    } else if (this.BoatNumber === undefined || this.BoatNumber === '') {
+      validationMessage = 'Boat Number required.';
+    } else if (this.TLName === undefined || this.TLName === '') {
+      validationMessage = 'Team Leader Name required.';
+    } else if (this.TLMobile === undefined || this.TLMobile === '') {
+      validationMessage = 'Team Leader Number required.';
+    } else if (this.BoatOwner === undefined || this.BoatOwner === '') {
+      validationMessage = 'Owner Name required.';
+    } else if (this.BoatOwnerMobile === undefined || this.BoatOwnerMobile === '') {
+      validationMessage = 'Owner Number required.';
+    } else if (this.BoatOwnerID === undefined || this.BoatOwnerID === '') {
+      validationMessage = 'Owner ID required.';
+    } else if (this.Participants === undefined || this.Participants === '') {
+      validationMessage = 'Number of participants required.';
     }
-    catch (ex) {
-      loader.dismissAll();
-       console.log(ex); }
+    if (validationMessage === '' || validationMessage === undefined) {
+      try {
+        const para = {
+          'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
+          'customer_id': this.service.UserDetails.CustomerID,
+          'customer_type': this.service.UserDetails.CustomerType,
+          'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
+          'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_participant': this.Participants,
+          'owner_id': this.BoatOwnerID, 'owner_name': this.BoatOwner, 'owner_mobile': this.BoatOwnerMobile
+
+          //'team_card': [this.membersfileURI]
+        }
+        loader.present();
+
+        const options = {
+          headers: this.createAuthorizationHeader()
+        };
+        this.http
+          .post<any>('http://trendix.qa/dmsc/api/dmsc/sailingBooking ', para, options)
+          .pipe(map(data => data))
+          .subscribe(
+            restItems => {
+              loader.dismissAll();
+
+              let alert = this.alertCtrl.create({
+                title: this.Events.training_name + ' Booking',
+                subTitle: restItems.message,
+                buttons: [{
+                  text: 'OK', handler: () => {
+                  }
+                }]
+              });
+              alert.present();
+            }
+          );
+      }
+      catch (ex) {
+        loader.dismissAll();
+        console.log(ex);
+      }
+    } else {
+      this.presentToast(validationMessage);
+    }
   }
   chooseUserIDCard() {
     const options: CameraOptions = {
@@ -157,34 +180,34 @@ export class SailingFormPage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     let loader = this.loadingCtrl.create({
-      content: "Loading Image.." 
+      content: "Loading Image.."
     });
     loader.present();
-      this.camera.getPicture(options)
-        .then(uri => {
-          console.log(uri);
-          this.IDFile = uri;
-          let base64Image = 'data:image/jpeg;base64,' + uri;
-          this.IDFile.push(base64Image);
-          loader.dismissAll();
-        })
-        .catch(e => {
-          loader.dismissAll();
-          console.log(e);
-          this.presentToast(e);
-        });
-    }
-    presentToast(msg) {
-      let toast = this.toastCtrl.create({
-        message: msg,
-        duration: 3000,
-        position: 'bottom'
+    this.camera.getPicture(options)
+      .then(uri => {
+        console.log(uri);
+        this.IDFile = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.IDFile.push(base64Image);
+        loader.dismissAll();
+      })
+      .catch(e => {
+        loader.dismissAll();
+        console.log(e);
+        this.presentToast(e);
       });
-  
-      toast.onDidDismiss(() => {
-        console.log('Dismissed toast');
-      });
-  
-      toast.present();
-    }
+  }
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
 }

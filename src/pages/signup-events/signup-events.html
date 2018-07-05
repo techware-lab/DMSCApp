@@ -9,7 +9,7 @@
 
 
 <ion-content padding>
-  <label>Personal Information</label>
+  <label class="bold">Personal Information</label>
   <ion-list>
     <ion-item>
       <ion-label floating>Full Name</ion-label>
@@ -23,7 +23,7 @@
     <ion-item>
       <ion-label floating>Nationality</ion-label>
       <ion-select [(ngModel)]="Nationality">
-        <ion-option *ngFor='let nation of NationlaityList' [value]="nation.country_code">{{nation.country_name}}</ion-option>
+        <ion-option *ngFor='let nation of NationlaityList' [value]="nation.id">{{nation.country_name}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
@@ -39,7 +39,7 @@
       <ion-input [(ngModel)]="IDNo" type="text"></ion-input>
     </ion-item>
   </ion-list>
-  <label>Bank Information(Optional)</label>
+  <label class="bold">Bank Information(Optional)</label>
   <ion-list>
     <ion-item>
       <ion-label floating>Account Name</ion-label>
@@ -62,7 +62,7 @@
       <ion-input [(ngModel)]="SwiftCode" type="text"></ion-input>
     </ion-item>
   </ion-list>
-  <label>Login Information</label>
+  <label class="bold">Login Information</label>
   <ion-list>
     <ion-item>
       <ion-label floating>EMail(User Name)</ion-label>

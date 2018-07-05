@@ -14,7 +14,7 @@
         <ion-avatar item-start>
           <img src='assets/imgs/avathar-default.png'>
         </ion-avatar>
-          <h2>Hi Guest </h2>          
+        <h2>Hi Guest </h2>
       </ion-item>
     </ion-toolbar>
   </ion-header>
@@ -26,29 +26,33 @@
         {{p.title | translate}}
       </button>
     </ion-list>
-    
+
     <ion-list *ngIf="service.loginState">
-        <button  class="nav-btn" menuClose ion-item  (click)="goToChangePasswordPage()" >
-            <ion-icon name="lock"></ion-icon>
-          Change Password</button>
-        <button  class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType === 'RACER'" (click)="gotoMyEvents()" >
-            <ion-icon name="boat"></ion-icon>
-          Manage my events</button>
-        <button  class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType !== 'RACER'" (click)="gotoMyactivities()" >
-            <ion-icon name="basketball"></ion-icon>
-          Manage my activities</button>
+      <button class="nav-btn" menuClose ion-item (click)="goToChangePasswordPage()">
+        <ion-icon name="lock"></ion-icon>
+        Change Password</button>
+      <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType === 'RACER'" (click)="gotoMyEvents()">
+        <ion-icon name="boat"></ion-icon>
+        Manage my events</button>
+      <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType !== 'RACER'" (click)="gotoMyactivities()">
+        <ion-icon name="basketball"></ion-icon>
+        Manage my activities</button>
       <button class="nav-btn" menuClose ion-item (click)="service.logout()">
         <ion-icon name="log-out"></ion-icon>
         {{"logout" | translate}}
       </button>
     </ion-list>
     <ion-list *ngIf="!service.loginState">
-        <button  class="nav-btn" menuClose ion-item  (click)="goToProfilePage()" >
-            <ion-icon name="key"></ion-icon>
-        Login to My Account
+      <button class="nav-btn" menuClose ion-item (click)="goToLoginPage()">
+        <ion-icon name="key"></ion-icon>
+        Login
+      </button>
+      <button class="nav-btn" menuClose ion-item (click)="goToProfilePage()">
+        <ion-icon name="person-add"></ion-icon>
+        Signup
       </button>
     </ion-list>
-      <img src="assets/imgs/logo TRANS.png" />
+    <img src="assets/imgs/logo TRANS.png" />
   </ion-content>
 </ion-menu>
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

@@ -110,15 +110,7 @@ export class SignupEventsPage {
         console.log(ex);
       }
     } else {
-      let alert = this.alertCtrl.create({
-        title: 'Registering for Events',
-        subTitle: validationMessage,
-        buttons: [{
-          text: 'OK', handler: () => {
-          }
-        }]
-      });
-      alert.present();
+      this.presentToast(validationMessage);
     }
   }
   createAuthorizationHeader() {
@@ -127,5 +119,18 @@ export class SignupEventsPage {
       'x-api-key': '123456'
     });
     return headers;
+  }
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 }

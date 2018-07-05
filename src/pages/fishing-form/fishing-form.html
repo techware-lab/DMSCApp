@@ -54,28 +54,40 @@
     <label>Team Information</label>
     <ion-list>        
         <ion-item>
-            <ion-label floating>Team Leader Name</ion-label>
-            <ion-input  [(ngModel)]="TLName" type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>Team Leader Mobile</ion-label>
-            <ion-input [(ngModel)]="TLMobile" type="text"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label floating>Team Name</ion-label>
-            <ion-input  [(ngModel)]="TeamName" type="text"></ion-input>
+            <ion-label floating>Boat Name</ion-label>
+            <ion-input  [(ngModel)]="BoatName" type="text"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label floating>Boat Number</ion-label>
             <ion-input  [(ngModel)]="BoatNumber" type="text"></ion-input>
           </ion-item>
           <ion-item>
+          <ion-item>
+            <ion-label floating>Team Leader Name</ion-label>
+            <ion-input [(ngModel)]="TLName" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Team Leader ID</ion-label>
+            <ion-input [(ngModel)]="TLID" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Boat Owner</ion-label>
+            <ion-input  [(ngModel)]="BoatOwner" type="text"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Boat Owner Mobile</ion-label>
+            <ion-input  [(ngModel)]="BoatOwnerMobile" type="number"></ion-input>
+          </ion-item>
             <ion-label floating>Number of Participant</ion-label>
             <ion-input [(ngModel)]="Participants" type="text"></ion-input>
           </ion-item>
           <ion-item>
-              <ion-label floating>Upload all Team Members ID Card</ion-label>
+              <ion-label floating>Upload All Team Members ID Card</ion-label>
             <button ion-button color="secondary" (click)="getMembersIds()">Choose IDs</button>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>Upload Copy of Boat Registration</ion-label>
+            <button ion-button color="secondary" (click)="getMembersIds()">Choose Regitration Documents</button>
           </ion-item>
     </ion-list>
       <label>Bank Information</label>

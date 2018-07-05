@@ -31,7 +31,6 @@ export class FishingFormPage {
   BoatName: any;
   TLID: any;
   TLName: any;
-  TLMobile: any;
   TeamName: any;
   BoatOwnerID: any;
   BoatOwner: any;
@@ -140,13 +139,32 @@ export class FishingFormPage {
     let loader = this.loadingCtrl.create({
       content: "Saving " + this.Events.training_name + "..."
     });
+    let validationMessage: string = '';
+    if (this.BoatNumber === undefined || this.BoatNumber === '') {
+      validationMessage = 'Boat Number required.';
+    } else if (this.BoatName === undefined || this.BoatName === '') {
+      validationMessage = 'Boat Name required.';
+    } else if (this.TLName === undefined || this.TLName === '') {
+      validationMessage = 'Team Leader Name required.';
+    } else if (this.TLID === undefined || this.TLID === '') {
+      validationMessage = 'Team Leader ID required.';
+    } else if (this.BoatOwner === undefined || this.BoatOwner === '') {
+      validationMessage = 'Owner Name required.';
+    } else if (this.BoatOwnerMobile === undefined || this.BoatOwnerMobile === '') {
+      validationMessage = 'Owner Number required.';
+    } else if (this.BoatOwnerID === undefined || this.BoatOwnerID === '') {
+      validationMessage = 'Owner ID required.';
+    } else if (this.Participants === undefined || this.Participants === '') {
+      validationMessage = 'Number of participants required.';
+    }
+    if (validationMessage === '' || validationMessage === undefined) {
     loader.present();
     try {
       const para = {
         'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
-        'customer_id': this.service.UserDetails.CustomerID,
-        'customer_type': this.service.UserDetails.CustomerType,
-        'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
+        'customer_id': this.service.UserDetails.CustomerID,'owner_mobile': this.BoatOwnerMobile,
+        'customer_type': this.service.UserDetails.CustomerType,'leader_id': this.TLID,'boat_owner': this.BoatOwner,
+        'team_leader': this.TLName, 'owner_id': this.BoatOwnerID, 'boat_name': this.BoatName,
         'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_member': this.Participants,
         'id_card':this.IDFile
         // 'team_card': [this.membersfileURI]
@@ -176,6 +194,10 @@ export class FishingFormPage {
     catch (ex) {
       loader.dismissAll();
        console.log(ex); }
+    }
+    else{
+      this.presentToast(validationMessage);
+    }
   }
 
   chooseUserIDCard() {

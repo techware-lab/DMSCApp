@@ -24,11 +24,11 @@ export class HomePage {
     this.translate.setDefaultLang('en');
     this.myIndex = navParams.data.tabIndex || 0;
   }
-  private firstLoaded: boolean = false;
+  // private firstLoaded: boolean = false;
   ionViewDidEnter() {
-      if (!this.firstLoaded && this.tabs.getSelected()!= null && this.tabs.getSelected().length() >= 2) {
-          this.tabs.getSelected().remove(0, this.tabs.getSelected().length() - 1);
-      }
-      this.firstLoaded = true;
+      // if (!this.firstLoaded && this.tabs.getSelected()!= null && this.tabs.getSelected().length() >= 2) {
+      //     this.tabs.getSelected().remove(0, this.tabs.getSelected().length() - 1);
+      // }
+      // this.firstLoaded = true;
   }
 }

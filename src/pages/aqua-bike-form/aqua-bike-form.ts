@@ -7,6 +7,7 @@ import { ServiceProvider } from '../../providers/service/service';
 // import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { CameraOptions, Camera } from '@ionic-native/camera';
+import { EventsPage } from '../events/events';
 
 @IonicPage()
 @Component({
@@ -112,6 +113,7 @@ export class AquaBikeFormPage {
                 subTitle: restItems.message,
                 buttons: [{
                   text: 'OK', handler: () => {
+                    this.navCtrl.push(EventsPage);
                   }
                 }]
               });
@@ -144,60 +146,72 @@ export class AquaBikeFormPage {
 
   SaveAquaBikeForm() {
     debugger;
-    try {
-      const para = {
-        'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
-        'customer_id': this.service.UserDetails.CustomerID,
-        'customer_type': this.service.UserDetails.CustomerType,
-        'bike_no': this.BikeNumber, 'license_number': this.LicenceNumber,
-        'previous_licensce': this.PrevLicenceNumber, 'category': this.CategoryClass,
-        'id_card': this.IDFile,
-
-      }
-      let loader = this.loadingCtrl.create({
-        content: "Saving " + this.Events.training_name + "..."
-      });
-      loader.present();
-
-
-      const options = {
-        headers: this.createAuthorizationHeader()
-      };
-      this.http
-        .post<any>('http://trendix.qa/dmsc/api/dmsc/aquaBikeBooking ', para, options)
-        .pipe(map(data => data))
-        .subscribe(
-          restItems => {
-            loader.dismissAll();
-
-            let alert = this.alertCtrl.create({
-              title: this.Events.training_name + ' Booking',
-              subTitle: restItems.message,
-              buttons: [{
-                text: 'OK', handler: () => {
-                  // this.AquaBikeForm();
-                }
-              }]
-            });
-            alert.present();
-          }
-        );
+    let validationMessage: string = '';
+    if (this.BikeNumber === undefined || this.BikeNumber === '') {
+      validationMessage = 'Bike Number required.';
+    } else if (this.LicenceNumber === undefined || this.LicenceNumber === '') {
+      validationMessage = 'Licence Number required.';
+    } else if (this.CategoryClass === undefined || this.CategoryClass === '') {
+      validationMessage = 'Category/Class required.';
     }
-    catch (ex) { console.log(ex) }
+    if (validationMessage === '' || validationMessage === undefined) {
+      try {
+        const para = {
+          'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
+          'customer_id': this.service.UserDetails.CustomerID,
+          'customer_type': this.service.UserDetails.CustomerType,
+          'bike_no': this.BikeNumber, 'license_number': this.LicenceNumber,
+          'previous_licensce': this.PrevLicenceNumber, 'category': this.CategoryClass,
+          'id_card': this.IDFile,
+
+        }
+        let loader = this.loadingCtrl.create({
+          content: "Saving " + this.Events.training_name + "..."
+        });
+        loader.present();
+
+
+        const options = {
+          headers: this.createAuthorizationHeader()
+        };
+        this.http
+          .post<any>('http://trendix.qa/dmsc/api/dmsc/aquaBikeBooking ', para, options)
+          .pipe(map(data => data))
+          .subscribe(
+            restItems => {
+              loader.dismissAll();
+
+              let alert = this.alertCtrl.create({
+                title: this.Events.training_name + ' Booking',
+                subTitle: restItems.message,
+                buttons: [{
+                  text: 'OK', handler: () => {
+                    // this.AquaBikeForm();
+                  }
+                }]
+              });
+              alert.present();
+            }
+          );
+      }
+      catch (ex) { console.log(ex) }
+    } else {
+      this.presentToast(validationMessage);
+    }
   }
 
   chooseUserIDCard() {
-  //   const options: CameraOptions = {
-  //   quality: 100,
-  //   destinationType: this.camera.DestinationType.DATA_URL,
-  //   encodingType: this.camera.EncodingType.JPEG,
-  //   mediaType: this.camera.MediaType.PICTURE
-  // }
-  const options: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.FILE_URI,
-    sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-  }
+    //   const options: CameraOptions = {
+    //   quality: 100,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE
+    // }
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
     this.camera.getPicture(options)
       .then(uri => {
         console.log(uri);

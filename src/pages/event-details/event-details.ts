@@ -9,7 +9,7 @@ import { AquaBikeFormPage } from '../aqua-bike-form/aqua-bike-form';
 import { SailingFormPage } from '../sailing-form/sailing-form';
 import { RowingFormPage } from '../rowing-form/rowing-form';
 import { FishingFormPage } from '../fishing-form/fishing-form';
-import { ProfilePage } from '../profile/profile';
+import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -65,9 +65,9 @@ export class EventDetailsPage {
               role: 'cancel'
             },
             {
-              text: 'Login/Register',
+              text: 'Login',
               handler: () => {
-                this.navCtrl.push(ProfilePage);
+                this.navCtrl.push(LoginPage);
               }
             }
           ]
@@ -85,9 +85,9 @@ export class EventDetailsPage {
             role: 'cancel'
           },
           {
-            text: 'Login/Register',
+            text: 'Login',
             handler: () => {
-              this.navCtrl.push(ProfilePage);
+              this.navCtrl.push(LoginPage);
             }
           }
         ]

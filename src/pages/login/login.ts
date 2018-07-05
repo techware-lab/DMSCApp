@@ -77,6 +77,9 @@ export class LoginPage {
   ForgotPassword() {
     this.navCtrl.push(ForgotPasswordPage);
   }
+  goToProfilePage() {
+    this.navCtrl.push(ProfilePage);
+  }
   createAuthorizationHeader() {
     const headers = new HttpHeaders({
       'enctype': 'multipart/form-data; boundary=----WebKitFormBoundaryuL67FWkv1CA',

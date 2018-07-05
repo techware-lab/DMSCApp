@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
 import { TranslateService } from '@ngx-translate/core';
-import { ProfilePage } from '../profile/profile';
+import { LoginPage } from '../login/login';
 
 @IonicPage()
 @Component({
@@ -106,9 +106,9 @@ export class ModalContentPage {
               role: 'cancel'
             },
             {
-              text: 'Login/Register',
+              text: 'Login',
               handler: () => {
-                this.navCtrl.push(ProfilePage);
+                this.navCtrl.push(LoginPage);
               }
             }
           ]
@@ -126,9 +126,9 @@ export class ModalContentPage {
             role: 'cancel'
           },
           {
-            text: 'Login/Register',
+            text: 'Login',
             handler: () => {
-              this.navCtrl.push(ProfilePage);
+              this.navCtrl.push(LoginPage);
             }
           }
         ]

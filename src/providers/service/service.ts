@@ -3,20 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/operators';
 import 'rxjs/add/operator/catch';
-import { AlertController } from 'ionic-angular';
-/*
-  Generated class for the ServiceProvider provider.
+import { AlertController, ToastController } from 'ionic-angular';
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ServiceProvider {
   public loginState:boolean = false;
   public lang:string ='en';
   public UserDetails :{CustomerID: string,CustomerType:string, FullName:string, Image:string };
-  constructor(public http: HttpClient, private alertCtrl: AlertController) {
-    console.log('Hello ServiceProvider Provider');
+  constructor(public http: HttpClient,public toastCtrl: ToastController,  private alertCtrl: AlertController) {
+   // console.log('Hello ServiceProvider Provider');
   }
 
   createAuthorizationHeader() {
@@ -40,7 +35,8 @@ export class ServiceProvider {
     .catch((e: any) => Observable.throw(this.errorHandler(e)));
   }
   errorHandler(error: any): void {
-    this.presentAlert('Connection Error', error);
+    console.log(error);
+    this.presentToast('No Internet Connections.');
   }
   
   presentAlert(_title, _subTitle) {
@@ -66,5 +62,18 @@ export class ServiceProvider {
       serchfind = regexp.test(search);
 
       return serchfind
+  }
+  presentToast(msg) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: 3000,
+      position: 'bottom'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
   }
 }

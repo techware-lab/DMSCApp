@@ -24,23 +24,21 @@
   </div>
 </ion-content>
 <ion-content class="card-background-page">
-  <div align-items-center>
-    <ion-card center text-center *ngIf="!service.loginState">
-      <ion-card-content align-items-center>
+  <div align-items-center  *ngIf="!service.loginState">
         <ion-list>
           <img src="assets/imgs/logo TRANS.png" />
-          <ion-item align-items-center>
+          <!-- <ion-item align-items-center>
             <button ion-button (click)="goToLoginPage()" round>Login</button>
           </ion-item>
           <ion-item align-items-center>
               <span floating> OR </span>
+          </ion-item> -->
+          <ion-item>
+            <button full ion-button (click)="goToSignupEventsPage()" block>Signup for Events</button>
           </ion-item>
-          <ion-item align-items-center>
-            <button ion-button (click)="goToSignupEventsPage()" round>Signup for Events</button>
-            <button ion-button (click)="goToSignupMembershipPage()" round>Signup for Membership</button>
+          <ion-item>
+            <button full ion-button (click)="goToSignupMembershipPage()" block>Signup for Membership</button>
           </ion-item>
         </ion-list>
-      </ion-card-content>
-    </ion-card>
   </div>
 </ion-content>

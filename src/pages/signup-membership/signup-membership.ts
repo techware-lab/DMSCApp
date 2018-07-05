@@ -13,14 +13,12 @@ import { ServiceProvider } from '../../providers/service/service';
 import { File } from '@ionic-native/file';
 // import { Transfer } from '@ionic-native/transfer';
 // import { FilePath } from '@ionic-native/file-path';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-
+declare var cordova: any;
 export class Dependent {
   MemberName: any;
   DOB: any; Email: any;
   Mobile: any
 }
-declare var cordova: any;
 @IonicPage()
 @Component({
   selector: 'page-signup-membership',
@@ -28,42 +26,15 @@ declare var cordova: any;
 })
 export class SignupMembershipPage {
   lastImageSpouse: string = null;
-  lastImageMember: string = null; 
-  public SignupMembership : FormGroup;
-  public DepandantForm : FormGroup;
+  lastImageMember: string = null;
   constructor(public navCtrl: NavController, public translate: TranslateService, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public camera: Camera,
     public toastCtrl: ToastController, public http: HttpClient, public navParams: NavParams
     , private imagePicker: ImagePicker, public actionSheetCtrl: ActionSheetController,
     private base64: Base64,  // private transfer: Transfer, 
     private file: File, // private filePath: FilePath,
-    public platform: Platform, private formBuilder: FormBuilder
+    public platform: Platform
   ) {
-    this.SignupMembership = this.formBuilder.group({
-      FullName: ['', Validators.required],
-      Mobile: ['', Validators.compose([Validators.required, Validators.minLength(10)])],
-      Nationality: ['', Validators.required],
-      Employer: ['', Validators.required],
-      Occupation: ['', Validators.required],
-      PBox: ['', Validators.required],
-      Fax: ['', Validators.required],
-      MembershipType: ['', Validators.required],
-      DOB: ['', Validators.required],
-      MemberPhoto: ['', Validators.required],
-      TypeOfClass: ['', Validators.required],
-      Username: ['', Validators.compose([Validators.required, Validators.email])],
-      Password: ['', Validators.required],
-      PrevSailingExp: [''],
-      PrevSailMembership: [''],
-      SpousePhoto: [''],
-    });
-    this.DepandantForm = this.formBuilder.group({
-      MemberName:['', Validators.required],
-      DOB:['', Validators.required],
-      Email:['', Validators.compose([Validators.required, Validators.email])],
-      Mobile:['', Validators.compose([Validators.required, Validators.minLength(10)]) ],
-    });
-
   }
 
   FullName: any;
@@ -108,57 +79,89 @@ export class SignupMembershipPage {
         restItems => {
           this.NationlaityList = restItems.response;
           loader.dismissAll();
-          console.log(this.NationlaityList);
         }
       );
+    ;
   }
   RegisterActivities() {
 
     let loader = this.loadingCtrl.create({
       content: "Saving new User for Activity..."
     });
-    try {
-      const para = {
-        'emai_id': this.SignupMembership.controls['Username'].value, 'password': this.SignupMembership.controls['Password'].value,
-        'full_name': this.SignupMembership.controls['FullName'].value  , 'mobile_no': this.SignupMembership.controls['Mobile'].value,
-        'nationality': this.Nationality, 'member_dob':  this.SignupMembership.controls['DOB'].value,
-        'member_type': this.SignupMembership.controls['MembershipType'].value, 'sailing_experience': this.SignupMembership.controls['PrevSailingExp'].value ,
-        'type_classes': this.SignupMembership.controls['TypeOfClass'].value, 'previous_club': this.SignupMembership.controls['PrevSailMembership'].value,
-        'member_image': this.SignupMembership.controls['MemberPhoto'].value, 'spouse_image': this.SignupMembership.controls['SpousePhoto'].value,
-        'employer': this.SignupMembership.controls['Employer'].value, 'pobox': this.SignupMembership.controls['PBox'].value,'occupation': this.SignupMembership.controls['Occupation'].value,
-        'dependents': this.Dependents
-        //  'account_name': this.ACName,
-        // 'bank_name': this.BankName, 'account_number': this.ACNumber, 'iban_number': this.IBANNumber
-        // , 'swift_code': this.SwiftCode
-
-      }
-      loader.present();
-
-      const options = {
-        headers: this.createAuthorizationHeader()
-      };
-      this.http
-        .post<any>('http://trendix.qa/dmsc/api/dmsc/signupEvent ', para, options)
-        .pipe(map(data => data))
-        .subscribe(
-          restItems => {
-            loader.dismissAll();
-
-            let alert = this.alertCtrl.create({
-              title: 'Registering for Activities',
-              subTitle: restItems.message,
-              buttons: [{
-                text: 'OK', handler: () => {
-                }
-              }]
-            });
-            alert.present();
-          }
-        );
+    let validationMessage: string = '';
+    if (this.Username === '' || this.Username === undefined) {
+      validationMessage = 'Username required.'
+    } else if (!this.service.isEmail(this.Username)) {
+      validationMessage = 'Username Invalid.'
+    } else if (this.Password == '' || this.Password === undefined) {
+      validationMessage = 'Password required.'
+    } else if (this.FullName == '' || this.FullName === undefined) {
+      validationMessage = 'FullName required.'
+    } else if (this.Mobile == '' || this.Mobile === undefined) {
+      validationMessage = 'Mobile required.'
+    } else if (this.Nationality == '' || this.Nationality === undefined) {
+      validationMessage = 'Nationality required.'
+    } else if (this.Employer == '' || this.Employer === undefined) {
+      validationMessage = 'Employer required.'
+    } else if (this.Fax == '' || this.Fax === undefined) {
+      validationMessage = 'Fax No required.'
+    } else if (this.Occupation == '' || this.Occupation === undefined) {
+      validationMessage = 'Occupation required.'
+    } else if (this.MembershipType == '' || this.MembershipType === undefined) {
+      validationMessage = 'Membership Type required.'
+    } else if (this.PBox == '' || this.PBox === undefined) {
+      validationMessage = 'P.O.Box No required.'
+    } else if (this.TypeOfClass == '' || this.TypeOfClass === undefined) {
+      validationMessage = 'Type of Class required.'
+    } else if (this.PBox == '' || this.PBox === undefined) {
+      validationMessage = 'P.O.Box No required.'
     }
-    catch (ex) {
-      loader.dismissAll();
-      console.log(ex);
+    if (validationMessage === '' || validationMessage === undefined) {
+      try {
+        const para = {
+          'emai_id': this.Username, 'password': this.Password,
+          'full_name': this.FullName, 'mobile_no': this.Mobile,
+          'nationality': this.Nationality, 'member_dob': this.DOB,
+          'member_type': this.MembershipType, 'sailing_experience': this.PrevSailingExp,
+          'type_classes': this.TypeOfClass, 'previous_club': this.PrevSailMembership,
+          'member_image': this.MemberPhoto, 'spouse_image': this.SpousePhoto,
+          'employer': this.Employer, 'pobox': this.PBox, 'occupation': this.Occupation,
+          'dependents': this.Dependents, 'faxno': this.Fax
+          //  'account_name': this.ACName,
+          // 'bank_name': this.BankName, 'account_number': this.ACNumber, 'iban_number': this.IBANNumber
+          // , 'swift_code': this.SwiftCode
+
+        }
+        loader.present();
+
+        const options = {
+          headers: this.createAuthorizationHeader()
+        };
+        this.http
+          .post<any>('http://trendix.qa/dmsc/api/dmsc/signupEvent ', para, options)
+          .pipe(map(data => data))
+          .subscribe(
+            restItems => {
+              loader.dismissAll();
+
+              let alert = this.alertCtrl.create({
+                title: 'Registering for Activities',
+                subTitle: restItems.message,
+                buttons: [{
+                  text: 'OK', handler: () => {
+                  }
+                }]
+              });
+              alert.present();
+            }
+          );
+      }
+      catch (ex) {
+        loader.dismissAll();
+        console.log(ex);
+      }
+    } else {
+      this.presentToast(validationMessage);
     }
   }
   createAuthorizationHeader() {
@@ -256,17 +259,25 @@ export class SignupMembershipPage {
     });
   }
   AddDependent() {
-    debugger;
-    this.Dependant.DOB = this.DepandantForm.controls['DOB'].value;
-    this.Dependant.MemberName = this.DepandantForm.controls['MemberName'].value;
-    this.Dependant.Mobile = this.DepandantForm.controls['Mobile'].value;
-    this.Dependant.Email = this.DepandantForm.controls['Email'].value;
-    this.Dependents.push(this.Dependant);
-    this.Dependant = new Dependent();
-    // this.Dependant.DOB='';
-    // this.Dependant.Email='';
-    // this.Dependant.Mobile='';
-    // this.Dependant.MemberName='';
+    let validationMessage: string = '';
+    if (this.Dependant.MemberName === '' || this.Dependant.MemberName === undefined) {
+      validationMessage = 'Member Name required.'
+    } else if (this.Dependant.Email == '' || this.Dependant.Email === undefined) {
+      validationMessage = 'Email required.'
+    } else if (!this.service.isEmail(this.Dependant.Email)) {
+      validationMessage = 'Invalid Email.'
+    } else if (this.Dependant.DOB == '' || this.Dependant.DOB === undefined) {
+      validationMessage = 'Date of Birth required.'
+    } else if (this.Dependant.Mobile == '' || this.Dependant.Mobile === undefined) {
+      validationMessage = 'Mobile required.'
+    }
+    if (validationMessage === '' || validationMessage === undefined) {
+
+      this.Dependents.push(this.Dependant);
+      this.Dependant = new Dependent();
+    } else {
+      this.presentToast(validationMessage);
+    }
   }
   removeDependent(indx) {
     debugger;
@@ -279,13 +290,13 @@ export class SignupMembershipPage {
         {
           text: 'Load from Library',
           handler: () => {
-            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY,type);
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY, type);
           }
         },
         {
           text: 'Use Camera',
           handler: () => {
-            this.takePicture(this.camera.PictureSourceType.CAMERA,type);
+            this.takePicture(this.camera.PictureSourceType.CAMERA, type);
           }
         },
         {
@@ -296,7 +307,7 @@ export class SignupMembershipPage {
     });
     actionSheet.present();
   }
-  public takePicture(sourceType,type) {
+  public takePicture(sourceType, type) {
     // Create options for the Camera Dialog
     var options = {
       quality: 100,
@@ -316,13 +327,15 @@ export class SignupMembershipPage {
       //       this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
       //     });
       // } else {
+      debugger;
       var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
       var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-      this.copyFileToLocalDir(correctPath, currentName, this.createFileName(),type);
+      this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), type);
       // }
-    }, (err) => {
-      this.presentToast('Error while selecting image.');
-    });
+    }, () => {
+        debugger;
+        this.presentToast('Error while selecting image.');
+      });
   }// Create a new name for the image
   private createFileName() {
     var d = new Date(),
@@ -332,16 +345,18 @@ export class SignupMembershipPage {
   }
 
   // Copy the image to a local folder
-  private copyFileToLocalDir(namePath, currentName, newFileName,type) {
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
-     if(type==='Spouse'){
-      this.lastImageSpouse = newFileName;
-
-     }else{
-      this.lastImageMember = newFileName;
-    }
+  private copyFileToLocalDir(namePath, currentName, newFileName, type) {
+    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(() => {
+      if (type === 'Spouse') {
+        this.lastImageSpouse = newFileName;
+      }
+      else {
+        this.lastImageMember = newFileName;
+      }
     }, error => {
-      this.presentToast('Error while storing file.');
+      debugger;
+      console.log(error);
+      this.presentToast(error);
     });
   }
 

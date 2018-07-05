@@ -95,7 +95,7 @@ export class MyApp {
       // this.nav.getActiveChildNavs()[0].select(0);
       // this.nav.setRoot(page.component, params);
       // this.app.getRootNav().setRoot(page.component, params);
-      this.rootPage = HomePage;
+      // this.rootPage = HomePage;
       this.nav.setRoot(page.component, params);
     }
   }
