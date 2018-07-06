@@ -30,13 +30,13 @@
     <ion-list *ngIf="service.loginState">
       <button class="nav-btn" menuClose ion-item (click)="goToChangePasswordPage()">
         <ion-icon name="lock"></ion-icon>
-        Change Password</button>
+        Change Password {{"changePassword" | translate}}</button>
       <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType === 'RACER'" (click)="gotoMyEvents()">
         <ion-icon name="boat"></ion-icon>
-        Manage my events</button>
+       {{"myEvents" | translate}}</button>
       <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType !== 'RACER'" (click)="gotoMyactivities()">
         <ion-icon name="basketball"></ion-icon>
-        Manage my activities</button>
+        {{"myActivities" | translate}}</button>
       <button class="nav-btn" menuClose ion-item (click)="service.logout()">
         <ion-icon name="log-out"></ion-icon>
         {{"logout" | translate}}
@@ -45,11 +45,11 @@
     <ion-list *ngIf="!service.loginState">
       <button class="nav-btn" menuClose ion-item (click)="goToLoginPage()">
         <ion-icon name="key"></ion-icon>
-        Login
+        {{"login" | translate}}
       </button>
       <button class="nav-btn" menuClose ion-item (click)="goToProfilePage()">
         <ion-icon name="person-add"></ion-icon>
-        Signup
+        {{"Signup" | translate}}
       </button>
     </ion-list>
     <img src="assets/imgs/logo TRANS.png" />

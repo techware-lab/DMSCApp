@@ -6,6 +6,7 @@
     "fees": "Fees",
     "SignupMembership": "Signup for Membership",
     "SignupEvents": "Signup for Events",
+    "Signup": "Signup",
     "profile": "Profile",
     "events": "Events",
     "activities": "Activities",
@@ -39,6 +40,8 @@
     "RESIDENTS-SINGLE":"RESIDENTS-SINGLE",
     "QATARINATIONAL":"QATARI NATIONAL",
     "MEMBERSHIP":"MEMBERSHIP",
-    "bookActivities":"Book Activities"
+    "bookActivities":"Book Activities",
+    "CallUs":"Call Us",
+    "becomeMemberHeader":"Become a member today and unwind the opertunity of unlimited marine sport activities"
 
 }

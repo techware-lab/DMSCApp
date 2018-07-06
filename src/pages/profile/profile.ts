@@ -7,6 +7,10 @@ import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { ServiceProvider } from '../../providers/service/service';
 import { TranslateService } from '@ngx-translate/core';
+import { ChangePasswordPage } from '../change-password/change-password';
+import { MyEventsPage } from '../my-events/my-events';
+import { MyActivitiesPage } from '../my-activities/my-activities';
+import { SettingsPage } from '../settings/settings';
 
 @IonicPage()
 
@@ -31,10 +35,10 @@ export class ProfilePage {
     }
     catch (ex) { console.log(ex) }
   }
-  presentPopover() {
+  presentPopover(myEvent) {    
     const popover = this.popoverCtrl.create(ProfileActionPage);
-    popover.present();
-
+    popover.present({
+      ev: myEvent});
   }
   goToSignupMembershipPage() {
     this.navCtrl.push(SignupMembershipPage);
@@ -49,25 +53,30 @@ export class ProfilePage {
 @Component({
   template: `     
     <ion-list>
-    <button class="nav-btn" menuClose ion-item >
+    <button (click)="goToChangePasswordPage()" class="nav-btn" menuClose ion-item >
       <ion-icon name="lock"></ion-icon>
       {{"changePassword" | translate}}
     </button>
   </ion-list>
   <ion-list>
-  <button class="nav-btn" menuClose ion-item >
+  <button (click)="gotoMyEvents()"  *ngIf="service.UserDetails.UserType !== 'RACER'" class="nav-btn" menuClose ion-item >
   <ion-icon name="boat"></ion-icon>
   {{"myEvents" | translate}}
   </button>
+  
+  <button (click)="gotoMyEvents()"  *ngIf="service.UserDetails.UserType === 'RACER'" class="nav-btn" menuClose ion-item >
+  <ion-icon name="boat"></ion-icon>
+  {{"myActivities" | translate}}
+  </button>
   </ion-list>
   <ion-list>
-  <button class="nav-btn" menuClose ion-item >
+  <button (click)="gotoSettings()" class="nav-btn" menuClose ion-item >
   <ion-icon name="cog"></ion-icon>
   {{"language" | translate}}
   </button>
   </ion-list>
   <ion-list>
-  <button class="nav-btn" menuClose ion-item >
+  <button (click)="service.logout()" class="nav-btn" menuClose ion-item >
   <ion-icon name="log-out"></ion-icon>
   {{"logout" | translate}}
   </button>
@@ -79,11 +88,25 @@ export class ProfilePage {
 export class ProfileActionPage {
 
 
-  constructor() {
+  constructor(public nav: NavController,public service: ServiceProvider) {
 
   }
 
   ngOnInit() {
 
+  }
+  
+  goToChangePasswordPage() {
+    this.nav.push(ChangePasswordPage);
+  }
+  gotoMyEvents() {
+    this.nav.push(MyEventsPage);
+  }
+
+  gotoMyactivities() {
+    this.nav.push(MyActivitiesPage);
+  }
+  gotoSettings() {
+    this.nav.push(SettingsPage);
   }
 }

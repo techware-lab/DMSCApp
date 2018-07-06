@@ -5,6 +5,7 @@
     "contact": "اتصل",
     "SignupMembership": "الاشتراك للحصول على العضوية",
     "SignupEvents": "الاشتراك في الأحداث",
+    "Signup": "الاشتر",
     "profile": "الملف الشخصي",
     "fees": "رسوم",
     "events": "أحداث",
@@ -39,5 +40,7 @@
     "RESIDENTS-SINGLE":"سكان - واحد",
     "QATARINATIONAL":"وطني القطري",
     "MEMBERSHIP":"عضوية",
-    "bookActivities":"أنشطة الحجز"
+    "bookActivities":"أنشطة الحجز",
+    "CallUs":"اتصل بنا",
+    "becomeMemberHeader":"أصبح عضوًا في فريق العمل اليوم واسترخوا في ممارسة الأنشطة الرياضية البحرية غير المحدودة"
 }
