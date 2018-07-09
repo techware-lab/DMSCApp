@@ -17,7 +17,6 @@ export class DashboardPage {
     public translate: TranslateService,public alertCtrl: AlertController, public modalCtrl: ModalController) {
 
       this.translate.setDefaultLang('en');
-
   }
 
   ionViewDidLoad() {
