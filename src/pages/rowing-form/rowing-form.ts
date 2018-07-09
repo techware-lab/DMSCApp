@@ -182,7 +182,9 @@ export class RowingFormPage {
           'customer_type': this.service.UserDetails.CustomerType,
           'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
           'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_member': this.Participants,
-          'team_card': [this.membersfileURI]
+          'team_card': [this.membersfileURI],
+          'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
+          'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
         }
         let loader = this.loadingCtrl.create({
           content: "Saving " + this.Events.training_name + "..."

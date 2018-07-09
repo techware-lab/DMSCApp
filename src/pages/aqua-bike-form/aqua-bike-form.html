@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content padding>
-  <label>Personal Information</label>
+  <label class="bold">Personal Information</label>
   <ion-list>
     <ion-item>
       <ion-label floating>Full Name</ion-label>
@@ -41,16 +41,16 @@
       <p>{{IDFile}}</p>
       <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
       <ion-card *ngFor="let image of IDFile; let i = index;">
-          <img [src]="image" />
-          <ion-card-content>
-              <ion-card-title>
-                  Image number # {{i}}
-              </ion-card-title>
-          </ion-card-content>
+        <img [src]="image" />
+        <ion-card-content>
+          <ion-card-title>
+            Image number # {{i}}
+          </ion-card-title>
+        </ion-card-content>
       </ion-card>
     </ion-item>
   </ion-list>
-  <label>Bike Information</label>
+  <label class="bold">Bike Information</label>
   <ion-list>
     <ion-item>
       <ion-label floating>Bike Number</ion-label>
@@ -69,7 +69,7 @@
       <ion-input [(ngModel)]="CategoryClass" type="text"></ion-input>
     </ion-item>
   </ion-list>
-  <label>Bank Information</label>
+  <label class="bold">Bank Information</label>
   <ion-list>
     <ion-item>
       <ion-label floating>Account Name</ion-label>
@@ -93,33 +93,26 @@
     </ion-item>
   </ion-list>
 
-  <label>Medical Form</label>
+  <label class="bold">Medical Form</label>
   <ion-list>
 
     <ion-item>
       <ion-label>
-        Please Click here to download the medical form, print out and sign by a doctor
+        Please Click <button ion-button (click)="openLocalPdf()" clear>here</button>  to download the medical form, print out and sign by a doctor
       </ion-label>
     </ion-item>
   </ion-list>
-  <label>Important Note</label>
+  <label class="bold">Important Note</label>
   <ion-list>
     <ion-item>
-      <ion-label>
-        It is strictly forbidden to subscribe any rider without:
-      </ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Life Jacket</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Safety helmet for the head</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Protective legs</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Shoes, glasses, gloves</ion-label>
+      <h4>
+          It is strictly forbidden to subscribe any rider without:</h4>
+      <ul class="imp-notes">
+        <li>Life Jacket</li>
+        <li>Safety helmet for the head</li>
+        <li>Protective legs</li>
+        <li>Shoes, glasses, gloves</li>
+      </ul>
     </ion-item>
   </ion-list>
   <button ion-button color="secondary" (click)="SaveAquaBikeForm()">Submit</button>

@@ -138,7 +138,7 @@ export class SignupMembershipPage {
           headers: this.createAuthorizationHeader()
         };
         this.http
-          .post<any>('http://trendix.qa/dmsc/api/dmsc/signupEvent ', para, options)
+          .post<any>('http://trendix.qa/dmsc/api/dmsc/signupMembership', para, options)
           .pipe(map(data => data))
           .subscribe(
             restItems => {

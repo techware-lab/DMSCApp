@@ -33,7 +33,7 @@
       <ion-card-title>
         <ion-icon name="call"></ion-icon>
         {{ "CallUs" | translate }}
-        <a href="tel:1800123456789">1800123456789</a>
+        <a href="tel:0097455734539">55734539</a>
       </ion-card-title>
       <p>
         {{ "becomeMemberHeader" | translate }}
@@ -41,6 +41,6 @@
     </ion-card-content>
   </ion-card>
 
-  <button *ngIf="!service.loginState" (click)="goToProfilePage()" ion-button block>
+  <button *ngIf="!service.loginState" (click)="goToMembershipPage()" ion-button block>
     {{ "joinClub" | translate }}</button>
 </ion-content>

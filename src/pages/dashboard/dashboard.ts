@@ -4,6 +4,7 @@ import { ServiceProvider } from '../../providers/service/service';
 import { ModalContentPage } from '../activities/activities';
 import { ProfilePage } from '../profile/profile';
 import { TranslateService } from '@ngx-translate/core';
+import { SignupMembershipPage } from '../signup-membership/signup-membership';
 
 @IonicPage()
 @Component({
@@ -34,6 +35,9 @@ export class DashboardPage {
 
   goToProfilePage() {
     this.navCtrl.push(ProfilePage);
+  }
+  goToMembershipPage() {
+    this.navCtrl.push(SignupMembershipPage);
   }
   openModal(characterNum) {
     this.activity = this.activityList.filter(x => x.category_id == characterNum.charNum)[0];

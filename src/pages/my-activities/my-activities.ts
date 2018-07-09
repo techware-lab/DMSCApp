@@ -51,6 +51,7 @@ export class MyActivitiesPage {
             if (restItems.status) {
               this.activitiesList = restItems.response;
               console.log(this.activitiesList);
+              this.getMyActivities();
             }
             else {
               const confirm = this.alertCtrl.create({

@@ -49,6 +49,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 import { Base64 } from '@ionic-native/base64';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
+import { DocumentViewer } from '@ionic-native/document-viewer';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -148,6 +149,7 @@ export function createTranslateLoader(http: HttpClient) {
     Base64,   
     Transfer,
     FilePath,
+    DocumentViewer
   ]
 })
 export class AppModule {

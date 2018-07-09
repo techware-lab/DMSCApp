@@ -30,7 +30,7 @@
     <ion-list *ngIf="service.loginState">
       <button class="nav-btn" menuClose ion-item (click)="goToChangePasswordPage()">
         <ion-icon name="lock"></ion-icon>
-        Change Password {{"changePassword" | translate}}</button>
+        {{"changePassword" | translate}}</button>
       <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType === 'RACER'" (click)="gotoMyEvents()">
         <ion-icon name="boat"></ion-icon>
        {{"myEvents" | translate}}</button>

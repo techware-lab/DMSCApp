@@ -7,6 +7,7 @@ import { ServiceProvider } from '../../providers/service/service';
 // import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { CameraOptions, Camera } from '@ionic-native/camera';
+import { DocumentViewer, DocumentViewerOptions } from '@ionic-native/document-viewer';
 import { EventsPage } from '../events/events';
 
 @IonicPage()
@@ -42,7 +43,7 @@ export class AquaBikeFormPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
     // private transfer: FileTransfer,
-    private camera: Camera,
+    private camera: Camera,  private document: DocumentViewer,
     public toastCtrl: ToastController,
     private fileChooser: FileChooser) {
   }
@@ -163,7 +164,8 @@ export class AquaBikeFormPage {
           'bike_no': this.BikeNumber, 'license_number': this.LicenceNumber,
           'previous_licensce': this.PrevLicenceNumber, 'category': this.CategoryClass,
           'id_card': this.IDFile,
-
+          'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
+          'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
         }
         let loader = this.loadingCtrl.create({
           content: "Saving " + this.Events.training_name + "..."
@@ -223,5 +225,11 @@ export class AquaBikeFormPage {
         console.log(e);
         this.presentToast(e);
       });
+  }
+  openLocalPdf() {
+    const options: DocumentViewerOptions = {
+      title: 'Medical Form'
+    }
+    this.document.viewDocument('assets/medical_form.pdf', 'application/pdf', options);
   }
 }

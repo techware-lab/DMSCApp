@@ -166,7 +166,9 @@ export class FishingFormPage {
         'customer_type': this.service.UserDetails.CustomerType,'leader_id': this.TLID,'boat_owner': this.BoatOwner,
         'team_leader': this.TLName, 'owner_id': this.BoatOwnerID, 'boat_name': this.BoatName,
         'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_member': this.Participants,
-        'id_card':this.IDFile
+        'id_card':this.IDFile,
+        'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
+        'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
         // 'team_card': [this.membersfileURI]
       }
       const options = {

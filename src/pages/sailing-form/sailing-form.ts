@@ -137,7 +137,9 @@ export class SailingFormPage {
           'customer_type': this.service.UserDetails.CustomerType,
           'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
           'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_participant': this.Participants,
-          'owner_id': this.BoatOwnerID, 'owner_name': this.BoatOwner, 'owner_mobile': this.BoatOwnerMobile
+          'owner_id': this.BoatOwnerID, 'owner_name': this.BoatOwner, 'owner_mobile': this.BoatOwnerMobile,
+          'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
+          'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
 
           //'team_card': [this.membersfileURI]
         }
