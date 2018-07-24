@@ -39,16 +39,12 @@
       <ion-input [disabled]='true' [(ngModel)]="IDNo" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <p>{{IDFile}}</p>
       <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
-      <ion-card *ngFor="let image of IDFile; let i = index;">
-        <img [src]="image" />
-        <ion-card-content>
-          <ion-card-title>
-            Image number # {{i}}
-          </ion-card-title>
-        </ion-card-content>
-      </ion-card>
+        <ion-card>
+          <ion-card-content>
+            <img [src]="IDFileShow" /> 
+          </ion-card-content>
+        </ion-card>     
     </ion-item>
   </ion-list>
   <label class="bold">Boat Information</label>
@@ -70,6 +66,10 @@
       <ion-input [(ngModel)]="TLID" type="text"></ion-input>
     </ion-item>
     <ion-item>
+      <ion-label floating>Boat Owner ID</ion-label>
+      <ion-input [(ngModel)]="BoatOwnerID" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
       <ion-label floating>Boat Owner</ion-label>
       <ion-input [(ngModel)]="BoatOwner" type="text"></ion-input>
     </ion-item>
@@ -82,10 +82,24 @@
       <ion-input [(ngModel)]="Participants" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <button ion-button color="secondary" (click)="getMembersIds()">Upload All Team Members ID Card</button>
+      <button ion-button (click)="getMembersIds()">Choose Member ID Card</button>     
+      <ion-list>
+        <ion-item>
+            <ion-card *ngFor="let id of MemberIDList; let i = index;">
+                <ion-card-content>
+                   {{i + 1}} <img [src]="id.IdFileb64" /> 
+                </ion-card-content>
+              </ion-card>
+        </ion-item>
+      </ion-list>
     </ion-item>
     <ion-item>
-      <button ion-button color="secondary" (click)="getMembersIds()">Upload Copy of Boat Registration</button>
+      <button ion-button (click)="getBoatIds()">Choose Copy of Boat Registration</button>      
+      <ion-card>
+          <ion-card-content>
+              <img [src]="BoatRegFileShow" /> 
+          </ion-card-content>
+        </ion-card>
     </ion-item>
   </ion-list>
   <label class="bold">Bank Information</label>

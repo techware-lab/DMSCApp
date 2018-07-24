@@ -45,6 +45,7 @@
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-file-transfer": "^1.7.1",
+    "cordova-plugin-filechooser": "^1.0.1",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
     "cordova-plugin-ionic-webview": "^1.1.19",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -76,7 +77,8 @@
       "cordova-plugin-telerik-imagepicker": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "your usage message"
       },
-      "com-badrit-base64": {}
+      "com-badrit-base64": {},
+      "cordova-plugin-filechooser": {}
     },
     "platforms": [
       "browser",

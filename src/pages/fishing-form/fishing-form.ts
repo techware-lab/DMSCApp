@@ -3,9 +3,9 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
-import { FileChooser } from '@ionic-native/file-chooser';
 // import { FileTransfer } from '@ionic-native/file-transfer';
 import { CameraOptions, Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 @IonicPage()
 @Component({
@@ -21,11 +21,14 @@ export class FishingFormPage {
   Blood: any;
   IDNo: any;
   IDFile: any;
+  IDFileShow: any;
   ACName: any;
   BankName: any;
   ACNumber: any;
   SwiftCode: any;
   IBANNumber: any;
+  MemberIDList: any;
+  BoatRegFileList: any;
 
   BoatNumber: any;
   BoatName: any;
@@ -38,17 +41,19 @@ export class FishingFormPage {
   Participants: any;
   BoatRegFile: any;
   AllMemberIDFlies: any;
+  BoatRegFileShow: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
     // private transfer: FileTransfer,
-    private camera: Camera,
-    public toastCtrl: ToastController,
-    private fileChooser: FileChooser) {
+    private camera: Camera, private imgPicker: ImagePicker,
+    public toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
     this.Events = this.navParams.data;
+    this.BoatRegFileShow = 'assets/imgs/noimage.jpg';
+    this.IDFileShow = 'assets/imgs/noimage.jpg';
     this.FishingForm();
   }
 
@@ -64,7 +69,8 @@ export class FishingFormPage {
         headers: this.createAuthorizationHeader()
       };
       const para = {
-        'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id, 'customer_id': this.service.UserDetails.CustomerID,
+        'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
+         'customer_id': this.service.UserDetails.CustomerID,
         'customer_type': this.service.UserDetails.CustomerType
       }
       this.http
@@ -123,15 +129,48 @@ export class FishingFormPage {
     toast.present();
   }
   getMembersIds() {
-    this.fileChooser.open()
+    const options = {
+      maximumImagesCount: 10,
+      quality: 100
+    }
+    this.imgPicker.getPictures(options).then((results) => {
+      for (var i = 0; i < results.length; i++) {
+        console.log('Image URI: ' + results[i]);
+        let base64Image = 'data:image/jpeg;base64,' + results[i];
+        this.MemberIDList.push({ 'IdFileb64': base64Image, 'IDFile' : results[i] });
+      }
+    }, (err) => {
+      this.presentToast(err)
+    });
+  }
+
+
+  getBoatIds() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    let loader = this.loadingCtrl.create({
+      content: "Loading Image.."
+    });
+    loader.present();
+    this.camera.getPicture(options)
       .then(uri => {
         console.log(uri);
-        // this.membersfileURI = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.BoatRegFile = uri;
+        this.BoatRegFileShow = base64Image;
+        loader.dismissAll();
       })
       .catch(e => {
+        loader.dismissAll();
         console.log(e);
         this.presentToast(e);
       });
+  }
+  addMemberFile(file) {
+    this.MemberIDList.push(file);
   }
 
   SaveFishingForm() {
@@ -158,46 +197,48 @@ export class FishingFormPage {
       validationMessage = 'Number of participants required.';
     }
     if (validationMessage === '' || validationMessage === undefined) {
-    loader.present();
-    try {
-      const para = {
-        'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
-        'customer_id': this.service.UserDetails.CustomerID,'owner_mobile': this.BoatOwnerMobile,
-        'customer_type': this.service.UserDetails.CustomerType,'leader_id': this.TLID,'boat_owner': this.BoatOwner,
-        'team_leader': this.TLName, 'owner_id': this.BoatOwnerID, 'boat_name': this.BoatName,
-        'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_member': this.Participants,
-        'id_card':this.IDFile,
-        'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
-        'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
-        // 'team_card': [this.membersfileURI]
-      }
-      const options = {
-        headers: this.createAuthorizationHeader()
-      };
-      this.http
-        .post<any>('http://trendix.qa/dmsc/api/dmsc/fishingBooking ', para, options)
-        .pipe(map(data => data))
-        .subscribe(
-          restItems => {
-            loader.dismissAll();
+      loader.present();
+      try {
+        const para = {
+          'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
+          'customer_id': this.service.UserDetails.CustomerID, 'owner_mobile': this.BoatOwnerMobile,
+          'customer_type': this.service.UserDetails.CustomerType, 'leader_id': this.TLID,
+          'boat_owner': this.BoatOwner,
+          'team_leader': this.TLName, 'owner_id': this.BoatOwnerID, 'boat_name': this.BoatName,
+          'boat_number': this.BoatNumber, 'total_member': this.Participants,
+          'id_card': this.IDFile,
+          'account_name': this.ACName, 'bank_name': this.BankName, 'account_number': this.ACNumber,
+          'pan_no': this.IBANNumber, 'swift_code': this.SwiftCode,
+          'team_card': JSON.stringify(this.MemberIDList)
+        }
+        const options = {
+          headers: this.createAuthorizationHeader()
+        };
+        this.http
+          .post<any>('http://trendix.qa/dmsc/api/dmsc/fishingBooking ', para, options)
+          .pipe(map(data => data))
+          .subscribe(
+            restItems => {
+              loader.dismissAll();
 
-            let alert = this.alertCtrl.create({
-              title: this.Events.training_name + ' Booking',
-              subTitle: restItems.message,
-              buttons: [{
-                text: 'OK', handler: () => {
-                }
-              }]
-            });
-            alert.present();
-          }
-        );
+              let alert = this.alertCtrl.create({
+                title: this.Events.training_name + ' Booking',
+                subTitle: restItems.message,
+                buttons: [{
+                  text: 'OK', handler: () => {
+                  }
+                }]
+              });
+              alert.present();
+            }
+          );
+      }
+      catch (ex) {
+        loader.dismissAll();
+        console.log(ex);
+      }
     }
-    catch (ex) {
-      loader.dismissAll();
-       console.log(ex); }
-    }
-    else{
+    else {
       this.presentToast(validationMessage);
     }
   }
@@ -209,21 +250,22 @@ export class FishingFormPage {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     let loader = this.loadingCtrl.create({
-      content: "Loading Image.." 
+      content: "Loading Image.."
     });
     loader.present();
-      this.camera.getPicture(options)
-        .then(uri => {
-          console.log(uri);
-          this.IDFile = uri;
-          let base64Image = 'data:image/jpeg;base64,' + uri;
-          this.IDFile.push(base64Image);
-          loader.dismissAll();
-        })
-        .catch(e => {
-          loader.dismissAll();
-          console.log(e);
-          this.presentToast(e);
-        });
-    }
+    this.camera.getPicture(options)
+      .then(uri => {
+        console.log(uri);
+        this.IDFile = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.IDFile = uri;
+        this.IDFileShow = base64Image;
+        loader.dismissAll();
+      })
+      .catch(e => {
+        loader.dismissAll();
+        console.log(e);
+        this.presentToast(e);
+      });
+  }
 }

@@ -7,13 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Camera } from '@ionic-native/camera';
-import { ImagePicker } from '@ionic-native/image-picker';
-import { Base64 } from '@ionic-native/base64';
 import { ServiceProvider } from '../../providers/service/service';
-import { File } from '@ionic-native/file';
-// import { Transfer } from '@ionic-native/transfer';
-// import { FilePath } from '@ionic-native/file-path';
-declare var cordova: any;
 export class Dependent {
   MemberName: any;
   DOB: any; Email: any;
@@ -27,12 +21,12 @@ export class Dependent {
 export class SignupMembershipPage {
   lastImageSpouse: string = null;
   lastImageMember: string = null;
+  SpouseImageChanged: boolean = false;
+  MemberImageChanged: boolean = false;
   constructor(public navCtrl: NavController, public translate: TranslateService, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public camera: Camera,
     public toastCtrl: ToastController, public http: HttpClient, public navParams: NavParams
-    , private imagePicker: ImagePicker, public actionSheetCtrl: ActionSheetController,
-    private base64: Base64,  // private transfer: Transfer, 
-    private file: File, // private filePath: FilePath,
+    ,public actionSheetCtrl: ActionSheetController,
     public platform: Platform
   ) {
   }
@@ -66,8 +60,8 @@ export class SignupMembershipPage {
   NationlaityList: any;
   ionViewDidLoad() {
     this.MembershipType = 'Single';
-    this.SpouseImage = 'assets/imgs/avathar-default.png';
-    this.MemberImage = 'assets/imgs/avathar-default.png';
+    this.lastImageSpouse = 'assets/imgs/avathar-default.png';
+    this.lastImageMember = 'assets/imgs/avathar-default.png';
     this.Dependents = [this.Dependant];
     this.Dependents.splice(0, 1);
     let loader = this.loadingCtrl.create({
@@ -115,9 +109,32 @@ export class SignupMembershipPage {
       validationMessage = 'Type of Class required.'
     } else if (this.PBox == '' || this.PBox === undefined) {
       validationMessage = 'P.O.Box No required.'
+    } else if (!this.MemberImageChanged) {
+      validationMessage = 'Member Image required.'
     }
+    // else if (!this.SpouseImageChanged) {
+    //   validationMessage = 'Spouse Image required.'
+    // } 
     if (validationMessage === '' || validationMessage === undefined) {
       try {
+        // const formData = new FormData;
+        // formData.append('emai_id',this.Username);
+        // formData.append('password',this.Password);
+        // formData.append('full_name',this.FullName);
+        // formData.append('mobile_no',this.Mobile);
+        // formData.append('nationality',this.Nationality);
+        // formData.append('member_dob',this.DOB);
+        // formData.append('member_type',this.MembershipType);
+        // formData.append('sailing_experience',this.PrevSailingExp);
+        // formData.append('type_classes',this.TypeOfClass);
+        // formData.append('previous_club',this.PrevSailMembership);
+        // formData.append('member_image',this.MemberPhoto);
+        // formData.append('spouse_image',this.SpousePhoto);
+        // formData.append('employer',this.Employer);
+        // formData.append('pobox',this.PBox);
+        // formData.append('occupation',this.Occupation);
+        // formData.append('dependents',JSON.stringify(this.Dependents));
+        // formData.append('faxno',this.Fax);
         const para = {
           'emai_id': this.Username, 'password': this.Password,
           'full_name': this.FullName, 'mobile_no': this.Mobile,
@@ -126,7 +143,7 @@ export class SignupMembershipPage {
           'type_classes': this.TypeOfClass, 'previous_club': this.PrevSailMembership,
           'member_image': this.MemberPhoto, 'spouse_image': this.SpousePhoto,
           'employer': this.Employer, 'pobox': this.PBox, 'occupation': this.Occupation,
-          'dependents': this.Dependents, 'faxno': this.Fax
+          'dependents': this.Dependents, 'faxno': this.Fax,
           //  'account_name': this.ACName,
           // 'bank_name': this.BankName, 'account_number': this.ACNumber, 'iban_number': this.IBANNumber
           // , 'swift_code': this.SwiftCode
@@ -166,58 +183,10 @@ export class SignupMembershipPage {
   }
   createAuthorizationHeader() {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json; charset=utf-8',
+      // 'Content-Type': 'application/json; charset=utf-8',
       'x-api-key': '123456'
     });
     return headers;
-  }
-  chooseSpousePhoto() {
-
-    // const options: CameraOptions = {
-    //   quality: 100,
-    //   destinationType: this.camera.DestinationType.FILE_URI,
-    //   sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-    // }
-    let loader = this.loadingCtrl.create({
-      content: "Loading Image.."
-    });
-    loader.present();
-    let options = {
-      maximumImagesCount: 1
-    };
-    this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-        this.SpouseImage = results[i];
-        this.base64.encodeFile(results[i]).then((base64File: string) => {
-          this.SpousePhoto = base64File;
-        }, (err) => {
-          loader.dismissAll();
-          console.log(err);
-          this.presentToast(err);
-        });
-      }
-
-      loader.dismissAll();
-    }, (err) => {
-      this.presentToast(err);
-      loader.dismissAll();
-    });
-
-
-
-    // this.camera.getPicture(options)
-    //   .then(uri => {
-    //     console.log(uri);
-    //     this.SpousePhoto = uri;
-    //     let base64Image = 'data:image/jpeg;base64,' + uri;
-    //     this.SpouseImage = base64Image;
-    //     loader.dismissAll();
-    //   })
-    //   .catch(e => {
-    //     loader.dismissAll();
-    //     console.log(e);
-    //     this.presentToast(e);
-    //   });
   }
   presentToast(msg) {
     let toast = this.toastCtrl.create({
@@ -231,32 +200,6 @@ export class SignupMembershipPage {
     });
 
     toast.present();
-  }
-  chooseMemberPhoto() {
-    let loader = this.loadingCtrl.create({
-      content: "Loading Image.."
-    });
-    loader.present();
-    let options = {
-      maximumImagesCount: 1
-    };
-    this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-        this.MemberImage = results[i];
-        this.base64.encodeFile(results[i]).then((base64File: string) => {
-          this.MemberPhoto = base64File;
-        }, (err) => {
-          loader.dismissAll();
-          this.presentToast(err);
-          console.log(err);
-        });
-      }
-
-      loader.dismissAll();
-    }, (err) => {
-      this.presentToast(err);
-      loader.dismissAll();
-    });
   }
   AddDependent() {
     let validationMessage: string = '';
@@ -309,7 +252,7 @@ export class SignupMembershipPage {
   }
   public takePicture(sourceType, type) {
     // Create options for the Camera Dialog
-    var options = {
+    var options = {      
       quality: 100,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
@@ -318,55 +261,21 @@ export class SignupMembershipPage {
 
     // Get the data of an image
     this.camera.getPicture(options).then((imagePath) => {
-      // Special handling for Android library
-      // if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-      //   this.filePath.resolveNativePath(imagePath)
-      //     .then(filePath => {
-      //       let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-      //       let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-      //       this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-      //     });
-      // } else {
-      debugger;
-      var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-      var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-      this.copyFileToLocalDir(correctPath, currentName, this.createFileName(), type);
-      // }
-    }, () => {
-        debugger;
-        this.presentToast('Error while selecting image.');
-      });
-  }// Create a new name for the image
-  private createFileName() {
-    var d = new Date(),
-      n = d.getTime(),
-      newFileName = n + ".jpg";
-    return newFileName;
-  }
-
-  // Copy the image to a local folder
-  private copyFileToLocalDir(namePath, currentName, newFileName, type) {
-    this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(() => {
+      
       if (type === 'Spouse') {
-        this.lastImageSpouse = newFileName;
+        this.lastImageSpouse = 'data:image/png;base64,' + imagePath;
+        this.SpousePhoto = imagePath;
+        this.SpouseImageChanged = true;
       }
       else {
-        this.lastImageMember = newFileName;
-      }
-    }, error => {
+        this.lastImageMember = 'data:image/png;base64,' + imagePath;
+        this.MemberPhoto = imagePath;
+        this.MemberImageChanged = true;
+      }     
+    }, () => {
       debugger;
-      console.log(error);
-      this.presentToast(error);
+      this.presentToast('Error while selecting image.');
     });
   }
 
-
-  // Always get the accurate path to your apps folder
-  public pathForImage(img) {
-    if (img === null) {
-      return '';
-    } else {
-      return cordova.file.dataDirectory + img;
-    }
-  }
 }

@@ -96,7 +96,7 @@
         </span>
         <ion-card>
           <ion-card-content>
-            <img src="{{pathForImage(lastImageMember)}}" />
+            <img [src]="lastImageMember" />
           </ion-card-content>
         </ion-card>
       </ion-item>
@@ -107,7 +107,7 @@
         </span>
         <ion-card>
           <ion-card-content>
-            <img src="{{pathForImage(lastImageSpouse)}}" />
+            <img [src]="lastImageSpouse" />
           </ion-card-content>
         </ion-card>
       </ion-item>
@@ -128,7 +128,7 @@
       </ion-item>
     </ion-list>
     <label class="bold">Login Information</label>
-    <ion-list>
+    <ion-list>     
       <ion-item>
         <ion-label floating>Email(User Name)</ion-label>
         <ion-input type="email" [(ngModel)]="Username"></ion-input>
@@ -138,5 +138,9 @@
         <ion-input type="password" [(ngModel)]="Password" ></ion-input>
       </ion-item>
     </ion-list>
-    <button ion-button (click)="RegisterActivities()" >Register New Account</button>    
+    <button ion-button (click)="RegisterActivities()" >Register New Account</button> 
+    
+    
+
+
 </ion-content>
