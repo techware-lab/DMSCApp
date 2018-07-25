@@ -86,7 +86,7 @@ export class MyApp {
     }
     else { params = { tabIndex: 0 }; }
     // If tabs page is already active just change the tab index
-    if (this.nav.getActiveChildNavs().length && page.index != undefined && page.index > 0) {
+    if (this.nav.getActiveChildNavs().length && page.index != undefined && page.index > 0) {      
       this.nav.getActiveChildNavs()[0].select(page.index);
     }
     else {
