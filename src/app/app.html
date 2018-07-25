@@ -25,32 +25,31 @@
         <ion-icon name="{{p.icon}}"></ion-icon>
         {{p.title | translate}}
       </button>
-    </ion-list>
-
-    <ion-list *ngIf="service.loginState">
-      <button class="nav-btn" menuClose ion-item (click)="goToChangePasswordPage()">
-        <ion-icon name="lock"></ion-icon>
-        {{"changePassword" | translate}}</button>
-      <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType === 'RACER'" (click)="gotoMyEvents()">
-        <ion-icon name="boat"></ion-icon>
-       {{"myEvents" | translate}}</button>
-      <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType !== 'RACER'" (click)="gotoMyactivities()">
-        <ion-icon name="basketball"></ion-icon>
-        {{"myActivities" | translate}}</button>
-      <button class="nav-btn" menuClose ion-item (click)="service.logout()">
-        <ion-icon name="log-out"></ion-icon>
-        {{"logout" | translate}}
-      </button>
-    </ion-list>
-    <ion-list *ngIf="!service.loginState">
-      <button class="nav-btn" menuClose ion-item (click)="goToLoginPage()">
-        <ion-icon name="key"></ion-icon>
-        {{"login" | translate}}
-      </button>
-      <button class="nav-btn" menuClose ion-item (click)="goToProfilePage()">
-        <ion-icon name="person-add"></ion-icon>
-        {{"Signup" | translate}}
-      </button>
+      <div *ngIf="service.loginState">
+        <button class="nav-btn" menuClose ion-item (click)="goToChangePasswordPage()">
+          <ion-icon name="lock"></ion-icon>
+          {{"changePassword" | translate}}</button>
+        <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType === 'RACER'" (click)="gotoMyEvents()">
+          <ion-icon name="boat"></ion-icon>
+          {{"myEvents" | translate}}</button>
+        <button class="nav-btn" menuClose ion-item *ngIf="service.UserDetails.CustomerType !== 'RACER'" (click)="gotoMyactivities()">
+          <ion-icon name="basketball"></ion-icon>
+          {{"myActivities" | translate}}</button>
+        <button class="nav-btn" menuClose ion-item (click)="service.logout()">
+          <ion-icon name="log-out"></ion-icon>
+          {{"logout" | translate}}
+        </button>
+      </div>
+      <div *ngIf="!service.loginState">
+        <button class="nav-btn" menuClose ion-item (click)="goToLoginPage()">
+          <ion-icon name="key"></ion-icon>
+          {{"login" | translate}}
+        </button>
+        <button class="nav-btn" menuClose ion-item (click)="goToProfilePage()">
+          <ion-icon name="person-add"></ion-icon>
+          {{"Signup" | translate}}
+        </button>
+      </div>
     </ion-list>
     <img src="assets/imgs/logo TRANS.png" />
   </ion-content>

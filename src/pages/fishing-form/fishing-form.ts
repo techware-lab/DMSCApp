@@ -6,7 +6,6 @@ import { ServiceProvider } from '../../providers/service/service';
 // import { FileTransfer } from '@ionic-native/file-transfer';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-
 @IonicPage()
 @Component({
   selector: 'page-fishing-form',
@@ -27,7 +26,7 @@ export class FishingFormPage {
   ACNumber: any;
   SwiftCode: any;
   IBANNumber: any;
-  MemberIDList: any;
+  MemberIDList: any = [];
   BoatRegFileList: any;
 
   BoatNumber: any;
@@ -42,6 +41,8 @@ export class FishingFormPage {
   BoatRegFile: any;
   AllMemberIDFlies: any;
   BoatRegFileShow: string;
+  MemberIDFile: any;
+  MemberIDFileShow: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
@@ -52,11 +53,14 @@ export class FishingFormPage {
 
   ionViewDidLoad() {
     this.Events = this.navParams.data;
+    this.MemberIDList = [];
     this.BoatRegFileShow = 'assets/imgs/noimage.jpg';
     this.IDFileShow = 'assets/imgs/noimage.jpg';
     this.FishingForm();
   }
-
+changeParticipatns(e){
+  this.MemberIDList = [];
+}
 
   FishingForm() {
 
@@ -70,7 +74,7 @@ export class FishingFormPage {
       };
       const para = {
         'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
-         'customer_id': this.service.UserDetails.CustomerID,
+        'customer_id': this.service.UserDetails.CustomerID,
         'customer_type': this.service.UserDetails.CustomerType
       }
       this.http
@@ -130,14 +134,14 @@ export class FishingFormPage {
   }
   getMembersIds() {
     const options = {
-      maximumImagesCount: 10,
+      maximumImagesCount: this.Participants,
       quality: 100
     }
     this.imgPicker.getPictures(options).then((results) => {
       for (var i = 0; i < results.length; i++) {
-        console.log('Image URI: ' + results[i]);
         let base64Image = 'data:image/jpeg;base64,' + results[i];
-        this.MemberIDList.push({ 'IdFileb64': base64Image, 'IDFile' : results[i] });
+
+        this.MemberIDList.push({ 'IdFileb64': base64Image, 'IDFile': results[i] });
       }
     }, (err) => {
       this.presentToast(err)
@@ -147,8 +151,9 @@ export class FishingFormPage {
 
   getBoatIds() {
     const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      // destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     let loader = this.loadingCtrl.create({
@@ -157,7 +162,6 @@ export class FishingFormPage {
     loader.present();
     this.camera.getPicture(options)
       .then(uri => {
-        console.log(uri);
         let base64Image = 'data:image/jpeg;base64,' + uri;
         this.BoatRegFile = uri;
         this.BoatRegFileShow = base64Image;
@@ -169,8 +173,8 @@ export class FishingFormPage {
         this.presentToast(e);
       });
   }
-  addMemberFile(file) {
-    this.MemberIDList.push(file);
+  addMemberFile() {
+    this.MemberIDList.push({ 'IdFileb64': this.MemberIDFileShow, 'IDFile': this.MemberIDFile });
   }
 
   SaveFishingForm() {
@@ -206,10 +210,10 @@ export class FishingFormPage {
           'boat_owner': this.BoatOwner,
           'team_leader': this.TLName, 'owner_id': this.BoatOwnerID, 'boat_name': this.BoatName,
           'boat_number': this.BoatNumber, 'total_member': this.Participants,
-          'id_card': this.IDFile,
+          'id_card': this.IDFile, 'boat_reg': this.BoatRegFile,
           'account_name': this.ACName, 'bank_name': this.BankName, 'account_number': this.ACNumber,
           'pan_no': this.IBANNumber, 'swift_code': this.SwiftCode,
-          'team_card': JSON.stringify(this.MemberIDList)
+          'team_card': this.MemberIDList
         }
         const options = {
           headers: this.createAuthorizationHeader()
@@ -245,8 +249,8 @@ export class FishingFormPage {
 
   chooseUserIDCard() {
     const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     let loader = this.loadingCtrl.create({
@@ -255,11 +259,32 @@ export class FishingFormPage {
     loader.present();
     this.camera.getPicture(options)
       .then(uri => {
-        console.log(uri);
         this.IDFile = uri;
         let base64Image = 'data:image/jpeg;base64,' + uri;
-        this.IDFile = uri;
         this.IDFileShow = base64Image;
+        loader.dismissAll();
+      })
+      .catch(e => {
+        loader.dismissAll();
+        console.log(e);
+        this.presentToast(e);
+      });
+  }
+  chooseMemberIDCard() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    let loader = this.loadingCtrl.create({
+      content: "Loading Image.."
+    });
+    loader.present();
+    this.camera.getPicture(options)
+      .then(uri => {
+        this.MemberIDFile = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.MemberIDFileShow = base64Image;
         loader.dismissAll();
       })
       .catch(e => {

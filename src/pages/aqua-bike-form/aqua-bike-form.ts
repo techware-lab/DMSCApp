@@ -163,7 +163,7 @@ export class AquaBikeFormPage {
           'customer_type': this.service.UserDetails.CustomerType,
           'bike_no': this.BikeNumber, 'license_number': this.LicenceNumber,
           'previous_licensce': this.PrevLicenceNumber, 'category': this.CategoryClass,
-          'id_card': this.IDFile,
+          'id_card': this.fileURI,
           'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
           'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
         }
@@ -210,8 +210,9 @@ export class AquaBikeFormPage {
     //   mediaType: this.camera.MediaType.PICTURE
     // }
     const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      // destinationType: this.camera.DestinationType.FILE_URI,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     }
     this.camera.getPicture(options)

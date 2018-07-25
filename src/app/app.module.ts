@@ -151,8 +151,8 @@ export function createTranslateLoader(http: HttpClient) {
     ImagePicker,
     Base64,   
     Transfer,
-    FilePath,
-    DocumentViewer
+    FilePath,    
+    DocumentViewer,
   ]
 })
 export class AppModule {

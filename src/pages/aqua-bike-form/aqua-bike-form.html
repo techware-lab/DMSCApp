@@ -38,14 +38,10 @@
       <ion-input [disabled]='true' [(ngModel)]="IDNo" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <p>{{IDFile}}</p>
       <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
-      <ion-card *ngFor="let image of IDFile; let i = index;">
-        <img [src]="image" />
+      <ion-card>
         <ion-card-content>
-          <ion-card-title>
-            Image number # {{i}}
-          </ion-card-title>
+        <img [src]="IDFile" />          
         </ion-card-content>
       </ion-card>
     </ion-item>

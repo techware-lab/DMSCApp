@@ -79,15 +79,16 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Number of Participant</ion-label>
-      <ion-input [(ngModel)]="Participants" type="text"></ion-input>
+      <ion-input [(ngModel)]="Participants" (change)="changeParticipatns($event)" type="number"></ion-input>
     </ion-item>
     <ion-item>
-      <button ion-button (click)="getMembersIds()">Choose Member ID Card</button>     
+      <button ion-button (click)="chooseMemberIDCard()">Choose Member ID Card</button>  
+      <button ion-button color="secondary" (click)="addMemberFile()">Add</button>
       <ion-list>
         <ion-item>
             <ion-card *ngFor="let id of MemberIDList; let i = index;">
                 <ion-card-content>
-                   {{i + 1}} <img [src]="id.IdFileb64" /> 
+                   <img [src]="id.IdFileb64" /> 
                 </ion-card-content>
               </ion-card>
         </ion-item>
@@ -97,7 +98,7 @@
       <button ion-button (click)="getBoatIds()">Choose Copy of Boat Registration</button>      
       <ion-card>
           <ion-card-content>
-              <img [src]="BoatRegFileShow" /> 
+            <img [src]="BoatRegFileShow" /> 
           </ion-card-content>
         </ion-card>
     </ion-item>
