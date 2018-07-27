@@ -43,6 +43,7 @@ export class FishingFormPage {
   BoatRegFileShow: string;
   MemberIDFile: any;
   MemberIDFileShow: string;
+  Agree: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
@@ -54,6 +55,7 @@ export class FishingFormPage {
   ionViewDidLoad() {
     this.Events = this.navParams.data;
     this.MemberIDList = [];
+    this.Agree = false;
     this.BoatRegFileShow = 'assets/imgs/noimage.jpg';
     this.IDFileShow = 'assets/imgs/noimage.jpg';
     this.FishingForm();
@@ -199,6 +201,8 @@ changeParticipatns(e){
       validationMessage = 'Owner ID required.';
     } else if (this.Participants === undefined || this.Participants === '') {
       validationMessage = 'Number of participants required.';
+    }else if (this.Agree === undefined || !this.Agree) {
+      validationMessage = 'Agree Terms and Conditions';
     }
     if (validationMessage === '' || validationMessage === undefined) {
       loader.present();

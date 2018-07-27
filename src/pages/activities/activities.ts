@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, Platform, ViewController, LoadingController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, ModalController, Platform, ViewController, LoadingController, AlertController, Tabs } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
@@ -12,7 +12,7 @@ import { LoginPage } from '../login/login';
   templateUrl: 'activities.html',
 })
 export class ActivitiesPage {
-
+  @ViewChild('myTabs') tabRef: Tabs;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public service: ServiceProvider,
     public modalCtrl: ModalController, public translate: TranslateService,
@@ -25,6 +25,9 @@ export class ActivitiesPage {
     this.navCtrl.push(ModalContentPage, this.activity);
   }
   ionViewDidLoad() {
+    if (this.tabRef != undefined) {
+      this.tabRef.select(0);
+    }
     console.log('ionViewDidLoad ActivitiesPage');
     this.getActivities();
   }

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Tabs } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ServiceProvider } from '../../providers/service/service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
   templateUrl: 'contact.html',
 })
 export class ContactPage {
+  @ViewChild('myTabs') tabRef: Tabs;
   Message: any;
   Subject: any;
   FullName: any;
@@ -22,6 +23,10 @@ export class ContactPage {
   }
 
   ionViewDidLoad() {
+    if (this.tabRef != undefined) {
+      this.tabRef.select(0);
+    }
+
   }
   ContactUs() {
 

@@ -263,12 +263,12 @@ export class SignupMembershipPage {
     this.camera.getPicture(options).then((imagePath) => {
       
       if (type === 'Spouse') {
-        this.lastImageSpouse = 'data:image/png;base64,' + imagePath;
+        this.lastImageSpouse = 'data:image/jpeg;base64,' + imagePath;
         this.SpousePhoto = imagePath;
         this.SpouseImageChanged = true;
       }
       else {
-        this.lastImageMember = 'data:image/png;base64,' + imagePath;
+        this.lastImageMember = 'data:image/jpeg;base64,' + imagePath;
         this.MemberPhoto = imagePath;
         this.MemberImageChanged = true;
       }     

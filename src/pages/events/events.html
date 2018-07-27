@@ -11,7 +11,7 @@
 </ion-header>
 
 <ion-content padding class="card-background-page">
-  <ion-card  (click)="goToEventsDetails(event)"  *ngFor='let event of eventList'>
+  <ion-card class="event-list" (click)="goToEventsDetails(event)"  *ngFor='let event of eventList'>
     <img src="{{event.image}}" />
     <div class="card-title">{{service.lang==='ar'?event.title_ar:event.title}}</div>
     <div class="card-subtitle" [innerHTML]="service.lang==='ar'?event.description_ar:event.description"></div>    

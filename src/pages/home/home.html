@@ -1,7 +1,7 @@
 
 <ion-content center text-center>
    asdsadsad {{'home' | translate}} asdasdsad
-        <ion-tabs [selectedIndex]="myIndex">
+        <ion-tabs #myTabs [selectedIndex]="myIndex">
             <ion-tab [root]="tabDashboard" [rootParams]="chatParams" tabTitle="{{'home' | translate}}" tabIcon="home"></ion-tab>
             <!-- <ion-tab [root]="tabSettings" [rootParams]="chatParams" tabTitle="Settings" tabIcon="cog"></ion-tab> -->
             <ion-tab [root]="tabEvents" [rootParams]="chatParams" tabTitle="{{'events' | translate}}" tabIcon="boat"></ion-tab>

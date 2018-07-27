@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, Tabs } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
@@ -12,39 +12,43 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'events.html',
 })
 export class EventsPage {
+  @ViewChild('myTabs') tabRef: Tabs;
   eventList;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,   
-    public loadingCtrl: LoadingController, public translate: TranslateService,   public service: ServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: HttpClient,
+    public loadingCtrl: LoadingController, public translate: TranslateService, public service: ServiceProvider) {
   }
 
   ionViewDidLoad() {
+    if (this.tabRef != undefined) {
+      this.tabRef.select(0);
+    }
     console.log('ionViewDidLoad EventsPage');
     this.getEvents();
   }
 
   goToEventsDetails(evtId) {
-    this.navCtrl.push(EventDetailsPage,{event: evtId});
+    this.navCtrl.push(EventDetailsPage, { event: evtId });
   }
   getEvents() {
-    try{
-    let loader = this.loadingCtrl.create({
-      content: "Loading Events..."
-    });
-    loader.present();
-    const options = {
-      headers: this.createAuthorizationHeader()
-    };
+    try {
+      let loader = this.loadingCtrl.create({
+        content: "Loading Events..."
+      });
+      loader.present();
+      const options = {
+        headers: this.createAuthorizationHeader()
+      };
 
-    this.http
-      .post<any>('http://trendix.qa/dmsc/api/dmsc/events', '', options)
-      .pipe(map(data => data))
-      .subscribe(
-        restItems => {
-          this.eventList = restItems.response;
-          loader.dismissAll();
-          console.log(this.eventList);
-        }
-      );
+      this.http
+        .post<any>('http://trendix.qa/dmsc/api/dmsc/events', '', options)
+        .pipe(map(data => data))
+        .subscribe(
+          restItems => {
+            this.eventList = restItems.response;
+            loader.dismissAll();
+            console.log(this.eventList);
+          }
+        );
     }
     catch (ex) { console.log(ex) }
   }
