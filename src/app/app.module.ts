@@ -155,7 +155,7 @@ export function createTranslateLoader(http: HttpClient) {
     Base64,   
     Transfer,
     FilePath,    
-    DocumentViewer,
+    DocumentViewer
   ]
 })
 export class AppModule {

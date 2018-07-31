@@ -75,26 +75,41 @@ export class MyApp {
     this.nav.push(ProfilePage);
   }
   goToLoginPage() {
-    
+
     let login = this.modalCtrl.create(LoginPage);
+    login.present();
+  }
+  goToFeesPage() {
+
+    let login = this.modalCtrl.create(FeesPage);
+    login.present();
+  }
+  goToSettingsPage() {
+
+    let login = this.modalCtrl.create(SettingsPage);
     login.present();
   }
   openPage(page) {
     let params = {};
-
-    // The index is equal to the order of our tabs inside tabs.ts
-    if (page.index) {
-      params = { tabIndex: page.index };
-    }
-    else { params = { tabIndex: 0 }; }
-    // If tabs page is already active just change the tab index
-    if (this.nav.getActiveChildNavs().length >0) {      
-      this.nav.getActiveChildNavs()[0].select(page.index);
-    }
-    else {
-      // Tabs are not active, so reset the root page 
-      // In this case: moving to or from SpecialPage
-      this.nav.setRoot(page.component, params);
+    if (page.component.name == "FeesPage") {
+      this.goToFeesPage();
+    } else if (page.component.name == "SettingsPage") {
+      this.goToSettingsPage();
+    } else {
+      // The index is equal to the order of our tabs inside tabs.ts
+      if (page.index) {
+        params = { tabIndex: page.index };
+      }
+      else { params = { tabIndex: 0 }; }
+      // If tabs page is already active just change the tab index
+      if (this.nav.getActiveChildNavs().length > 0) {
+        this.nav.getActiveChildNavs()[0].select(page.index);
+      }
+      else {
+        // Tabs are not active, so reset the root page 
+        // In this case: moving to or from SpecialPage
+        this.nav.setRoot(page.component, params);
+      }
     }
   }
 

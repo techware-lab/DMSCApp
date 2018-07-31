@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Tabs } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Tabs, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ServiceProvider } from '../../providers/service/service';
 
@@ -10,7 +10,7 @@ import { ServiceProvider } from '../../providers/service/service';
 })
 export class SettingsPage {
   @ViewChild('myTabs') tabRef: Tabs;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,public vwCtrl:ViewController,
     public translate: TranslateService, public service: ServiceProvider) {
     if (this.service.lang === undefined || this.service.lang !== 'ar') {
       this.translate.setDefaultLang('en');
@@ -25,6 +25,9 @@ export class SettingsPage {
     this.translate.use(this.service.lang);
   }
 
+  closeSettings(){
+    this.vwCtrl.dismiss();
+  }
   ionViewDidLoad() {
     if (this.tabRef != undefined) {
       this.tabRef.select(0);

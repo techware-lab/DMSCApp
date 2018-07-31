@@ -11,6 +11,7 @@ import { EventsPage } from '../events/events';
 import { PledgePage } from '../pledge/pledge';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { DocumentViewer } from '@ionic-native/document-viewer';
 
 @IonicPage()
 @Component({
@@ -46,7 +47,7 @@ export class AquaBikeFormPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
     // private transfer: FileTransfer,
-    private transfer: FileTransfer, public platform: Platform,
+    private transfer: FileTransfer, public platform: Platform, private document: DocumentViewer,
     private camera: Camera, public modal: ModalController,
     public toastCtrl: ToastController, private file: File,
     private fileChooser: FileChooser) {
@@ -56,7 +57,7 @@ export class AquaBikeFormPage {
       }
 
       if (this.platform.is('ios')) {
-        this.storageDirectory = this.file.externalDataDirectory;
+        this.storageDirectory = this.file.documentsDirectory;
       }
       else if (this.platform.is('android')) {
         this.storageDirectory = this.file.externalDataDirectory;
@@ -261,19 +262,29 @@ export class AquaBikeFormPage {
   }
   downloadPdf() {
     let fileURL = '';
+
+    let loader = this.loadingCtrl.create({
+      content: "Downloading..Please Wait.."
+    });
+    loader.present();
     this.platform.ready().then(() => {
       fileURL = 'http://trendix.qa/dmsc/assets_front/form/medical_form.pdf';
       const fileTransfer: FileTransferObject = this.transfer.create();
       const imageName = fileURL.split('/').pop();
 
       fileTransfer.download(fileURL, this.storageDirectory + imageName).then((entry) => {
+
+        loader.dismissAll();
         const alertSuccess = this.alertCtrl.create({
           title: `Download Succeeded!`,
-          subTitle: `${fileURL} was successfully downloaded to: ${entry.toURL()}`,
+          subTitle: `Document was successfully downloaded to: ${entry.toURL()}`,
           buttons: ['Ok']
         });
         alertSuccess.present();
+        let url = entry.toURL();
+        this.document.viewDocument(url, 'application/pdf', {});
       }, (error) => {
+        loader.dismissAll();
         const alertFailure = this.alertCtrl.create({
           title: `Download Failed!`,
           subTitle: `${fileURL} was not successfully downloaded. Error code: ${error.code}`,

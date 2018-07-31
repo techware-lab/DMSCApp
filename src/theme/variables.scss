@@ -157,3 +157,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b3bb8', end
   color:#fff;
   background: linear-gradient(to bottom, #0099ff 0%, #00ffff 100%);
 }
+.custom-nav-title {
+  float: left;
+  line-height: 30px;
+}
+.custom-nav-back {
+  float: left;
+}
+.pledge-btn {
+  height: 1px;
+  float: left!important;
+  margin-top: -7px!important;
+  width: 60px;
+  color: #1681c4;
+}

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { ProfilePage } from '../profile/profile';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -17,7 +17,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class FeesPage {
 
-  constructor(public navCtrl: NavController,public translate: TranslateService, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public translate: TranslateService,
+    public vwCntrl: ViewController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -26,5 +27,8 @@ export class FeesPage {
 
   goToHomePage() {
     this.navCtrl.push(ProfilePage);
+  }
+  closeFees() {
+    this.vwCntrl.dismiss();
   }
 }
