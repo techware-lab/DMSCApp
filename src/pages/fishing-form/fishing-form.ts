@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, ModalController, ViewController } from 'ionic-angular';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
 // import { FileTransfer } from '@ionic-native/file-transfer';
 import { CameraOptions, Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { PledgePage } from '../pledge/pledge';
 @IonicPage()
 @Component({
   selector: 'page-fishing-form',
@@ -48,7 +49,7 @@ export class FishingFormPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
     // private transfer: FileTransfer,
-    private camera: Camera, private imgPicker: ImagePicker,
+    private camera: Camera, private imgPicker: ImagePicker,public modal :ModalController,public vwCtrl: ViewController,
     public toastCtrl: ToastController) {
   }
 
@@ -296,5 +297,9 @@ changeParticipatns(e){
         console.log(e);
         this.presentToast(e);
       });
+  }
+  openPledge(){
+    let pledge = this.modal.create(PledgePage);
+    pledge.present();
   }
 }

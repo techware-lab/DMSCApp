@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { ServiceProvider } from '../../providers/service/service';
 import { map } from 'rxjs/operators';
 import { CameraOptions, Camera } from '@ionic-native/camera';
+import { PledgePage } from '../pledge/pledge';
 
 @IonicPage()
 @Component({
@@ -11,6 +12,11 @@ import { CameraOptions, Camera } from '@ionic-native/camera';
   templateUrl: 'sailing-form.html',
 })
 export class SailingFormPage {
+  Agree: boolean = false;
+  MemberIDFile: any;
+  MemberIDList: any;
+  MemberIDFileShow: any;
+  IDFileShow: string;
   Events: any;
   FullName: any;
   Mobile: any;
@@ -40,15 +46,21 @@ export class SailingFormPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
-    public loadingCtrl: LoadingController, public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController, public alertCtrl: AlertController,public modal:ModalController,
     public toastCtrl: ToastController, public http: HttpClient, public camera: Camera) {
   }
 
   ionViewDidLoad() {
-    this.Events = this.navParams.data;
+    this.Events = this.navParams.data;    
+    this.MemberIDList = [];
+    this.IDFileShow = 'assets/imgs/noimage.jpg';
     this.SailingForm();
   }
 
+  openPledge(){
+    let pledge = this.modal.create(PledgePage);
+    pledge.present();
+  }
 
   SailingForm() {
 
@@ -128,20 +140,23 @@ export class SailingFormPage {
       validationMessage = 'Owner ID required.';
     } else if (this.Participants === undefined || this.Participants === '') {
       validationMessage = 'Number of participants required.';
-    }
+    } else if (this.IDFile === undefined || this.IDFile === '') {
+      validationMessage = 'Member ID Card required.';
+    } else if (this.Agree === undefined || !this.Agree) {
+      validationMessage = 'Agree Terms and Conditions';
+    } 
     if (validationMessage === '' || validationMessage === undefined) {
       try {
         const para = {
           'event_category_id': this.Events.category_id, 'event_id': this.Events.post_id,
-          'customer_id': this.service.UserDetails.CustomerID,
+          'customer_id': this.service.UserDetails.CustomerID,'id_card':this.IDFile,
           'customer_type': this.service.UserDetails.CustomerType,
           'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
           'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_participant': this.Participants,
           'owner_id': this.BoatOwnerID, 'owner_name': this.BoatOwner, 'owner_mobile': this.BoatOwnerMobile,
           'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
-          'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
-
-          //'team_card': [this.membersfileURI]
+          'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode,
+          'team_card': this.MemberIDList
         }
         loader.present();
 
@@ -175,30 +190,6 @@ export class SailingFormPage {
       this.presentToast(validationMessage);
     }
   }
-  chooseUserIDCard() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-    }
-    let loader = this.loadingCtrl.create({
-      content: "Loading Image.."
-    });
-    loader.present();
-    this.camera.getPicture(options)
-      .then(uri => {
-        console.log(uri);
-        this.IDFile = uri;
-        let base64Image = 'data:image/jpeg;base64,' + uri;
-        this.IDFile.push(base64Image);
-        loader.dismissAll();
-      })
-      .catch(e => {
-        loader.dismissAll();
-        console.log(e);
-        this.presentToast(e);
-      });
-  }
   presentToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -211,5 +202,51 @@ export class SailingFormPage {
     });
 
     toast.present();
+  }
+  
+  chooseUserIDCard() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      // destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    this.camera.getPicture(options)
+      .then(uri => {
+        console.log(uri);
+        this.IDFile = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.IDFileShow = base64Image;
+      })
+      .catch(e => {
+        console.log(e);
+        this.presentToast(e);
+      });
+  }
+  addMemberFile() {
+    this.MemberIDList.push({ 'IdFileb64': this.MemberIDFileShow, 'IDFile': this.MemberIDFile });
+  }
+  chooseMemberIDCard() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    let loader = this.loadingCtrl.create({
+      content: "Loading Image.."
+    });
+    loader.present();
+    this.camera.getPicture(options)
+      .then(uri => {
+        this.MemberIDFile = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.MemberIDFileShow = base64Image;
+        loader.dismissAll();
+      })
+      .catch(e => {
+        loader.dismissAll();
+        console.log(e);
+        this.presentToast(e);
+      });
   }
 }

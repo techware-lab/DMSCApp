@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { ProfilePage } from '../profile/profile';
-import { HomePage } from '../home/home';
+// import { HomePage } from '../home/home';
 import { TranslateService } from '@ngx-translate/core';
 
 @IonicPage()
@@ -18,7 +18,7 @@ export class LoginPage {
   Username: string = '';
   loginStatus;
   loginMessage;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public vwCtrl:ViewController,
     public http: HttpClient, public alertCtrl: AlertController, public translate: TranslateService,
     public loadingCtrl: LoadingController, public service: ServiceProvider) {
   }
@@ -56,7 +56,7 @@ export class LoginPage {
             };
             this.service.loginState = restItems.status;
             //this.navCtrl.setRoot(HomePage);
-            this.navCtrl.push(HomePage);
+            this.closeLogin();
             //this.navCtrl.getActiveChildNavs()[0].select(0);
           }
           else {
@@ -70,7 +70,9 @@ export class LoginPage {
         }
       );
   }
-
+  closeLogin(){
+    this.vwCtrl.dismiss();
+  }
   goToHomePage() {
     this.navCtrl.push(ProfilePage);
   }

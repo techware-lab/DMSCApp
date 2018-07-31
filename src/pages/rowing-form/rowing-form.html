@@ -39,8 +39,12 @@
       <ion-input [disabled]='true' [(ngModel)]="IDNo" type="text"></ion-input>
     </ion-item>
     <ion-item>
-      <p>{{flieURI}}</p>
       <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
+      <ion-card>
+        <ion-card-content>
+        <img [src]="IDFileShow" />          
+        </ion-card-content>
+      </ion-card>
     </ion-item>
   </ion-list>
   <label class="bold">Team Information</label>
@@ -63,19 +67,20 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Number of Participant</ion-label>
-      <ion-input [(ngModel)]="Participants" type="text"></ion-input>
+      <ion-input [(ngModel)]="Participants"  (change)="changeParticipatns($event)" type="number"></ion-input>
     </ion-item>
     <ion-item>
-      <p>{{IDFile}}</p>
-      <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
-      <ion-card *ngFor="let image of IDFile; let i = index;">
-        <img [src]="image" />
-        <ion-card-content>
-          <ion-card-title>
-            Image number # {{i}}
-          </ion-card-title>
-        </ion-card-content>
-      </ion-card>
+      <button ion-button (click)="chooseMemberIDCard()">Choose Member ID Card</button>  
+      <button ion-button color="secondary" (click)="addMemberFile()">Add</button>
+      <ion-list>
+        <ion-item>
+            <ion-card *ngFor="let id of MemberIDList; let i = index;">
+                <ion-card-content>
+                   <img [src]="id.IdFileb64" /> 
+                </ion-card-content>
+              </ion-card>
+        </ion-item>
+      </ion-list>
     </ion-item>
   </ion-list>
   <label class="bold">Bank Information</label>
@@ -99,6 +104,12 @@
     <ion-item>
       <ion-label floating>Swift Code</ion-label>
       <ion-input [(ngModel)]="SwiftCode" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>I agree
+          <button ion-button clear (click)="openPledge()">Pledge</button>
+        </ion-label>
+      <ion-checkbox [(ngModel)]="Agree"></ion-checkbox>
     </ion-item>
   </ion-list>
   <button ion-button (click)="SaveAquaBikeForm()">Submit</button>

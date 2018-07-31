@@ -41,7 +41,7 @@
       <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
       <ion-card>
         <ion-card-content>
-        <img [src]="IDFile" />          
+          <img [src]="IDFile" />
         </ion-card-content>
       </ion-card>
     </ion-item>
@@ -91,24 +91,30 @@
 
   <label class="bold">Medical Form</label>
   <ion-list>
-
     <ion-item>
-      <ion-label>
-        Please Click <button ion-button (click)="openLocalPdf()" clear>here</button>  to download the medical form, print out and sign by a doctor
-      </ion-label>
+      <p style="white-space: normal!important;"> Please Click
+        <label style="color:#1681c4;" (click)="downloadPdf()">here</label>
+        to download the medical form, print out and sign by a doctor</p>
     </ion-item>
   </ion-list>
   <label class="bold">Important Note</label>
   <ion-list>
     <ion-item>
       <h4>
-          It is strictly forbidden to subscribe any rider without:</h4>
+        It is strictly forbidden to subscribe any rider without:</h4>
       <ul class="imp-notes">
         <li>Life Jacket</li>
         <li>Safety helmet for the head</li>
         <li>Protective legs</li>
         <li>Shoes, glasses, gloves</li>
       </ul>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-item>
+      <ion-label>I agree <label style="color:#1681c4;" (click)="openPledge()">here</label>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="Agree"></ion-checkbox>
     </ion-item>
   </ion-list>
   <button ion-button color="secondary" (click)="SaveAquaBikeForm()">Submit</button>

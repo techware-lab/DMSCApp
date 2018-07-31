@@ -75,7 +75,9 @@ export class MyApp {
     this.nav.push(ProfilePage);
   }
   goToLoginPage() {
-    this.nav.push(LoginPage);
+    
+    let login = this.modalCtrl.create(LoginPage);
+    login.present();
   }
   openPage(page) {
     let params = {};
@@ -86,16 +88,12 @@ export class MyApp {
     }
     else { params = { tabIndex: 0 }; }
     // If tabs page is already active just change the tab index
-    if (this.nav.getActiveChildNavs().length && page.index != undefined && page.index > 0) {      
+    if (this.nav.getActiveChildNavs().length >0) {      
       this.nav.getActiveChildNavs()[0].select(page.index);
     }
     else {
       // Tabs are not active, so reset the root page 
       // In this case: moving to or from SpecialPage
-      // this.nav.getActiveChildNavs()[0].select(0);
-      // this.nav.setRoot(page.component, params);
-      // this.app.getRootNav().setRoot(page.component, params);
-      // this.rootPage = HomePage;
       this.nav.setRoot(page.component, params);
     }
   }

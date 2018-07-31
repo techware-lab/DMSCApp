@@ -256,6 +256,7 @@ export class SignupMembershipPage {
       quality: 100,
       sourceType: sourceType,
       saveToPhotoAlbum: false,
+      destinationType: this.camera.DestinationType.DATA_URL,
       correctOrientation: true
     };
 

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { ServiceProvider } from '../../providers/service/service';
-import { FileChooser } from '@ionic-native/file-chooser';
 import { CameraOptions, Camera } from '@ionic-native/camera';
-// import { FileTransfer } from '@ionic-native/file-transfer';
+import { PledgePage } from '../pledge/pledge';
 
 
 @IonicPage()
@@ -14,6 +13,11 @@ import { CameraOptions, Camera } from '@ionic-native/camera';
   templateUrl: 'rowing-form.html',
 })
 export class RowingFormPage {
+  Agree: boolean = false;
+  MemberIDList: any;
+  MemberIDFileShow: any;
+  MemberIDFile: any;
+  IDFileShow: string;
   FileNameID: any;
   FileNameMember: any;
 
@@ -43,16 +47,21 @@ export class RowingFormPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: ServiceProvider,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public http: HttpClient,
     //  private transfer: FileTransfer,
-    private camera: Camera,
-    public toastCtrl: ToastController,
-    private fileChooser: FileChooser) {
+    private camera: Camera,public modal:ModalController,
+    public toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
     this.Events = this.navParams.data;
+    this.MemberIDList = [];
+    this.IDFileShow = 'assets/imgs/noimage.jpg';
     this.AquaBikeForm();
   }
 
+  openPledge(){
+    let pledge = this.modal.create(PledgePage);
+    pledge.present();
+  }
 
   AquaBikeForm() {
 
@@ -124,42 +133,10 @@ export class RowingFormPage {
 
     toast.present();
   }
-  chooseUserIDCard() {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
-    }
-    let loader = this.loadingCtrl.create({
-      content: "Loading Image.."
-    });
-    loader.present();
-    this.camera.getPicture(options)
-      .then(uri => {
-        console.log(uri);
-        this.IDFile = uri;
-        let base64Image = 'data:image/jpeg;base64,' + uri;
-        this.IDFile.push(base64Image);
-        loader.dismissAll();
-      })
-      .catch(e => {
-        loader.dismissAll();
-        console.log(e);
-        this.presentToast(e);
-      });
-  }
-  getMembersIds() {
-    this.fileChooser.open()
-      .then(uri => {
-        console.log(uri);
-        this.membersfileURI = uri;
-      })
-      .catch(e => {
-        console.log(e);
-        this.presentToast(e);
-      });
-  }
 
+  changeParticipatns(e) {
+    this.MemberIDList = [];
+  }
   SaveAquaBikeForm() {
     debugger;
     let validationMessage: string = '';
@@ -173,6 +150,10 @@ export class RowingFormPage {
       validationMessage = 'Team Leader Number required.';
     } else if (this.Participants === undefined || this.Participants === '') {
       validationMessage = 'Number of participants required.';
+    } else if (this.IDFile === undefined || this.IDFile === '') {
+      validationMessage = 'Member ID Card required.';
+    } else if (this.Agree === undefined || !this.Agree) {
+      validationMessage = 'Agree Terms and Conditions';
     }
     if (validationMessage === '' || validationMessage === undefined) {
       try {
@@ -182,9 +163,9 @@ export class RowingFormPage {
           'customer_type': this.service.UserDetails.CustomerType,
           'team_leader': this.TLName, 'leader_mobile': this.TLMobile,
           'team_name': this.TeamName, 'boat_number': this.BoatNumber, 'total_member': this.Participants,
-          'team_card': [this.membersfileURI],
-          'account_name':this.ACName, 'bank_name':this.BankName, 'account_number':this.ACNumber,
-          'pan_no':this.IBANNumber, 'swift_code':this.SwiftCode
+          'team_card': this.MemberIDList, 'id_card': this.IDFile,
+          'account_name': this.ACName, 'bank_name': this.BankName, 'account_number': this.ACNumber,
+          'pan_no': this.IBANNumber, 'swift_code': this.SwiftCode
         }
         let loader = this.loadingCtrl.create({
           content: "Saving " + this.Events.training_name + "..."
@@ -241,5 +222,51 @@ export class RowingFormPage {
     }
   }
 
+  addMemberFile() {
+    this.MemberIDList.push({ 'IdFileb64': this.MemberIDFileShow, 'IDFile': this.MemberIDFile });
+  }
+  chooseUserIDCard() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      // destinationType: this.camera.DestinationType.FILE_URI,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    this.camera.getPicture(options)
+      .then(uri => {
+        console.log(uri);
+        this.IDFile = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.IDFileShow = base64Image;
+      })
+      .catch(e => {
+        console.log(e);
+        this.presentToast(e);
+      });
+  }
+
+  chooseMemberIDCard() {
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    }
+    let loader = this.loadingCtrl.create({
+      content: "Loading Image.."
+    });
+    loader.present();
+    this.camera.getPicture(options)
+      .then(uri => {
+        this.MemberIDFile = uri;
+        let base64Image = 'data:image/jpeg;base64,' + uri;
+        this.MemberIDFileShow = base64Image;
+        loader.dismissAll();
+      })
+      .catch(e => {
+        loader.dismissAll();
+        console.log(e);
+        this.presentToast(e);
+      });
+  }
 
 }

@@ -9,16 +9,26 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content center text-center padding>
+<ion-content>
+  
+    <div  (click)="openModal({charNum: activity.category_id})" col-12 class="events row"[ngClass]="{'evnt-list-alt': odd , 'evnt-list':even  }" *ngFor='let activity of activityList; let odd=odd; let even=even;'>
+        <div col-3 item-start>
+            <img src="{{activity.act_icon}}" />
+        </div>
+        <div col-9>
+          <h5 style="margin-bottom: -1rem!important;">{{service.lang==='ar'?activity.title_ar:activity.title}}</h5>
+          <p innerHtml="{{service.lang==='ar'?activity.description_ar:activity.description}}"></p>
+        </div>
+      </div>
 
-  <ion-grid>
+  <!-- <ion-grid>
     <ion-row center>
       <ion-col (click)="openModal({charNum: activity.category_id})" col-6 *ngFor='let activity of activityList'>
         <img class="circle-pic" src="{{activity.image}}" />
         <div>{{service.lang==='ar'?activity.title_ar:activity.title}}</div>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
   <!-- 
   <ion-card>
     <img src="http://trendix.qa/dmsc/uploads/activity/kayak_new.png" />

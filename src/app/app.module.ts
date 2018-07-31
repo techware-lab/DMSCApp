@@ -51,6 +51,7 @@ import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { DocumentViewer } from '@ionic-native/document-viewer';
 import { UserPage } from '../pages/user/user';
+import { PledgePage } from '../pages/pledge/pledge';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -81,7 +82,8 @@ export function createTranslateLoader(http: HttpClient) {
     RowingFormPage,
     FishingFormPage,
     ProfileActionPage,
-    UserPage
+    UserPage,
+    PledgePage
     // DashboardPage
 
   ],
@@ -133,7 +135,8 @@ export function createTranslateLoader(http: HttpClient) {
     FishingFormPage,
     ChangePasswordPage,
     ProfileActionPage,
-    UserPage
+    UserPage,
+    PledgePage
     // DashboardPage
   ],
   providers: [

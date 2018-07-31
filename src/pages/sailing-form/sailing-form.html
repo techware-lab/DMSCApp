@@ -38,15 +38,14 @@
       <ion-label floating>ID No</ion-label>
       <ion-input [disabled]='true' [(ngModel)]="IDNo" type="text"></ion-input>
     </ion-item>
-    <ion-item>        
-        <span ion-button icon-left (click)="chooseUserIDCard()">
-          <ion-icon name="document"></ion-icon>Select Member ID
-        </span>
-        <ion-card>
-          <ion-card-content>
-          </ion-card-content>
-        </ion-card>
-      </ion-item>
+    <ion-item>
+      <button ion-button color="secondary" (click)="chooseUserIDCard()">Choose ID</button>
+      <ion-card>
+        <ion-card-content>
+        <img [src]="IDFileShow" />          
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
   </ion-list>
   <label class="bold">Team Information</label>
   <ion-list>
@@ -83,6 +82,19 @@
       <ion-label floating>No. of Participants</ion-label>
       <ion-input [(ngModel)]="Participants" type="number"></ion-input>
     </ion-item>
+    <ion-item>
+      <button ion-button (click)="chooseMemberIDCard()">Choose Member ID Card</button>  
+      <button ion-button color="secondary" (click)="addMemberFile()">Add</button>
+      <ion-list>
+        <ion-item>
+            <ion-card *ngFor="let id of MemberIDList; let i = index;">
+                <ion-card-content>
+                   <img [src]="id.IdFileb64" /> 
+                </ion-card-content>
+              </ion-card>
+        </ion-item>
+      </ion-list>
+    </ion-item>
   </ion-list>
   <label class="bold">Bank Information</label>
   <ion-list>
@@ -105,6 +117,10 @@
     <ion-item>
       <ion-label floating>Swift Code</ion-label>
       <ion-input [(ngModel)]="SwiftCode" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>I agree <button ion-button  clear (click)="openPledge()">Pledge</button></ion-label>
+      <ion-checkbox [(ngModel)]="Agree"></ion-checkbox>
     </ion-item>
   </ion-list>
   <button ion-button (click)="SaveSailingForm()">Submit</button>

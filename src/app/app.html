@@ -1,14 +1,14 @@
 <ion-menu [content]="content">
   <ion-header>
-    <ion-toolbar>
+    <!-- <ion-toolbar> -->
       <ion-item *ngIf="service.loginState">
-        <button class="nav-btn" menuClose ion-item (click)="goToProfilePage()">
-          <ion-avatar item-start>
-            <img id="profile-image" src="{{service.UserDetails.Image !== ''? service.UserDetails.Image :'assets/imgs/avathar-default.png' }}">
+        <!-- <button class="nav-btn" menuClose ion-item (click)="goToProfilePage()"> -->
+          <ion-avatar item-start (click)="goToProfilePage()">
+            <img src="{{service.UserDetails.Image !== ''? service.UserDetails.Image :'assets/imgs/avathar-default.png' }}">
           </ion-avatar>
           <h2>{{service.UserDetails.FullName}}</h2>
           <p>{{service.UserDetails.CustomerType}}</p>
-        </button>
+        <!-- </button> -->
       </ion-item>
       <ion-item *ngIf="!service.loginState">
         <ion-avatar item-start>
@@ -16,7 +16,7 @@
         </ion-avatar>
         <h2>Hi Guest </h2>
       </ion-item>
-    </ion-toolbar>
+    <!-- </ion-toolbar> -->
   </ion-header>
 
   <ion-content class="menu">
